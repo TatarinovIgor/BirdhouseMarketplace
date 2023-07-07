@@ -29,22 +29,20 @@ function App() {
                 <Route path="/" element={<Index/>} />
 
                 <Route path="/about" element={<AboutPage/>} />
-                <Route path="/account_preview" element={<AccountPreview/>} />                          #ToDo finish page
+                <Route path="/account_preview" element={<AccountPreview/>} />
                 <Route path="/contact_us" element={<ContactUs/>} />
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/deposit_success" element={<DepositSuccess/>} />
                 <Route path="/deposit_unsuccess" element={<DepositUnsuccess/>} />
                 <Route path="/deposit_withdraw" element={<DepositWithdraw/>} />
-                <Route path="/error" element={<Error/>} />                                             #ToDo finish page
-                <Route path="/explore" element={<Explore/>} />                                         #ToDo finish page
-                <Route path="/explore_advertisers" element={<ExploreAdvertisers/>} />                   #ToDo wrong page
-                <Route path="/explore_bloggers" element={<ExploreBloggers/>} />                        #ToDo finish page
-                <Route path="/explore_offers" element={<ExploreOffers/>} />                            #ToDo finish page
+                <Route path="/error" element={<Error/>} />
+                <Route path="/explore" element={<Explore/>} />
+                <Route path="/explore_advertisers" element={<ExploreAdvertisers/>} />
+                <Route path="/explore_bloggers" element={<ExploreBloggers/>} />
                 <Route path="/landing_advertisers" element={<LandingAdvertisers/>} />
                 <Route path="/landing_bloggers" element={<LandingBloggers/>} />
-                <Route path="/login" element={<Login/>} />                                             #ToDo finish page
-                <Route path="/product_blogger" element={<ProductBlogger/>} />                          #ToDo finish page
-                <Route path="/product_page" element={<ProductPage/>} />                                #ToDo finish page
+                <Route path="/login" element={<Login/>} />
+                <Route path="/product_page" element={<ProductPage/>} />
                 <Route path="/verfification" element={<Verification/>} />
                 <Route path="/withdraw_success" element={<WithdrawSuccess/>} />
                 <Route path="/withdraw_unsuccess" element={<WithdrawUnsuccess/>} />
