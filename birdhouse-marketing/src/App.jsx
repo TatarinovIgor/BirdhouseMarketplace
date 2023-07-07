@@ -8,17 +8,13 @@ import DepositSuccess from "./pages/templates/DepositSuccess/DepositSuccess.jsx"
 import DepositUnsuccess from "./pages/templates/DepositUsuccess/DepositUnsuccess.jsx";
 import DepositWithdraw from "./pages/templates/DepositWithdraw/DepositWithdraw.jsx";
 import Error from "./pages/templates/Error/Error.jsx";
-import Explore from "./pages/templates/Explore/Explore.jsx";
 import ExploreAdvertisers from "./pages/templates/ExploreAdvertisers/ExploreAdvertisers.jsx";
 import ExploreBloggers from "./pages/templates/ExploreBloggers/ExploreBloggers.jsx";
-import ExploreOffers from "./pages/templates/ExploreOffers/ExploreOffers.jsx";
 import Index from "./pages/templates/Index/Index.jsx";
 import LandingAdvertisers from "./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx";
 import LandingBloggers from "./pages/templates/LandingBlogger/LandingBlogger.jsx";
 import Login from "./pages/templates/Login/Login.jsx";
-import ProductBlogger from "./pages/templates/ProductBlogger/ProductBlogger.jsx";
 import ProductPage from "./pages/templates/ProductPage/ProductPage.jsx";
-import Verification from "./pages/templates/Verification/Verification.jsx";
 import WithdrawSuccess from "./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx";
 import WithdrawUnsuccess from "./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx";
 
@@ -27,23 +23,22 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Index/>} />
-
                 <Route path="/about" element={<AboutPage/>} />
                 <Route path="/account_preview" element={<AccountPreview/>} />
                 <Route path="/contact_us" element={<ContactUs/>} />
                 <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/deposit_success" element={<DepositSuccess/>} />
                 <Route path="/deposit_unsuccess" element={<DepositUnsuccess/>} />
+                <Route path="/deposit" element={<DepositWithdraw/>} />
                 <Route path="/deposit_withdraw" element={<DepositWithdraw/>} />
+                <Route path="/withdraw" element={<DepositWithdraw/>} />
                 <Route path="/error" element={<Error/>} />
-                <Route path="/explore" element={<Explore/>} />
                 <Route path="/explore_advertisers" element={<ExploreAdvertisers/>} />
                 <Route path="/explore_bloggers" element={<ExploreBloggers/>} />
                 <Route path="/landing_advertisers" element={<LandingAdvertisers/>} />
                 <Route path="/landing_bloggers" element={<LandingBloggers/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/product_page" element={<ProductPage/>} />
-                <Route path="/verfification" element={<Verification/>} />
                 <Route path="/withdraw_success" element={<WithdrawSuccess/>} />
                 <Route path="/withdraw_unsuccess" element={<WithdrawUnsuccess/>} />
             </Routes>
