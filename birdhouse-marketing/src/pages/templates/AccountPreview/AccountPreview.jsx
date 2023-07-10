@@ -37,7 +37,7 @@ const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n
     "        </div>\n" +
     "        <div class=\"bubble-element Group bubble-r-container fixed clickable-element\" style=\"z-index: 4; align-self: center; min-width: 40px; max-width: 40px; order: 4; min-height: 40px; max-height: 40px; width: 40px; flex-grow: 1; height: 40px; margin: 0px; overflow: visible; border-radius: 100px; padding: 0px; opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg&quot;);\" onclick=\"location.href='dashboard'\" ></div>\n" +
     "        <div class=\"bubble-element Text\" style=\"visibility: hidden; z-index: 4; align-self: center; min-width: 83px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; display: none;\"></div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\">Balance: </div>\n" +
+    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\"><p id=\"UserBalance\"></p> </div>\n" +
     "      </div>\n" +
     "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"visibility: hidden; z-index: 7; align-self: center; min-width: 0px; order: 4; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; display: none; justify-content: space-between;\">\n" +
     "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 4; align-self: center; min-width: 25px; max-width: 25px; order: 1; min-height: 23px; max-height: 23px; width: 25px; flex-grow: 1; height: 23px; margin: 0px 14px 0px 0px;\"></div>\n" +
@@ -52,7 +52,7 @@ const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n
     "    </div>\n" +
     "  </div>\n" +
     "  <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 3; align-self: center; min-width: 300px; max-width: 1200px; order: 5; min-height: 100px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px 50px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 9px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 35px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 36px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">IgorTatarinov</div>\n" +
+    "    <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 9px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 35px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 36px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\"><p id=\"UserName\"></p></div>\n" +
     "    <div class=\"bubble-element Text\" style=\"visibility: hidden; z-index: 3; align-self: center; min-width: 0px; max-width: 580px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 20px; display: none;\"></div>\n" +
     "    <div class=\"bubble-element RepeatingGroup\" style=\"visibility: hidden; z-index: 5; align-self: center; min-width: 0px; order: 5; min-height: 50px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 30px; display: none;\"></div>\n" +
     "    <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 7; align-self: center; min-width: 0px; max-width: 762px; order: 6; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center; overflow: visible; background-color: rgba(255, 255, 255, 0.7); border-radius: 15px; opacity: 1;\">\n" +
@@ -61,16 +61,16 @@ const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n
     "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px;\"></div>\n" +
     "      </div>\n" +
     "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 6; align-self: stretch; min-width: 190px; order: 2; min-height: 110px; width: 190px; flex-grow: 1; height: auto; margin: 0px; justify-content: flex-start; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 0px; padding: 29px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">0</div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">items</div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\"><p id=\"UserItems\"></p></div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">Items</div>\n" +
     "      </div>\n" +
     "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 3; align-self: stretch; min-width: 190px; order: 3; min-height: 110px; width: 190px; flex-grow: 1; height: auto; margin: 0px; justify-content: flex-start; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 0px; padding: 29px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1; word-break: break-word;\">6</div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">trades</div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1; word-break: break-word;\"><p id=\"UserTrades\"></p></div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">Trades</div>\n" +
     "      </div>\n" +
     "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; align-self: flex-start; min-width: 190px; order: 4; min-height: 110px; width: 190px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-start; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 0px; padding: 29px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1; word-break: break-word;\">40</div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">volume traded</div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); text-align: center; letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1; word-break: break-word;\"><p id=\"UserVolume\"></p></div>\n" +
+    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">Volume traded</div>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
@@ -828,9 +828,6 @@ const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n
     "      </div>\n" +
     "    </div>\n" +
     "  </div>\n" +
-    "  <div class=\"debugger-page-mention\">The page is higher than your real design as the debugger is visible and displays a white area.\n" +
-    "    It will be back to normal when the debugger is off.\n" +
-    "  </div>\n" +
     "</div>\n" +
     "<div class=\"bubble-element GroupFocus bubble-r-container relative\" style=\"visibility: hidden; display: none; position: absolute; min-width: 0px; min-height: 500px; height: initial; right: 20px; bottom: 20px; z-index: 2019; margin-right: auto; overflow-y: auto;\">\n" +
     "  <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; place-self: start center; min-width: 0px; min-height: 0px; width: calc(100% - 20px); height: max-content; margin: 25px 20px 0px 0px; justify-content: flex-start;\">\n" +
@@ -1098,6 +1095,31 @@ const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
+    "\n" +
+    "<script>\n" +
+    "  window.onload = function() {\n" +
+    "    // Get the value\n" +
+    "    var Name = \"IgorTatarinov\";\n" +
+    "    var Balance = \"0\";\n" +
+    "    var Items = \"0\";\n" +
+    "    var Trades = \"0\";\n" +
+    "    var Volume = \"0\";\n" +
+    "\n" +
+    "    // Display the value on the page\n" +
+    "    var outputName = document.getElementById('UserName');\n" +
+    "    var outputBalance = document.getElementById('UserBalance');\n" +
+    "    var outputItems = document.getElementById('UserItems');\n" +
+    "    var outputTrades = document.getElementById('UserTrades');\n" +
+    "    var outputVolume = document.getElementById('UserVolume');\n" +
+    "    outputName.innerText = Name;\n" +
+    "    outputBalance.innerText = \"Balance: \" + Balance;\n" +
+    "    outputItems.innerText = Items;\n" +
+    "    outputTrades.innerText = Trades;\n" +
+    "    outputVolume.innerText = Volume;\n" +
+    "\n" +
+    "  };\n" +
+    "</script>\n" +
+    "\n" +
     "</html>"
 const AccountPreview = () => {
     return <div dangerouslySetInnerHTML={{ __html: html_template }} />;

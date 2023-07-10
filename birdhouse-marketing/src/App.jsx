@@ -10,7 +10,6 @@ import DepositWithdraw from "./pages/templates/DepositWithdraw/DepositWithdraw.j
 import Error from "./pages/templates/Error/Error.jsx";
 import ExploreAdvertisers from "./pages/templates/ExploreAdvertisers/ExploreAdvertisers.jsx";
 import ExploreBloggers from "./pages/templates/ExploreBloggers/ExploreBloggers.jsx";
-import Index from "./pages/templates/Index/Index.jsx";
 import LandingAdvertisers from "./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx";
 import LandingBloggers from "./pages/templates/LandingBlogger/LandingBlogger.jsx";
 import Login from "./pages/templates/Login/Login.jsx";
@@ -22,11 +21,11 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Index/>} />
+                 <Route path="/" element={<LandingBloggers/>} />
                 <Route path="/about" element={<AboutPage/>} />
                 <Route path="/account_preview" element={<AccountPreview/>} />
                 <Route path="/contact_us" element={<ContactUs/>} />
-                <Route path="/dashboard" element={<Dashboard/>} />
+                <Route path="/dashboard" element={<Dashboard/>} />                                    #ToDo Make dynamic
                 <Route path="/deposit_success" element={<DepositSuccess/>} />
                 <Route path="/deposit_unsuccess" element={<DepositUnsuccess/>} />
                 <Route path="/deposit" element={<DepositWithdraw/>} />

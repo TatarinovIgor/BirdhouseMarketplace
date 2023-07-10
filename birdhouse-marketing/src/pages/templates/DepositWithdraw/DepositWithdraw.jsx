@@ -256,16 +256,6 @@ const html_template ="\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div class=\"page-is-loaded\"></div>\n" +
-    "<div style=\"width: 128px !important; position: fixed !important; bottom: 10px !important; right: 10px !important; height: 29px !important; z-index: 100000000000 !important; box-shadow: 0px 0px 20px 0 #00000069 !important; background: #0205D3 !important; border-radius: 3px !important;\">\n" +
-    "  <div style=\"position: absolute;\" class=\"notranslate\" translate=\"no\">\n" +
-    "    <div style=\"\">\n" +
-    "      <img alt=\"Bubble\" src=\"https://meta.cdn.bubble.io/f1585607370503x914556455591480200/banner-icon.svg\" style=\"width: 15px !important; margin-top: 7px !important; margin-left: 6px !important; float: left;\">\n" +
-    "      <div style=\"color: white; font-size: 12px; font-family: Arial, sans-serif; margin-top: 9px; float: left; margin-left: 8px; width: 95px; font-weight: bold;\">Built on Bubble</div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <a target=\"_blank\" style=\"width: 100%; height: 100%; position: absolute;\" href=\"https://bubble.io?utm_source=app_mention&amp;utm_content=marketingbirdhouse\"></a>\n" +
-    "</div>\n" +
     "</body>\n" +
     "</html>\n"
 

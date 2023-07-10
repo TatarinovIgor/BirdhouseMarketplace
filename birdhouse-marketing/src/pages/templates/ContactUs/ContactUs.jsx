@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const html_template = "'\n" +
-    "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n7-active wf-lato-n4-active wf-montserratalternates-n8-active wf-poppins-n4-active wf-poppins-n5-active wf-poppins-n6-active wf-poppins-n7-active wf-poppins-i8-active wf-poppins-i4-active wf-active\" style=\"height: 100%; --color_primary_default: rgba(2, 5, 211, 1); --color_primary_default_rgb: 2,5,211; --color_primary_contrast_default: rgba(255, 255, 255, 1); --color_primary_contrast_default_rgb: 255,255,255; --color_text_default: rgba(9, 23, 71, 1); --color_text_default_rgb: 9,23,71; --color_surface_default: rgba(255, 255, 255, 1); --color_surface_default_rgb: 255,255,255; --color_background_default: rgba(255, 255, 255, 0); --color_background_default_rgb: 255,255,255; --color_destructive_default: rgba(255, 0, 0, 1); --color_destructive_default_rgb: 255,0,0; --color_success_default: rgba(23, 219, 78, 1); --color_success_default_rgb: 23,219,78; --color_alert_default: rgba(250, 181, 21, 1); --color_alert_default_rgb: 250,181,21; --font_default: &quot;Lato&quot;;\">\n" +
+const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n7-active wf-lato-n4-active wf-montserratalternates-n8-active wf-poppins-n4-active wf-poppins-n5-active wf-poppins-n6-active wf-poppins-n7-active wf-poppins-i8-active wf-poppins-i4-active wf-active\" style=\"height: 100%; --color_primary_default: rgba(2, 5, 211, 1); --color_primary_default_rgb: 2,5,211; --color_primary_contrast_default: rgba(255, 255, 255, 1); --color_primary_contrast_default_rgb: 255,255,255; --color_text_default: rgba(9, 23, 71, 1); --color_text_default_rgb: 9,23,71; --color_surface_default: rgba(255, 255, 255, 1); --color_surface_default_rgb: 255,255,255; --color_background_default: rgba(255, 255, 255, 0); --color_background_default_rgb: 255,255,255; --color_destructive_default: rgba(255, 0, 0, 1); --color_destructive_default_rgb: 255,0,0; --color_success_default: rgba(23, 219, 78, 1); --color_success_default_rgb: 23,219,78; --color_alert_default: rgba(250, 181, 21, 1); --color_alert_default_rgb: 250,181,21; --font_default: &quot;Lato&quot;;\">\n" +
     "<head>\n" +
     "  <meta charset=\"utf-8\">\n" +
     "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n" +
@@ -34,7 +33,7 @@ const html_template = "'\n" +
     "        </div>\n" +
     "        <div class=\"bubble-element Group bubble-r-container fixed clickable-element\" style=\"z-index: 4; align-self: center; min-width: 40px; max-width: 40px; order: 4; min-height: 40px; max-height: 40px; width: 40px; flex-grow: 1; height: 40px; margin: 0px; overflow: visible; border-radius: 100px; padding: 0px; opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg&quot;);\" onclick=\"location.href='dashboard'\" ></div>\n" +
     "        <div class=\"bubble-element Text\" style=\"visibility: hidden; z-index: 4; align-self: center; min-width: 83px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; display: none;\"></div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\">Balance: </div>\n" +
+    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\"><p id=\"UserBalance\"></p> </div>\n" +
     "      </div>\n" +
     "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"visibility: hidden; z-index: 7; align-self: center; min-width: 0px; order: 4; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; display: none; justify-content: space-between;\">\n" +
     "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 4; align-self: center; min-width: 25px; max-width: 25px; order: 1; min-height: 23px; max-height: 23px; width: 25px; flex-grow: 1; height: 23px; margin: 0px 14px 0px 0px;\"></div>\n" +
@@ -302,19 +301,19 @@ const html_template = "'\n" +
     "    </div>\n" +
     "  </div>\n" +
     "</div>\n" +
-    "<div class=\"page-is-loaded\"></div>\n" +
-    "<div style=\"width: 128px !important; position: fixed !important; bottom: 10px !important; right: 10px !important; height: 29px !important; z-index: 100000000000 !important; box-shadow: 0px 0px 20px 0 #00000069 !important; background: #0205D3 !important; border-radius: 3px !important;\">\n" +
-    "  <div style=\"position: absolute;\" class=\"notranslate\" translate=\"no\">\n" +
-    "    <div style=\"\">\n" +
-    "      <img alt=\"Bubble\" src=\"https://meta.cdn.bubble.io/f1585607370503x914556455591480200/banner-icon.svg\" style=\"width: 15px !important; margin-top: 7px !important; margin-left: 6px !important; float: left;\">\n" +
-    "      <div style=\"color: white; font-size: 12px; font-family: Arial, sans-serif; margin-top: 9px; float: left; margin-left: 8px; width: 95px; font-weight: bold;\">Built on Bubble</div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <a target=\"_blank\" style=\"width: 100%; height: 100%; position: absolute;\" href=\"https://bubble.io?utm_source=app_mention&amp;utm_content=marketingbirdhouse\"></a>\n" +
-    "</div>\n" +
+    "<script>\n" +
+    "  window.onload = function() {\n" +
+    "    // Get the value\n" +
+    "    var Balance = \"0\";\n" +
+    "\n" +
+    "    // Display the value on the page\n" +
+    "    var outputBalance = document.getElementById('UserBalance');\n" +
+    "    outputBalance.innerText = \"Balance: \" + Balance;\n" +
+    "\n" +
+    "  };\n" +
+    "</script>\n" +
     "</body>\n" +
-    "</html>\n" +
-    "'"
+    "</html>\n"
 
 const ContactUs = () => {
     return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
