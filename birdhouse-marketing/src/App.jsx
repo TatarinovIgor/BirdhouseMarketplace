@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { FrontendApi, Configuration } from "@ory/client"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AboutPage from "./pages/templates/AboutUs/AboutUs.jsx";
 import AccountPreview from "./pages/templates/AccountPreview/AccountPreview.jsx";
@@ -17,7 +18,21 @@ import ProductPage from "./pages/templates/ProductPage/ProductPage.jsx";
 import WithdrawSuccess from "./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx";
 import WithdrawUnsuccess from "./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx";
 
+import * as OryPages from "./oryAuth.jsx";
+
 function App() {
+    // Get your Ory url from .env
+    // Or localhost for local development
+    const basePath = "http://127.0.0.1:4455"
+    const ory = new FrontendApi(
+        new Configuration({
+            basePath,
+            baseOptions: {
+                withCredentials: true,
+            },
+        }),
+    )
+
     return (
         <Router>
             <Routes>
@@ -40,9 +55,15 @@ function App() {
                 <Route path="/product_page" element={<ProductPage/>} />
                 <Route path="/withdraw_success" element={<WithdrawSuccess/>} />
                 <Route path="/withdraw_unsuccess" element={<WithdrawUnsuccess/>} />
+                <Route path="/ory_login" element={OryPages.default.OryLogin(ory, basePath)} />
+                <Route path="/ory_register" element={OryPages.default.OryRegister(ory, basePath)} />
+                <Route path="/ory_recovery" element={OryPages.default.OryRecovery(ory,basePath)} />
+                <Route path="/ory_verify" element={OryPages.default.OryVerify(ory, basePath)} />
             </Routes>
         </Router>
     );
 }
 
 export default App;
+
+//docker-compose -f quickstart.yml -f quickstart-standalone.yml uo --build --force-recreate
