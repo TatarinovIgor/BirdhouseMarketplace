@@ -2,26 +2,26 @@ import React, {Component, lazy} from 'react';
 import { FrontendApi, Configuration } from "@ory/client"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import AboutPage from "./pages/templates/AboutUs/AboutUs.jsx"
-import AccountPreview from"./pages/templates/AccountPreview/AccountPreview.jsx";
-import ContactUs from "./pages/templates/ContactUs/ContactUs.jsx";
-import Dashboard from "./pages/templates/Dashboard/Dashboard.jsx";
-import DepositSuccess from "./pages/templates/DepositSuccess/DepositSuccess.jsx";
-import DepositUnsuccess from "./pages/templates/DepositUsuccess/DepositUnsuccess.jsx";
-import DepositWithdraw from "./pages/templates/DepositWithdraw/DepositWithdraw.jsx";
-import Error from "./pages/templates/Error/Error.jsx";
-import ExploreAdvertisers from "./pages/templates/ExploreAdvertisers/ExploreAdvertisers.jsx";
-import ExploreBloggers from "./pages/templates/ExploreBloggers/ExploreBloggers.jsx";
-import LandingAdvertisers from "./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx";
-import LandingBloggers from "./pages/templates/LandingBlogger/LandingBlogger.jsx";
-import Login from "./pages/templates/Login/Login.jsx";
-import ProductPage from "./pages/templates/ProductPage/ProductPage.jsx";
-import WithdrawSuccess from "./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx";
-import WithdrawUnsuccess from "./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx";
-import OryVerify from "./auth/verification.jsx";
-import OryRecovery from "./auth/recovery.jsx";
-import OryLogin from "./auth/login.jsx";
-import OryRegister from "./auth/registration.jsx";
+const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
+const AccountPreview = React.lazy(() => import("./pages/templates/AccountPreview/AccountPreview.jsx"))
+const ContactUs = React.lazy(() => import("./pages/templates/ContactUs/ContactUs.jsx"))
+const Dashboard = React.lazy(() => import("./pages/templates/Dashboard/Dashboard.jsx"))
+const DepositSuccess = React.lazy(() => import("./pages/templates/DepositSuccess/DepositSuccess.jsx"))
+const DepositUnsuccess = React.lazy(() => import("./pages/templates/DepositUsuccess/DepositUnsuccess.jsx"))
+const DepositWithdraw = React.lazy(() => import("./pages/templates/DepositWithdraw/DepositWithdraw.jsx"))
+const Error = React.lazy(() => import("./pages/templates/Error/Error.jsx"))
+const ExploreAdvertisers = React.lazy(() => import("./pages/templates/ExploreAdvertisers/ExploreAdvertisers.jsx"))
+const ExploreBloggers = React.lazy(() => import("./pages/templates/ExploreBloggers/ExploreBloggers.jsx"))
+const LandingAdvertisers = React.lazy(() => import("./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx"))
+const LandingBloggers = React.lazy(() => import("./pages/templates/LandingBlogger/LandingBlogger.jsx"))
+const Login = React.lazy(() => import("./pages/templates/Login/Login.jsx"))
+const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/ProductPage.jsx"))
+const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
+const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
+const OryVerify = React.lazy(() => import("./auth/verification.jsx"))
+const OryRecovery = React.lazy(() => import("./auth/recovery.jsx"))
+const OryLogin = React.lazy(() => import("./auth/login.jsx"))
+const OryRegister = React.lazy(() => import("./auth/registration.jsx"))
 
 function App() {
     // Get your Ory url from .env
@@ -39,29 +39,29 @@ function App() {
     return (
         <Router>
             <Routes>
-                 <Route path="/" element={<LandingBloggers/>} />
-                <Route path="/about" element={<AboutPage/>} />
-                <Route path="/account_preview" element={<AccountPreview/>} />
-                <Route path="/contact_us" element={<ContactUs/>} />
-                <Route path="/dashboard" element={<Dashboard/>} />                                    #ToDo Make dynamic
-                <Route path="/deposit_success" element={<DepositSuccess/>} />
-                <Route path="/deposit_unsuccess" element={<DepositUnsuccess/>} />
-                <Route path="/deposit" element={<DepositWithdraw/>} />
-                <Route path="/deposit_withdraw" element={<DepositWithdraw/>} />
-                <Route path="/withdraw" element={<DepositWithdraw/>} />
-                <Route path="/error" element={<Error/>} />
-                <Route path="/explore_advertisers" element={<ExploreAdvertisers/>} />
-                <Route path="/explore_bloggers" element={<ExploreBloggers/>} />
-                <Route path="/landing_advertisers" element={<LandingAdvertisers/>} />
-                <Route path="/landing_bloggers" element={<LandingBloggers/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/product_page" element={<ProductPage/>} />
-                <Route path="/withdraw_success" element={<WithdrawSuccess/>} />
-                <Route path="/withdraw_unsuccess" element={<WithdrawUnsuccess/>} />
-                <Route path="/ory_login" element={OryLogin(ory, basePath)} />
-                <Route path="/ory_register" element={OryRegister(ory, basePath)} />
-                <Route path="/ory_recovery" element={OryRecovery(ory,basePath)} />
-                <Route path="/ory_verify" element={OryVerify(ory, basePath)} />
+                <Route path="/" element={<React.Suspense fallback='Loading...'> <LandingBloggers/> </React.Suspense>}/>
+                <Route path="/about" element={<React.Suspense fallback='Loading...'> <AboutPage/> </React.Suspense>} />
+                <Route path="/account_preview" element={<React.Suspense fallback='Loading...'> <AccountPreview/> </React.Suspense>} />
+                <Route path="/contact_us" element={<React.Suspense fallback='Loading...'> <ContactUs/> </React.Suspense>} />
+                <Route path="/dashboard" element={<React.Suspense fallback='Loading...'> <Dashboard/> </React.Suspense>} />                                    #ToDo Make dynamic
+                <Route path="/deposit_success" element={<React.Suspense fallback='Loading...'> <DepositSuccess/> </React.Suspense>} />
+                <Route path="/deposit_unsuccess" element={<React.Suspense fallback='Loading...'> <DepositUnsuccess/> </React.Suspense>} />
+                <Route path="/deposit" element={<React.Suspense fallback='Loading...'> <DepositWithdraw/> </React.Suspense>} />
+                <Route path="/deposit_withdraw" element={<React.Suspense fallback='Loading...'> <DepositWithdraw/> </React.Suspense>} />
+                <Route path="/withdraw" element={<React.Suspense fallback='Loading...'> <DepositWithdraw/> </React.Suspense>} />
+                <Route path="/error" element={<React.Suspense fallback='Loading...'> <Error/> </React.Suspense>} />
+                <Route path="/explore_advertisers" element={<React.Suspense fallback='Loading...'> <ExploreAdvertisers/> </React.Suspense>} />
+                <Route path="/explore_bloggers" element={<React.Suspense fallback='Loading...'> <ExploreBloggers/> </React.Suspense>} />
+                <Route path="/landing_advertisers" element={<React.Suspense fallback='Loading...'> <LandingAdvertisers/> </React.Suspense>} />
+                <Route path="/landing_bloggers" element={<React.Suspense fallback='Loading...'> <LandingBloggers/> </React.Suspense>} />
+                <Route path="/login" element={<React.Suspense fallback='Loading...'> <Login/> </React.Suspense>} />
+                <Route path="/product_page" element={<React.Suspense fallback='Loading...'> <ProductPage/> </React.Suspense>} />
+                <Route path="/withdraw_success" element={<React.Suspense fallback='Loading...'> <WithdrawSuccess/> </React.Suspense>} />
+                <Route path="/withdraw_unsuccess" element={<React.Suspense fallback='Loading...'> <WithdrawUnsuccess/> </React.Suspense>} />
+                <Route path="/ory_login" element={<React.Suspense fallback='Loading...'> OryLogin(ory, basePath) </React.Suspense>} />
+                <Route path="/ory_register" element={<React.Suspense fallback='Loading...'> OryRegister(ory, basePath) </React.Suspense>} />
+                <Route path="/ory_recovery" element={<React.Suspense fallback='Loading...'> OryRecovery(ory,basePath) </React.Suspense>} />
+                <Route path="/ory_verify" element={<React.Suspense fallback='Loading...'> OryVerify(ory, basePath) </React.Suspense>} />
             </Routes>
         </Router>
     );
