@@ -18,10 +18,10 @@ const Login = React.lazy(() => import("./pages/templates/Login/Login.jsx"))
 const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/ProductPage.jsx"))
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
-const OryVerify = React.lazy(() => import("./auth/verification.jsx"))
-const OryRecovery = React.lazy(() => import("./auth/recovery.jsx"))
-const OryLogin = React.lazy(() => import("./auth/login.jsx"))
-const OryRegister = React.lazy(() => import("./auth/registration.jsx"))
+import OryVerify from "./auth/verification.jsx";
+import OryRecovery from "./auth/recovery.jsx";
+import OryLogin from "./auth/login.jsx";
+import OryRegister from "./auth/registration.jsx";
 
 function App() {
     // Get your Ory url from .env
@@ -58,10 +58,10 @@ function App() {
                 <Route path="/product_page" element={<React.Suspense fallback='Loading...'> <ProductPage/> </React.Suspense>} />
                 <Route path="/withdraw_success" element={<React.Suspense fallback='Loading...'> <WithdrawSuccess/> </React.Suspense>} />
                 <Route path="/withdraw_unsuccess" element={<React.Suspense fallback='Loading...'> <WithdrawUnsuccess/> </React.Suspense>} />
-                <Route path="/ory_login" element={<React.Suspense fallback='Loading...'> OryLogin(ory, basePath) </React.Suspense>} />
-                <Route path="/ory_register" element={<React.Suspense fallback='Loading...'> OryRegister(ory, basePath) </React.Suspense>} />
-                <Route path="/ory_recovery" element={<React.Suspense fallback='Loading...'> OryRecovery(ory,basePath) </React.Suspense>} />
-                <Route path="/ory_verify" element={<React.Suspense fallback='Loading...'> OryVerify(ory, basePath) </React.Suspense>} />
+                <Route path="/ory_login" element={OryLogin(ory, basePath)} />
+                <Route path="/ory_register" element={OryRegister(ory, basePath)} />
+                <Route path="/ory_recovery" element={OryRecovery(ory,basePath)} />
+                <Route path="/ory_verify" element={OryVerify(ory, basePath)} />
             </Routes>
         </Router>
     );
