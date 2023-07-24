@@ -520,6 +520,40 @@
   function Logout(){
     console.log("logout todo")
   }
+
+
+  function ParseResponse(jsonString) {
+
+  }
+
+  function GetOrders() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        ParseResponse(xhttp.responseText);
+      }
+    };
+
+    baseHeaders = ["Content-Type", "application/json;charset=UTF-8"];
+    xhttp.open("GET", "{{url}}/crm/api/v1/partners/{{guid}}/services", true);
+    xhttp.setRequestHeader(baseHeaders);
+    xhttp.send();
+  }
+  function CreateOrder() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        ParseResponse(xhttp.responseText);
+      }
+    };
+    baseHeaders = ["Content-Type", "application/json;charset=UTF-8"];
+    payload = {};
+    xhttp.open("POST", "{{url}}/crm/api/v1/services", true);
+    xhttp.setRequestHeader(baseHeaders);
+    xhttp.send(JSON.stringify(payload));
+
+
+  }
 </script>
 </body>
 </html>
