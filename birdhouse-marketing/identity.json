@@ -30,40 +30,29 @@
             }
           }
         },
-        "phone": {
-          "title": "Phone",
-          "type": "string",
-          "format": "tel",
-          "ory.sh/kratos": {
-            "credentials": {
-              "password": {
-                "identifier": true
-              }
-            }
-          }
-        },
-        "userType": {
-          "title": "Please select one",
-          "type": "object",
-          "properties": {
-            "isBlogger": {
-              "title": "I am blogger",
-              "type": "boolean"
-            },
-            "isAdvertiser": {
-              "title": "I am advertiser",
-              "type": "boolean"
-            }
-          }
+        "tos": {
+          "type": "boolean",
+          "title": "Accept Terms and Conditions"
         }
       },
       "required": [
         "username",
-        "phone",
         "email",
-        "userType"
+        "tos"
       ],
+
       "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "merchant_id": {
+          "type": "string"
+        },
+        "agent_id": {
+          "type":"string"
+        }
+      }
     }
   }
 }

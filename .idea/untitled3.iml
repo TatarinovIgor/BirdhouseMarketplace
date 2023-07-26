@@ -8,10 +8,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jquery.toast" level="application" />
     <orderEntry type="library" name="jquery-xss.toast" level="application" />
     <orderEntry type="library" name="clipboard" level="application" />
-    <orderEntry type="library" name="style" level="application" />
     <orderEntry type="library" name="jquery.toast" level="application" />
+    <orderEntry type="library" name="style" level="application" />
   </component>
 </module>
