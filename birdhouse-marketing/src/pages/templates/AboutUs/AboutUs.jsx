@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FrontendApi, Configuration, Session, Identity } from "@ory/client"
 
 const html_template = "<html lang=\"en\">\n" +
     "<head>\n" +
@@ -111,7 +112,24 @@ const html_template = "<html lang=\"en\">\n" +
     "</body>\n" +
     "</html>"
 const About = () => {
-    return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
+    fetch("http://127.0.0.1:4433/sessions/whoami", {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        }})
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.error.code !== 200) {
+                window.location.replace(`http://127.0.0.1:4455/login`)
+            } else if (data.active) {
+                return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
+            }
+        });
+
+
 };
 
 export default About;

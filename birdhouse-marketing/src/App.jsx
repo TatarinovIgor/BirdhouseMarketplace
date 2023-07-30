@@ -26,7 +26,9 @@ import OryRegister from "./auth/registration.jsx";
 function App() {
     // Get your Ory url from .env
     // Or localhost for local development
-    const basePath = "http://127.0.0.1:4455"
+    const basePath = "http://127.0.0.1:4433"
+    const uiPath = "http://127.0.0.1:4455"
+
     const ory = new FrontendApi(
         new Configuration({
             basePath,
@@ -58,10 +60,12 @@ function App() {
                 <Route path="/product_page" element={<React.Suspense fallback='Loading...'> <ProductPage/> </React.Suspense>} />
                 <Route path="/withdraw_success" element={<React.Suspense fallback='Loading...'> <WithdrawSuccess/> </React.Suspense>} />
                 <Route path="/withdraw_unsuccess" element={<React.Suspense fallback='Loading...'> <WithdrawUnsuccess/> </React.Suspense>} />
-                <Route path="/ory_login" element={OryLogin(ory, basePath)} />
-                <Route path="/ory_register" element={OryRegister(ory, basePath)} />
-                <Route path="/ory_recovery" element={OryRecovery(ory,basePath)} />
-                <Route path="/ory_verify" element={OryVerify(ory, basePath)} />
+
+
+                <Route path="/ory_login" element={OryLogin(ory, uiPath)} />
+                <Route path="/ory_register" element={OryRegister(ory, uiPath)} />
+                <Route path="/ory_recovery" element={OryRecovery(ory,uiPath)} />
+                <Route path="/ory_verify" element={OryVerify(ory, uiPath)} />
             </Routes>
         </Router>
     );
