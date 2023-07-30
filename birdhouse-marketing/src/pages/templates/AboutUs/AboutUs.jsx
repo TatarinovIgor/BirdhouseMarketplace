@@ -122,14 +122,12 @@ const About = () => {
         .then((response) => response.json())
         .then((data) => {
             console.log(data)
-            if (data.error.code !== 200) {
+            if (data.error) {
                 window.location.replace(`http://127.0.0.1:4455/login`)
-            } else if (data.active) {
-                return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
             }
         });
 
-
+    return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
 };
 
 export default About;
