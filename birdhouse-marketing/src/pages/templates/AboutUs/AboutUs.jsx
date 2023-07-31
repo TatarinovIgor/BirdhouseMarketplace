@@ -112,21 +112,6 @@ const html_template = "<html lang=\"en\">\n" +
     "</body>\n" +
     "</html>"
 const About = () => {
-    fetch("http://127.0.0.1:4433/sessions/whoami", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        }})
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            if (data.error) {
-                window.location.replace(`http://127.0.0.1:4455/login`)
-            }
-        });
-
     return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
 };
 
