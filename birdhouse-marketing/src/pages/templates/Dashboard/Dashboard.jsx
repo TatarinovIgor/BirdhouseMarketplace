@@ -1,548 +1,11063 @@
 import React, { useEffect, useState } from 'react';
-
-const html_template = "<html lang=\"en\" class=\"wf-barlow-n5-active wf-barlow-n7-active wf-lato-n4-active wf-montserratalternates-n8-active wf-poppins-n4-active wf-poppins-n5-active wf-poppins-n6-active wf-poppins-n7-active wf-poppins-i8-active wf-poppins-i4-active wf-active\" style=\"height: 100%; --color_primary_default: rgba(2, 5, 211, 1); --color_primary_default_rgb: 2,5,211; --color_primary_contrast_default: rgba(255, 255, 255, 1); --color_primary_contrast_default_rgb: 255,255,255; --color_text_default: rgba(9, 23, 71, 1); --color_text_default_rgb: 9,23,71; --color_surface_default: rgba(255, 255, 255, 1); --color_surface_default_rgb: 255,255,255; --color_background_default: rgba(255, 255, 255, 0); --color_background_default_rgb: 255,255,255; --color_destructive_default: rgba(255, 0, 0, 1); --color_destructive_default_rgb: 255,0,0; --color_success_default: rgba(23, 219, 78, 1); --color_success_default_rgb: 23,219,78; --color_alert_default: rgba(250, 181, 21, 1); --color_alert_default_rgb: 250,181,21; --font_default: &quot;Lato&quot;;\">\n" +
-    "<head>\n" +
-    "  <meta charset=\"utf-8\">\n" +
-    "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n" +
-    "  <title>Dashboard</title>\n" +
-    "  <meta name=\"referrer\" content=\"origin\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Barlow:500%7CBarlow:700%7CLato%7CLato:regular%7CLato:regular%7CMontserrat+Alternates:800%7CPoppins:regular%7CPoppins:500%7CPoppins:600%7CPoppins:700%7CPoppins:800italic%7CPoppins:italic%7CPoppins:regular\">\n" +
-    "  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://birdhouse-styles.s3.amazonaws.com/style.css\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://d2tf8y1b8kxrzw.cloudfront.net/serve_files/airalert/jquery.toast.min.css\">\n" +
-    "</head>\n" +
-    "<body style=\"height: 100%; display: flex; flex-direction: column;\" data-new-gr-c-s-check-loaded=\"14.1114.0\" data-gr-ext-installed=\"\">\n" +
-    "<div class=\"main-page bubble-element Page bubble-r-container flex column\" style=\"width: 100%; margin-right: auto; margin-left: auto; position: relative; z-index: 1; min-height: max(0px, 100%); height: max-content; flex-shrink: 0; justify-content: flex-start; opacity: 1; background: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648042133128x973166173247376600%2FGroup%25201000000957%2520%25281%2529.png?w=1536&amp;h=&amp;auto=compress&amp;dpr=2&amp;fit=max&quot;) center top / cover repeat-y rgba(255, 255, 255, 0);\">\n" +
-    "\n" +
-    "  <!-- Header -->\n" +
-    "  <div class=\"bubble-element CustomElement bubble-r-container flex row\" id=\"header\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 1; min-height: 80px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center; overflow: visible; background-color: rgb(255, 255, 255); border-radius: 0px; box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 25px 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 15; align-self: center; min-width: 300px; max-width: 1180px; order: 3; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px; justify-content: space-between; overflow: visible; background-color: rgb(255, 255, 255); border-radius: 0px; opacity: 1;\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 2; align-self: center; min-width: 82px; max-width: 82px; order: 1; min-height: 28px; width: 82px; flex-grow: 1; height: max-content; margin: 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\" onclick=\"location.href='landing_advertisers'\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"align-self: flex-start; min-width: 74px; max-width: 74px; order: 1; min-height: 21px; width: 74px; flex-grow: 1; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: &quot;Montserrat Alternates&quot;; font-size: 40px; font-weight: 800; color: rgb(3, 180, 198); letter-spacing: -5px; line-height: 1.5; border-radius: 0px; opacity: 1;\"><font color=\"#00ffff\">B</font><font color=\"#000000\">H</font></div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 394px; order: 2; min-height: 40px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 10px; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 10px; padding: 0px 10px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; place-self: center start; min-width: 25px; max-width: 25px; min-height: 23px; max-height: 23px; width: 25px; height: 23px; margin: 0px 14px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387433266x621007601971848000/search.svg&quot;);\"></div>\n" +
-    "        <input type=\"input\" class=\"bubble-element Input\" placeholder=\"Search ads, usernames, categories\" maxlength=\"\" style=\"z-index: 3; place-self: center end; min-width: 0px; max-width: 337px; min-height: 40px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px; border: none; background-color: transparent; border-radius: 0px; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 4; place-self: center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\" ></div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='explore_bloggers'\">Bloggers</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='explore_advertisers'\">Advertisers</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='dashboard#create'\">Create</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='about'\">About us</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 3; align-self: flex-start; min-width: 83px; order: 6; min-height: 0px; width: 83px; flex-grow: 1; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\">Contact us</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed clickable-element\" style=\"z-index: 4; align-self: center; min-width: 40px; max-width: 40px; order: 4; min-height: 40px; max-height: 40px; width: 40px; flex-grow: 1; height: 40px; margin: 0px; overflow: visible; border-radius: 100px; padding: 0px; opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg&quot;);\" onclick=\"location.href='dashboard'\" ></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"visibility: hidden; z-index: 4; align-self: center; min-width: 83px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; display: none;\"></div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\"><p id=\"UserBalance\"></p> </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"visibility: hidden; z-index: 7; align-self: center; min-width: 0px; order: 4; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; display: none; justify-content: space-between;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 4; align-self: center; min-width: 25px; max-width: 25px; order: 1; min-height: 23px; max-height: 23px; width: 25px; flex-grow: 1; height: 23px; margin: 0px 14px 0px 0px;\"></div>\n" +
-    "        <div class=\"bubble-element Image\" style=\"z-index: 6; align-self: center; min-width: 18px; max-width: 18px; order: 2; min-height: 14px; max-height: 14px; width: 18px; flex-grow: 1; height: 14px; margin: 0px;\"></div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <!-- Content -->\n" +
-    "  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: center; min-width: 320px; max-width: 1200px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 100px 0px 0px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "    <!-- Left Panel -->\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; max-width: 230px; order: 2; min-height: 400px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\" id=\"position-sticky\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 1; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; background-color: rgb(255, 255, 255); border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 0px; opacity: 1; cursor: pointer;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657003567373x578777759303418900%2Fweb.png?w=32&amp;h=32&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection1()\">Created orders</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 2; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657003561152x702908939978423800%2Fcollection.png?w=32&amp;h=32&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection2()\">Accepted orders</div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"visibility: hidden; z-index: 26; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 10px; justify-content: flex-start; overflow: visible;\">\n" +
-    "          <div class=\"bubble-element progressbar-ProgressBar\" style=\"z-index: 4; align-self: flex-start; min-width: 300px; max-width: 300px; order: 1; min-height: 25px; max-height: 25px; width: 300px; flex-grow: 1; height: 25px; margin: 0px;\">\n" +
-    "            <div class=\"inner-progressbar\" style=\"background-color: rgb(127, 149, 235); line-height: 25px; transition: width 0.3s ease 0s; width: 0%;\">\n" +
-    "              <div class=\"progressbar-label\" style=\"clip-path: inset(0px); padding: inherit; transition: width 0.3s ease 0s, clip-path 0.3s ease 0s; width: 300px;\">0%</div>\n" +
-    "              <div class=\"progressbar-label-overlay\" style=\"clip-path: inset(0px 300px 0px 0px); padding: inherit; transition: width 0.3s ease 0s, clip-path 0.3s ease 0s; width: 300px;\">0%</div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap;\"></div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 8; align-self: flex-start; min-width: 0px; order: 3; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657779343897x414356299746209150%2Fcheckmark-png-25959.png?w=32&amp;h=32&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection3()\">Assigned orders</div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"visibility: hidden; z-index: 26; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 10px; justify-content: flex-start; overflow: visible;\">\n" +
-    "          <div class=\"bubble-element progressbar-ProgressBar\" style=\"z-index: 4; align-self: flex-start; min-width: 300px; max-width: 300px; order: 1; min-height: 25px; max-height: 25px; width: 300px; flex-grow: 1; height: 25px; margin: 0px;\">\n" +
-    "            <div class=\"inner-progressbar\" style=\"background-color: rgb(127, 149, 235); line-height: 25px; transition: width 0.3s ease 0s; width: 0%;\">\n" +
-    "              <div class=\"progressbar-label\" style=\"clip-path: inset(0px); padding: inherit; transition: width 0.3s ease 0s, clip-path 0.3s ease 0s; width: 300px;\">0%</div>\n" +
-    "              <div class=\"progressbar-label-overlay\" style=\"clip-path: inset(0px 300px 0px 0px); padding: inherit; transition: width 0.3s ease 0s, clip-path 0.3s ease 0s; width: 300px;\">0%</div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap;\"></div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 4; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 20px; opacity: 1; cursor: pointer; transition: background 200ms linear 0s;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1646656909311x277336483683550800/edit.svg&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection4()\">Create order</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 5; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 20px; opacity: 1; cursor: pointer; transition: background 200ms linear 0s;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1646656633061x297849365330265150/user.svg&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection5()\">Profile</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 10; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 20px; opacity: 1; cursor: pointer; transition: background 200ms linear 0s;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470078185x821974678684926200/Settings.svg&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"SetSection6()\">Settings</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 230px; max-width: 230px; order: 11; min-height: 60px; height: max-content; flex-grow: 0; flex-shrink: 0; width: 230px; margin: 60px 0px 0px; justify-content: flex-start; overflow: visible; border-radius: 20px; opacity: 1; cursor: pointer; transition: background 200ms linear 0s;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 20px; max-width: 20px; order: 1; min-height: 20px; max-height: 20px; width: 20px; flex-grow: 1; height: 20px; margin: 0px 0px 0px 20px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1646657123576x984020082182149600%2Flogout.png?w=24&amp;h=24&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;);\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\" onclick=\"Logout()\">Log out</div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "    <!-- Elements -->\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; max-width: 900px; order: 5; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 20px 0px 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"visibility: hidden; z-index: 8; align-self: flex-start; min-width: 300px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; display: none; justify-content: flex-start;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 30px;\"></div>\n" +
-    "        <div class=\"bubble-element RepeatingGroup\" style=\"z-index: 15; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px;\"></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 16; align-self: flex-start; min-width: 0px; order: 4; min-height: 1px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px;\"></div>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <!-- Enabled Section 1 -->\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" id=\"section-1\" style=\"z-index: 2; align-self: flex-start; min-width: 300px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 30px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\" onclick=\"SetSection1\">Created orders</div>\n" +
-    "        <div class=\"bubble-element RepeatingGroup bubble-rg\" style=\"z-index: 15; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; gap: 20px; grid-auto-rows: minmax(max-content, 280px); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-auto-flow: row; overflow: auto; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-1\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left-style: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative clickable-element\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px; overflow: visible; border-radius: 20px; opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1688368811224x263609441702520770%2F14f6944b242eef8884e860f46c01a291.png?w=384&amp;h=357&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;);\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start; overflow: visible; background: -webkit-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgb(33, 33, 33) 100%); border-radius: 20px; padding: 15px 12px; opacity: 1;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.77); line-height: 1; border-radius: 0px; opacity: 1; word-break: break-word;\">IgorTatarinov</div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.77); line-height: 1; border-radius: 0px; opacity: 1;\">Lifestyle</div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.77); text-align: right; line-height: 1; border-radius: 0px; opacity: 1;\">Price</div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 600; color: rgb(255, 255, 255); line-height: 1; border-radius: 0px; opacity: 1;\">Costa Coffe</div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\">\n" +
-    "                      <img alt=\"\" style=\"border-radius: 0px; position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; object-fit: contain;\" src=\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\">\n" +
-    "                      <div style=\"position: relative; padding-top: 100%;\"></div>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 600; color: rgb(255, 255, 255); text-align: right; line-height: 1; border-radius: 0px; opacity: 1;\">0</div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "                <div class=\"bubble-element Image clickable-element\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1; cursor: pointer;\">\n" +
-    "                  <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470239115x593164468864627600/Frame%2010.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "                  <div style=\"position: relative; padding-top: 100%;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Image clickable-element\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px; border-radius: 0px; opacity: 1; cursor: pointer;\">\n" +
-    "                  <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470245189x925024197092840600/Frame%207.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "                  <div style=\"position: relative; padding-top: 100%;\"></div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-2\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-3\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-4\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-5\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-6\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-7\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-8\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-9\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-10\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\">\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                </div>\n" +
-    "                <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\">\n" +
-    "                  <div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\">\n" +
-    "                    <div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                    <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div>\n" +
-    "                  </div>\n" +
-    "                </div>\n" +
-    "              </div>\n" +
-    "              <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\">\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 17; align-self: flex-start; min-width: 36px; max-width: 36px; order: 1; width: 36px; flex-grow: 1; height: max-content; margin: 0px;\"></div>\n" +
-    "                <div class=\"bubble-element Image\" style=\"z-index: 18; align-self: flex-start; min-width: 36px; max-width: 36px; order: 2; width: 36px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div>\n" +
-    "              </div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 16; align-self: flex-start; min-width: 0px; order: 5; min-height: 1px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(0, 0, 0); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">No orders founded.</div>\n" +
-    "      </div>\n" +
-    "\n" +
-    "      <!-- Enabled Section 2 -->\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" id=\"section-2\" style=\"z-index: 7; align-self: flex-start; min-width: 300px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 30px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Accepted orders</div><div class=\"bubble-element RepeatingGroup bubble-rg\" style=\"z-index: 15; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; gap: 20px; grid-auto-rows: minmax(max-content, 280px); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-auto-flow: row; overflow: auto; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-1\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-2\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-3\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-4\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-5\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-6\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-7\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-8\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-9\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-10\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div></div><div class=\"bubble-element Text\" style=\"z-index: 16; align-self: flex-start; min-width: 0px; order: 4; min-height: 1px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(0, 0, 0); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">No orders founded.</div></div>\n" +
-    "\n" +
-    "      <!-- Enabled Section 3 -->\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" id=\"section-3\" style=\"z-index: 8; align-self: flex-start; min-width: 300px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 30px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\" >Assinged orders</div><div class=\"bubble-element RepeatingGroup bubble-rg\" style=\"z-index: 15; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; gap: 20px; grid-auto-rows: minmax(max-content, 280px); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); grid-auto-flow: row; overflow: auto; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-1\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-2\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-3\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top-style: none; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-4\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-5\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-6\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-7\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-8\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-9\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left: 20px solid rgba(150, 150, 150, 0); margin-left: -20px; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex column group-item entry-10\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 280px; border-top: 20px solid rgba(150, 150, 150, 0); margin-top: -20px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 2; align-self: center; min-width: 280px; max-width: 280px; order: 1; min-height: 0px; height: 0px; flex-grow: 1; width: 280px; margin: 0px 0px 20px;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 16; place-self: end center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: flex-end; min-width: 0px; order: 1; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 10px 0px 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 80px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: flex-end; min-width: 0px; order: 2; min-height: 17px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-end;\"><div class=\"bubble-element Image\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 24px; order: 1; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px;\"></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 19; place-self: start end; min-width: 0px; min-height: 0px; width: max-content; height: max-content; margin: 10px 10px 0px 0px; justify-content: flex-start;\"><button class=\"bubble-element Button\" style=\"z-index: 25; align-self: flex-start; min-width: 100px; max-width: 140px; order: 28; min-height: 35px; width: 100px; flex-grow: 1; height: max-content; margin: 0px;\"></button></div></div></div></div><div class=\"bubble-element Text\" style=\"z-index: 16; align-self: flex-start; min-width: 0px; order: 4; min-height: 1px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(0, 0, 0); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">No orders founded.</div></div>\n" +
-    "\n" +
-    "      <!-- Enabled Section 4 -->\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" id=\"section-4\" style=\"z-index: 3; align-self: flex-start; min-width: 300px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; max-width: 580px; order: 27; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 50px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Create Ad</div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Insert order preview picture <font color=\"#ff0000\">*</font></div><div class=\"bubble-element Text\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 15px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); line-height: 1; border-radius: 0px; opacity: 1;\">File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB</div><div class=\"bubble-element PictureInput clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; max-width: 280px; order: 4; min-height: 280px; height: 280px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border-style: solid; border-width: 2px; border-color: rgb(237, 237, 237); border-radius: 20px; opacity: 1;\"><img src=\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\" style=\"width: 100%; height: 100%; z-index: 5; position: absolute; object-fit: contain; opacity: 0;\"><button class=\"button_for_file_uploader\" style=\"border: none; background-color: rgba(255, 255, 255, 0); z-index: 4; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; cursor: pointer; opacity: 1; font-family: Barlow; font-size: 14px; font-weight: 500; color: rgb(58, 77, 143); text-align: center; background-repeat: no-repeat; background-position: center center; background-size: cover; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648463175515x503048959543825900%2FGroup%25201000000914.png?w=384&amp;h=&amp;auto=compress&amp;dpr=1&amp;fit=max&quot;);\"></button><input type=\"file\" accept=\"image/*\" style=\"opacity: 0; position: absolute; z-index: 15; left: 0px; width: 100%; height: 100%; font-size: 0px; cursor: pointer;\"></div><div class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Order Title <font color=\"#ff0000\">*</font></div><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Set the name of Ad\" maxlength=\"\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; order: 6; min-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 8; align-self: flex-start; min-width: 0px; order: 7; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Your refferal link or code (only for online businesses)</div><div class=\"bubble-element Text\" style=\"z-index: 9; align-self: flex-start; min-width: 0px; max-width: 580px; order: 8; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); line-height: 1.5; border-radius: 0px; opacity: 1;\">We will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.</div><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Type here...\" maxlength=\"\" style=\"z-index: 10; align-self: flex-start; min-width: 0px; order: 9; min-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 11; align-self: flex-start; min-width: 0px; order: 10; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Description</div><div class=\"bubble-element Text\" style=\"z-index: 11; align-self: flex-start; min-width: 0px; order: 11; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); line-height: 1.5; border-radius: 0px; opacity: 1;\">The description will be included on the item's detail page underneath its image.</div><textarea class=\"bubble-element MultiLineInput a1689834994986x14741\" data-gramm_editor=\"false\" maxlength=\"\" placeholder=\"Provide a detailed description of your item.\" style=\"z-index: 12; align-self: flex-start; min-width: 0px; order: 12; min-height: 150px; height: 150px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1.5; padding: 15px 18px; opacity: 1;\"></textarea><div class=\"bubble-element Text\" style=\"z-index: 23; align-self: flex-start; min-width: 0px; order: 13; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">I am looking for: <font color=\"#ff0000\">*</font></div><select class=\"bubble-element Dropdown\" style=\"z-index: 22; align-self: flex-start; min-width: 0px; order: 14; min-height: 49px; height: 49px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; display: block; border: 1px solid rgb(237, 237, 237); background-color: transparent; color: rgb(153, 153, 153); font-family: Poppins; font-size: 14px; font-weight: 500; border-radius: 15px; letter-spacing: 0.3px; padding: 0px 15px 0px 5px; opacity: 1;\"><option class=\"dropdown-choice dropdown-placeholder\" value=\"&quot;PLACEHOLDER_1427118222253&quot;\" style=\"color: rgb(0, 0, 0); display: none;\">Choose an option...</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655914521354x993542613203760600&quot;\" style=\"color: rgb(0, 0, 0);\">Blogger</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655914531378x292482317519252160&quot;\" style=\"color: rgb(0, 0, 0);\">Advertiser</option></select><div class=\"bubble-element Text\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; order: 17; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Categories <font color=\"#ff0000\">*</font></div><select class=\"bubble-element Dropdown\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; order: 18; min-height: 49px; height: 49px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; display: block; border: 1px solid rgb(237, 237, 237); background-color: transparent; color: rgb(153, 153, 153); font-family: Poppins; font-size: 14px; font-weight: 500; border-radius: 15px; letter-spacing: 0.3px; padding: 0px 15px 0px 5px; opacity: 1;\"><option class=\"dropdown-choice dropdown-placeholder\" value=\"&quot;PLACEHOLDER_1427118222253&quot;\" style=\"color: rgb(0, 0, 0); display: none;\">Choose an option...</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915048958x774413879836322000&quot;\" style=\"color: rgb(0, 0, 0);\">Fashion</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915103865x604125479111830300&quot;\" style=\"color: rgb(0, 0, 0);\">Lifestyle</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915114633x686655037183082900&quot;\" style=\"color: rgb(0, 0, 0);\">Beauty</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915125148x581360832021081500&quot;\" style=\"color: rgb(0, 0, 0);\">Music</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915152856x133988939524297700&quot;\" style=\"color: rgb(0, 0, 0);\">Crypto</option><option class=\"dropdown-choice\" value=\"&quot;1348695171700984260__LOOKUP__1655915161895x165208841614873820&quot;\" style=\"color: rgb(0, 0, 0);\">Other</option></select><div class=\"bubble-element Text\" style=\"z-index: 13; align-self: flex-start; min-width: 0px; order: 19; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Currency</div><div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 14; align-self: flex-start; min-width: 0px; order: 20; min-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; justify-content: space-between; overflow: visible; background-color: rgba(255, 255, 255, 0.7); border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 15px; opacity: 1; cursor: pointer;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 1; min-height: 30px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: center; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px; overflow: visible; background-color: rgba(255, 255, 255, 0); border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 20px; padding: 0px; opacity: 1; background-image: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657633985492x211575392420328060%2F25228.png?w=32&amp;h=32&amp;auto=compress&amp;fit=crop&amp;dpr=2&quot;); background-size: cover; background-repeat: no-repeat; background-attachment: initial; background-origin: initial; background-clip: initial;\"></div><div class=\"bubble-element Text\" style=\"z-index: 3; align-self: center; min-width: 158px; order: 2; min-height: 0px; max-height: 30px; width: 158px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(123, 123, 123); letter-spacing: 1px; line-height: 1.5; border-radius: 0px; opacity: 1;\"><div>USD</div></div></div><div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: center; min-width: 24px; max-width: 24px; order: 2; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647516484530x217959983199276220/Carret%20Down.svg&quot;);\"></div></div><div class=\"bubble-element Text\" style=\"z-index: 15; align-self: flex-start; min-width: 0px; order: 21; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Price <font color=\"#ff0000\">*</font></div><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" style=\"z-index: 16; align-self: flex-start; min-width: 0px; order: 22; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\" placeholder=\"Type here...\" inputmode=\"text\"><button class=\"bubble-element Button clickable-element\" style=\"z-index: 20; align-self: flex-start; min-width: 0px; max-width: 140px; order: 23; min-height: 46px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; padding: 0px; cursor: pointer; background: linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%); border: none; text-align: center; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(255, 255, 255); letter-spacing: 1px; line-height: 1; border-radius: 5px; opacity: 1; transition: background 200ms ease 0s;\">Create</button></div></div>\n" +
-    "\n" +
-    "      <!-- Enabled Section 5 -->\n" +
-    "      <div id=\"section-5\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 4; align-self: flex-start; min-width: 320px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 50px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(0, 0, 0); line-height: 1.5; border-radius: 0px; opacity: 1;\">Profile Settings</div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 31; align-self: center; min-width: 320px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 29; align-self: flex-start; min-width: 300px; max-width: 380px; order: 1; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 21; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Username <font color=\"#ff0000\">*</font></div><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Username\" maxlength=\"\" style=\"z-index: 21; align-self: flex-start; min-width: 0px; order: 3; min-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 21; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Bio</div><textarea class=\"bubble-element MultiLineInput a1689834994986x14741\" data-gramm_editor=\"false\" maxlength=\"\" placeholder=\"Tell the world your story!\" style=\"z-index: 21; align-self: flex-start; min-width: 0px; max-width: 380px; order: 5; min-height: 100px; height: 100px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1.5; padding: 15px 18px; opacity: 1;\"></textarea><div class=\"bubble-element Text\" style=\"z-index: 32; align-self: flex-start; min-width: 0px; order: 6; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Email Address <font color=\"#ff0000\">*</font></div><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Email\" maxlength=\"\" disabled=\"\" style=\"z-index: 32; align-self: flex-start; min-width: 0px; order: 7; min-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border: 1px solid rgb(238, 238, 238); background-color: rgb(235, 235, 235); border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; order: 8; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Social media or product links</div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 30; align-self: flex-start; min-width: 0px; order: 9; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 15px; opacity: 1;\"><input type=\"input\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Enter link\" maxlength=\"\" style=\"z-index: 28; align-self: flex-start; min-width: 0px; order: 1; min-height: 50px; width: 0px; flex-grow: 1; height: 50px; margin: 0px; border: none; background-color: transparent; border-radius: 0px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element CustomElement bubble-r-container flex row clickable-element\" style=\"z-index: 29; align-self: center; min-width: 0px; max-width: 48px; order: 2; min-height: 24px; max-height: 24px; width: 0px; flex-grow: 1; height: 24px; margin: 0px 5px 0px 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\"><div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 6; align-self: flex-start; min-width: 24px; max-width: 24px; order: 1; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647536585250x463795952349799200/Property%3Dfilled%2C%20Network%3Dgoogle.svg&quot;);\"></div><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 6; align-self: flex-start; min-width: 24px; order: 2; min-height: 24px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1644856829814x920083039750816600/Carret%20Down.svg&quot;);\"></div></div></div><div class=\"bubble-element RepeatingGroup bubble-rg\" style=\"z-index: 23; align-self: flex-start; min-width: 0px; order: 11; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 30px; gap: 0px; grid-auto-rows: minmax(max-content, 0px); grid-template-columns: repeat(1, minmax(0px, 1fr)); grid-auto-flow: row; overflow: auto; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 15px; opacity: 1;\"><div class=\"bubble-element GroupItem bubble-r-container flex row group-item entry-1\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 0px; border-top-style: none; border-left-style: none;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 13px; opacity: 1;\"><div class=\"bubble-element Image\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 24px; order: 2; width: 0px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\"><img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647536889240x427907597683149250/website.svg\" style=\"border-radius: 0px; position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; object-fit: contain;\"><div style=\"position: relative; padding-top: 100%;\"></div></div><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 3; min-height: 32px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px; white-space: pre-wrap; overflow: visible; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; padding: 5px 1px; border-radius: 0px; opacity: 1; word-break: break-word;\">birdhouse.technology</div><div class=\"bubble-element Group bubble-r-container relative clickable-element\" style=\"z-index: 4; align-self: center; min-width: 24px; max-width: 24px; order: 4; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px; overflow: visible; background-color: rgb(255, 255, 255); border-radius: 0px; opacity: 1; cursor: pointer;\"><div class=\"bubble-element HTML\" style=\"z-index: 2; place-self: center; min-width: 24px; min-height: 24px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px; border-radius: 0px; opacity: 1;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
-    "        <path d=\"M16.7437 8.49378C17.0854 8.15206 17.0854 7.59802 16.7437 7.25629C16.402 6.91457 15.8479 6.91457 15.5062 7.25629L12 10.7625L8.49379 7.25629C8.15207 6.91457 7.59803 6.91457 7.2563 7.25629C6.91458 7.59802 6.91458 8.15206 7.2563 8.49378L10.7625 12L7.25629 15.5062C6.91457 15.8479 6.91457 16.402 7.25629 16.7437C7.59801 17.0854 8.15206 17.0854 8.49378 16.7437L12 13.2375L15.5062 16.7437C15.8479 17.0854 16.402 17.0854 16.7437 16.7437C17.0854 16.402 17.0854 15.8479 16.7437 15.5062L13.2375 12L16.7437 8.49378Z\" fill=\"#212121\"></path>\n" +
-    "      </svg>\n" +
-    "      </div></div></div></div><div class=\"bubble-element GroupItem bubble-r-container flex row group-item entry-2\" style=\"justify-content: flex-start; box-sizing: content-box; min-height: 0px; border-top: 0px none rgba(238, 238, 238, 0.5); margin-top: 0px; border-left-style: none; display: none;\"><div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; width: 0px; flex-grow: 1; height: max-content; margin: 0px; justify-content: flex-start;\"><div class=\"bubble-element Image\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 24px; order: 2; width: 0px; flex-grow: 1; height: max-content; margin: 0px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 2; align-self: center; min-width: 0px; order: 3; min-height: 32px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 0px 0px 10px;\"></div><div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 4; align-self: center; min-width: 24px; max-width: 24px; order: 4; min-height: 24px; max-height: 24px; width: 24px; flex-grow: 1; height: 24px; margin: 0px;\"><div class=\"bubble-element HTML\" style=\"z-index: 2; place-self: center; min-width: 24px; min-height: 24px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px;\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
-    "        <path d=\"M16.7437 8.49378C17.0854 8.15206 17.0854 7.59802 16.7437 7.25629C16.402 6.91457 15.8479 6.91457 15.5062 7.25629L12 10.7625L8.49379 7.25629C8.15207 6.91457 7.59803 6.91457 7.2563 7.25629C6.91458 7.59802 6.91458 8.15206 7.2563 8.49378L10.7625 12L7.25629 15.5062C6.91457 15.8479 6.91457 16.402 7.25629 16.7437C7.59801 17.0854 8.15206 17.0854 8.49378 16.7437L12 13.2375L15.5062 16.7437C15.8479 17.0854 16.402 17.0854 16.7437 16.7437C17.0854 16.402 17.0854 15.8479 16.7437 15.5062L13.2375 12L16.7437 8.49378Z\" fill=\"#212121\"></path>\n" +
-    "      </svg>\n" +
-    "      </div></div></div></div></div></div><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 30; align-self: flex-start; min-width: 300px; max-width: 500px; order: 2; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 33; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Profile Image</div><div class=\"bubble-element PictureInput clickable-element\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; max-width: 150px; order: 2; min-height: 150px; height: 150px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border-style: dotted; border-width: 1px; border-color: rgb(237, 237, 237); border-radius: 20px; opacity: 1;\"><img src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg\" style=\"width: 100%; height: 100%; z-index: 5; position: absolute; object-fit: contain; opacity: 1;\"><button class=\"button_for_file_uploader\" style=\"border: none; background-color: rgba(255, 255, 255, 0.63); z-index: 4; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; padding: 0px; cursor: pointer; opacity: 0; font-family: Barlow; font-size: 14px; font-weight: 500; color: rgb(58, 77, 143); text-align: center;\"></button><input type=\"file\" accept=\"image/*\" title=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg\" style=\"opacity: 0; position: absolute; z-index: 15; left: 0px; width: 100%; height: 100%; font-size: 0px; cursor: pointer;\"></div><div class=\"bubble-element Text\" style=\"z-index: 34; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Profile Banner</div><div class=\"bubble-element Text\" style=\"z-index: 24; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); line-height: 1.5; border-radius: 0px; opacity: 1;\">Recomendable size is 1440 x 250.</div><div class=\"bubble-element PictureInput clickable-element\" style=\"z-index: 34; align-self: flex-start; min-width: 0px; order: 22; min-height: 85px; height: 85px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px; border-style: solid; border-width: 1px; border-color: rgb(237, 237, 237); border-radius: 20px; opacity: 1;\"><img src=\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\" style=\"width: 100%; height: 100%; z-index: 5; position: absolute; object-fit: contain; opacity: 0;\"><button class=\"button_for_file_uploader\" style=\"border: none; background-color: rgba(255, 255, 255, 0.63); z-index: 4; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; padding: 0px; cursor: pointer; opacity: 1; font-family: Barlow; font-size: 14px; font-weight: 500; color: rgb(58, 77, 143); text-align: center; background-repeat: no-repeat; background-position: center center; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647546632984x709636644989855000/Group%201000000914%20%281%29.svg&quot;);\"></button><input type=\"file\" accept=\"image/*\" style=\"opacity: 0; position: absolute; z-index: 15; left: 0px; width: 100%; height: 100%; font-size: 0px; cursor: pointer;\"></div></div></div><button class=\"bubble-element Button clickable-element\" style=\"z-index: 27; align-self: flex-start; min-width: 120px; max-width: 120px; order: 3; min-height: 50px; height: max-content; flex-grow: 0; flex-shrink: 0; width: 120px; margin: 0px 0px 0px 10px; padding: 0px; cursor: pointer; background: linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%); border: none; text-align: center; font-family: Poppins; font-size: 16px; font-weight: 500; color: rgb(255, 255, 255); letter-spacing: 1px; line-height: 1; border-radius: 5px; opacity: 1; transition: background 200ms ease 0s;\">Update</button></div>\n" +
-    "      </div>\n" +
-    "      <!-- Enabled Section 6 -->\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" id=\"section-6\" style=\"z-index: 5; align-self: flex-start; min-width: 300px; order: 6; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 0px 10px; justify-content: flex-start; overflow: visible; border-radius: 0px; padding: 0px 0px 100px; opacity: 1;\"><h2 class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 50px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 28px; font-weight: 600; color: rgb(5, 5, 5); line-height: 1.5; border-radius: 0px; opacity: 1;\">Settings</h2><div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 39; align-self: flex-start; min-width: 0px; max-width: 580px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\"><div class=\"bubble-element Text\" style=\"z-index: 30; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">Password</div><input type=\"password\" autocomplete=\"new-password\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\" Password\" maxlength=\"\" style=\"z-index: 30; align-self: flex-start; min-width: 0px; order: 2; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"visibility: hidden; z-index: 33; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; display: none; justify-content: flex-start;\"><div class=\"bubble-element Text\" style=\"z-index: 29; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px;\"></div><input type=\"password\" autocomplete=\"new-password\" class=\"bubble-element Input\" style=\"z-index: 29; align-self: flex-start; min-width: 0px; order: 2; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px 0px 30px;\"><div class=\"bubble-element Text\" style=\"z-index: 29; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px;\"></div><input type=\"password\" autocomplete=\"new-password\" class=\"bubble-element Input\" style=\"z-index: 29; align-self: flex-start; min-width: 0px; order: 4; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px;\"></div><div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 38; align-self: flex-end; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 10px 0px 40px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer;\">change pasword</div><div class=\"bubble-element Text\" style=\"z-index: 36; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 600; color: rgb(33, 33, 33); letter-spacing: 0.2px; line-height: 1.6; border-radius: 0px; opacity: 1;\">Email</div><input type=\"email\" class=\"bubble-element Input a1689834994986x14741\" placeholder=\"Email\" maxlength=\"\" style=\"z-index: 29; align-self: flex-start; min-width: 0px; order: 6; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px; border: 1px solid rgb(238, 238, 238); background-color: transparent; border-radius: 15px; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); padding: 0px 15px; opacity: 1;\"><div class=\"bubble-element Group bubble-r-container flex column\" style=\"visibility: hidden; z-index: 37; align-self: flex-start; min-width: 0px; order: 7; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; display: none; justify-content: flex-start;\"><div class=\"bubble-element Text\" style=\"z-index: 36; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 10px;\"></div><input type=\"password\" autocomplete=\"new-password\" class=\"bubble-element Input\" style=\"z-index: 35; align-self: flex-start; min-width: 0px; order: 2; min-height: 50px; max-height: 50px; height: 50px; flex-grow: 1; width: calc(100% - 0px); margin: 0px;\"></div><div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 34; align-self: flex-end; min-width: 0px; order: 8; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 10px 0px 40px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 12px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer;\">change email</div><button class=\"bubble-element Button\" style=\"visibility: hidden; z-index: 33; align-self: flex-end; min-width: 0px; max-width: 120px; order: 9; min-height: 50px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; display: none;\"></button><div class=\"bubble-element Group bubble-r-container flex column\" style=\"visibility: hidden; z-index: 39; align-self: flex-start; min-width: 0px; order: 10; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; display: none; justify-content: flex-start;\"><div class=\"bubble-element Text\" style=\"z-index: 30; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 31; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 10px;\"></div><div class=\"bubble-element Text\" style=\"z-index: 32; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px;\"></div></div></div></div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <!-- Footer starts here --->\n" +
-    "  <div class=\"bubble-element CustomElement bubble-r-container flex column\" style=\"z-index: 6; align-self: center; min-width: 0px; max-width: 1200px; order: 8; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-top: 1px solid rgb(246, 246, 246); border-radius: 0px; opacity: 1;\" id=\"\">\n" +
-    "    <div class=\"bubble-element CustomElement bubble-r-container flex column\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 1200px; order: 6; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-top: 1px solid rgb(246, 246, 246); border-radius: 0px; opacity: 1;\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 9; align-self: flex-start; min-width: 300px; max-width: 1180px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 46px 10px 36px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 8; align-self: stretch; min-width: 280px; max-width: 300px; order: 1; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; max-width: 266px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 30px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">BirdHouse</div>\n" +
-    "          <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "            <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: flex-start; min-width: 35px; max-width: 35px; order: 1; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387110450x225588365466711900/Group%20252.svg&quot;);\"></div>\n" +
-    "            <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 2; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387114934x751236047018641900/Group%20253.svg&quot;);\"></div>\n" +
-    "            <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 3; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387119622x631156546568235800/Group%20254.svg&quot;);\"></div>\n" +
-    "            <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 4; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647453372274x846150973190001900/Group%20255%20%281%29.svg&quot;);\"></div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 6; align-self: stretch; min-width: 280px; max-width: 300px; order: 2; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <h3 class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Navigation</h3>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">About Us</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer;\" onclick=\"location.href='contact_us'\">Contact Us</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">Terms &amp; Conditions</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 5px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">Privacy Policy</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; align-self: stretch; min-width: 280px; max-width: 300px; order: 3; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <h3 class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Contact Us</h3>\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">+1 23 456 789 123</div>\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 5px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">itatarinov@gmail.com</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 7; align-self: stretch; min-width: 280px; max-width: 300px; order: 4; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <h3 class=\"bubble-element Text\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Soon available</h3>\n" +
-    "          <div class=\"bubble-element Text\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 23px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">Vulputate hac felis morbi egestas.</div>\n" +
-    "          <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 6; align-self: center; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "            <div class=\"bubble-element Image\" style=\"z-index: 7; align-self: center; min-width: 132px; max-width: 45%; order: 3; width: 132px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\">\n" +
-    "              <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "              <div style=\"position: relative; padding-top: 34.0136%;\"></div>\n" +
-    "            </div>\n" +
-    "            <div class=\"bubble-element Image\" style=\"z-index: 6; align-self: center; min-width: 146px; max-width: 45%; order: 4; width: 146px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\">\n" +
-    "              <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "              <div style=\"position: relative; padding-top: 29.8137%;\"></div>\n" +
-    "            </div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "</div>\n" +
-    "<script>\n" +
-    "  window.onload = function() {\n" +
-    "    // Get the value\n" +
-    "    var Balance = \"0\";\n" +
-    "\n" +
-    "    // Display the value on the page\n" +
-    "    var outputBalance = document.getElementById('UserBalance');\n" +
-    "    outputBalance.innerText = \"Balance: \" + Balance;\n" +
-    "\n" +
-    "\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "\n" +
-    "    SetSection1();\n" +
-    "  };\n" +
-    "\n" +
-    "  function SetSection1(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"block\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "  }\n" +
-    "  function SetSection2(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"block\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "  }\n" +
-    "  function SetSection3(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"block\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "  }\n" +
-    "  function SetSection4(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"block\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "  }\n" +
-    "  function SetSection5(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"block\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"none\"\n" +
-    "  }\n" +
-    "  function SetSection6(){\n" +
-    "    var s1 = document.getElementById(\"section-1\");\n" +
-    "    s1.style.display = \"none\"\n" +
-    "    var s2 = document.getElementById(\"section-2\");\n" +
-    "    s2.style.display = \"none\"\n" +
-    "    var s3 = document.getElementById(\"section-3\");\n" +
-    "    s3.style.display = \"none\"\n" +
-    "    var s4 = document.getElementById(\"section-4\");\n" +
-    "    s4.style.display = \"none\"\n" +
-    "    var s5 = document.getElementById(\"section-5\");\n" +
-    "    s5.style.display = \"none\"\n" +
-    "    var s6 = document.getElementById(\"section-6\");\n" +
-    "    s6.style.display = \"block\"\n" +
-    "  }\n" +
-    "\n" +
-    "  function Logout(){\n" +
-    "    console.log(\"logout todo\")\n" +
-    "  }\n" +
-    "</script>\n" +
-    "</body>\n" +
-    "</html>\n"
+import "./style.css";
 
 const Dashboard = () => {
-    fetch("http://127.0.0.1:4433/sessions/whoami", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        }})
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
-            if (data.error) {
-                window.location.replace(`http://127.0.0.1:4439/login`)
-            }
-        });
-
-    return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
+    return (
+        <div
+            className="main-page bubble-element Page bubble-r-container flex column"
+            style={{
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
+                position: "relative",
+                zIndex: 1,
+                minHeight: "max(0px, 100%)",
+                height: "max-content",
+                flexShrink: 0,
+                justifyContent: "flex-start",
+                opacity: 1,
+                background:
+                    'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648042133128x973166173247376600%2FGroup%25201000000957%2520%25281%2529.png?w=1536&h=&auto=compress&dpr=2&fit=max") center top / cover repeat-y rgba(255, 255, 255, 0)'
+            }}
+        >
+            {/* Header */}
+            <div
+                className="bubble-element CustomElement bubble-r-container flex row"
+                id="header"
+                style={{
+                    zIndex: 4,
+                    alignSelf: "flex-start",
+                    minWidth: 0,
+                    order: 1,
+                    minHeight: 80,
+                    height: "max-content",
+                    flexGrow: 0,
+                    flexShrink: 0,
+                    width: "calc(100% - 0px)",
+                    margin: 0,
+                    justifyContent: "center",
+                    overflow: "visible",
+                    backgroundColor: "rgb(255, 255, 255)",
+                    borderRadius: 0,
+                    boxShadow: "rgba(0, 0, 0, 0.05) 0px 4px 25px 0px",
+                    opacity: 1
+                }}
+            >
+                <div
+                    className="bubble-element Group bubble-r-container flex row"
+                    style={{
+                        zIndex: 15,
+                        alignSelf: "center",
+                        minWidth: 300,
+                        maxWidth: 1180,
+                        order: 3,
+                        minHeight: 0,
+                        width: 300,
+                        flexGrow: 1,
+                        height: "max-content",
+                        margin: "0px 10px",
+                        justifyContent: "space-between",
+                        overflow: "visible",
+                        backgroundColor: "rgb(255, 255, 255)",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 2,
+                            alignSelf: "center",
+                            minWidth: 82,
+                            maxWidth: 82,
+                            order: 1,
+                            minHeight: 28,
+                            width: 82,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: 0,
+                            justifyContent: "center",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1,
+                            cursor: "pointer"
+                        }}
+                        onClick="location.href='landing_advertisers'"
+                    >
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                alignSelf: "flex-start",
+                                minWidth: 74,
+                                maxWidth: 74,
+                                order: 1,
+                                minHeight: 21,
+                                width: 74,
+                                flexGrow: 1,
+                                height: "max-content",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: '"Montserrat Alternates"',
+                                fontSize: 40,
+                                fontWeight: 800,
+                                color: "rgb(3, 180, 198)",
+                                letterSpacing: "-5px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <font color="#00ffff">B</font>
+                            <font color="#000000">H</font>
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container relative"
+                        style={{
+                            zIndex: 4,
+                            alignSelf: "center",
+                            minWidth: 0,
+                            maxWidth: 394,
+                            order: 2,
+                            minHeight: 40,
+                            width: 0,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px",
+                            overflow: "visible",
+                            borderStyle: "solid",
+                            borderWidth: 1,
+                            borderColor: "rgb(238, 238, 238)",
+                            borderRadius: 10,
+                            padding: "0px 10px",
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                placeSelf: "center start",
+                                minWidth: 25,
+                                maxWidth: 25,
+                                minHeight: 23,
+                                maxHeight: 23,
+                                width: 25,
+                                height: 23,
+                                margin: "0px 14px 0px 0px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387433266x621007601971848000/search.svg")'
+                            }}
+                        />
+                        <input
+                            type="input"
+                            className="bubble-element Input"
+                            placeholder="Search ads, usernames, categories"
+                            maxLength=""
+                            style={{
+                                zIndex: 3,
+                                placeSelf: "center end",
+                                minWidth: 0,
+                                maxWidth: 337,
+                                minHeight: 40,
+                                width: "calc(100% - 0px)",
+                                height: "calc(100% - 0px)",
+                                margin: 0,
+                                border: "none",
+                                backgroundColor: "transparent",
+                                borderRadius: 0,
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 400,
+                                color: "rgb(123, 123, 123)",
+                                letterSpacing: "0.5px",
+                                opacity: 1
+                            }}
+                        />
+                        <div
+                            className="bubble-element Group bubble-r-container flex row clickable-element"
+                            style={{
+                                zIndex: 4,
+                                placeSelf: "center",
+                                minWidth: 0,
+                                minHeight: 0,
+                                width: "calc(100% - 0px)",
+                                height: "calc(100% - 0px)",
+                                margin: 0,
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1,
+                                cursor: "pointer"
+                            }}
+                        />
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "center",
+                            minWidth: 0,
+                            order: 3,
+                            minHeight: 0,
+                            width: "max-content",
+                            flexGrow: 0,
+                            height: "max-content",
+                            margin: 0,
+                            justifyContent: "center",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container flex row"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 3,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 20px 0px 0px",
+                                justifyContent: "center",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 2,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 20px 0px 0px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                                onClick="location.href='explore_bloggers'"
+                            >
+                                Bloggers
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 20px 0px 0px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                                onClick="location.href='explore_advertisers'"
+                            >
+                                Advertisers
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 4,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 20px 0px 0px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                                onClick="location.href='dashboard#create'"
+                            >
+                                Create
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 5,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 20px 0px 0px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                                onClick="location.href='about'"
+                            >
+                                About us
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id="gradient-text"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 83,
+                                    order: 6,
+                                    minHeight: 0,
+                                    width: 83,
+                                    flexGrow: 1,
+                                    height: "max-content",
+                                    margin: 0,
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                            >
+                                Contact us
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container fixed clickable-element"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 40,
+                                maxWidth: 40,
+                                order: 4,
+                                minHeight: 40,
+                                maxHeight: 40,
+                                width: 40,
+                                flexGrow: 1,
+                                height: 40,
+                                margin: 0,
+                                overflow: "visible",
+                                borderRadius: 100,
+                                padding: 0,
+                                opacity: 1,
+                                cursor: "pointer",
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg")'
+                            }}
+                            onClick="location.href='dashboard'"
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                visibility: "hidden",
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 83,
+                                order: 5,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 20px",
+                                display: "none"
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text clickable-element"
+                            id="gradient-text"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "center",
+                                minWidth: 83,
+                                order: 6,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 20px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1,
+                                cursor: "pointer",
+                                transition: "color 300ms linear 0s"
+                            }}
+                            onClick="location.href='deposit'"
+                        >
+                            <p id="UserBalance"/>{" "}
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row"
+                        style={{
+                            visibility: "hidden",
+                            zIndex: 7,
+                            alignSelf: "center",
+                            minWidth: 0,
+                            order: 4,
+                            minHeight: 0,
+                            width: "max-content",
+                            flexGrow: 0,
+                            height: "max-content",
+                            margin: 0,
+                            display: "none",
+                            justifyContent: "space-between"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 25,
+                                maxWidth: 25,
+                                order: 1,
+                                minHeight: 23,
+                                maxHeight: 23,
+                                width: 25,
+                                flexGrow: 1,
+                                height: 23,
+                                margin: "0px 14px 0px 0px"
+                            }}
+                        />
+                        <div
+                            className="bubble-element Image"
+                            style={{
+                                zIndex: 6,
+                                alignSelf: "center",
+                                minWidth: 18,
+                                maxWidth: 18,
+                                order: 2,
+                                minHeight: 14,
+                                maxHeight: 14,
+                                width: 18,
+                                flexGrow: 1,
+                                height: 14,
+                                margin: 0
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+            {/* Content */}
+            <div
+                className="bubble-element Group bubble-r-container flex row"
+                style={{
+                    zIndex: 2,
+                    alignSelf: "center",
+                    minWidth: 320,
+                    maxWidth: 1200,
+                    order: 4,
+                    minHeight: 0,
+                    height: "max-content",
+                    flexGrow: 0,
+                    flexShrink: 0,
+                    width: "calc(100% - 0px)",
+                    margin: "100px 0px 0px",
+                    justifyContent: "space-between",
+                    overflow: "visible",
+                    borderRadius: 0,
+                    opacity: 1
+                }}
+            >
+                {/* Left Panel */}
+                <div
+                    className="bubble-element Group bubble-r-container flex column"
+                    style={{
+                        zIndex: 7,
+                        alignSelf: "flex-start",
+                        minWidth: 0,
+                        maxWidth: 230,
+                        order: 2,
+                        minHeight: 400,
+                        width: 0,
+                        flexGrow: 1,
+                        height: "max-content",
+                        margin: 0,
+                        justifyContent: "flex-start",
+                        overflow: "visible",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                    id="position-sticky"
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 4,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 1,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            backgroundColor: "rgb(255, 255, 255)",
+                            borderStyle: "solid",
+                            borderWidth: 1,
+                            borderColor: "rgb(238, 238, 238)",
+                            borderRadius: 0,
+                            opacity: 1,
+                            cursor: "pointer"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657003567373x578777759303418900%2Fweb.png?w=32&h=32&auto=compress&fit=crop&dpr=2")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection1()"
+                        >
+                            Created orders
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 6,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 2,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1,
+                            cursor: "pointer"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657003561152x702908939978423800%2Fcollection.png?w=32&h=32&auto=compress&fit=crop&dpr=2")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection2()"
+                        >
+                            Accepted orders
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex row"
+                            style={{
+                                visibility: "hidden",
+                                zIndex: 26,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 5,
+                                minHeight: 0,
+                                width: 0,
+                                flexGrow: 1,
+                                height: "max-content",
+                                margin: "0px 0px 10px",
+                                justifyContent: "flex-start",
+                                overflow: "visible"
+                            }}
+                        >
+                            <div
+                                className="bubble-element progressbar-ProgressBar"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 300,
+                                    maxWidth: 300,
+                                    order: 1,
+                                    minHeight: 25,
+                                    maxHeight: 25,
+                                    width: 300,
+                                    flexGrow: 1,
+                                    height: 25,
+                                    margin: 0
+                                }}
+                            >
+                                <div
+                                    className="inner-progressbar"
+                                    style={{
+                                        backgroundColor: "rgb(127, 149, 235)",
+                                        lineHeight: 25,
+                                        transition: "width 0.3s ease 0s",
+                                        width: "0%"
+                                    }}
+                                >
+                                    <div
+                                        className="progressbar-label"
+                                        style={{
+                                            clipPath: "inset(0px)",
+                                            padding: "inherit",
+                                            transition: "width 0.3s ease 0s, clip-path 0.3s ease 0s",
+                                            width: 300
+                                        }}
+                                    >
+                                        0%
+                                    </div>
+                                    <div
+                                        className="progressbar-label-overlay"
+                                        style={{
+                                            clipPath: "inset(0px 300px 0px 0px)",
+                                            padding: "inherit",
+                                            transition: "width 0.3s ease 0s, clip-path 0.3s ease 0s",
+                                            width: 300
+                                        }}
+                                    >
+                                        0%
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    width: 0,
+                                    flexGrow: 1,
+                                    height: "max-content",
+                                    margin: "0px 0px 0px 10px",
+                                    whiteSpace: "pre-wrap"
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 8,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 3,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1,
+                            cursor: "pointer"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657779343897x414356299746209150%2Fcheckmark-png-25959.png?w=32&h=32&auto=compress&fit=crop&dpr=2")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection3()"
+                        >
+                            Assigned orders
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex row"
+                            style={{
+                                visibility: "hidden",
+                                zIndex: 26,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 5,
+                                minHeight: 0,
+                                width: 0,
+                                flexGrow: 1,
+                                height: "max-content",
+                                margin: "0px 0px 10px",
+                                justifyContent: "flex-start",
+                                overflow: "visible"
+                            }}
+                        >
+                            <div
+                                className="bubble-element progressbar-ProgressBar"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 300,
+                                    maxWidth: 300,
+                                    order: 1,
+                                    minHeight: 25,
+                                    maxHeight: 25,
+                                    width: 300,
+                                    flexGrow: 1,
+                                    height: 25,
+                                    margin: 0
+                                }}
+                            >
+                                <div
+                                    className="inner-progressbar"
+                                    style={{
+                                        backgroundColor: "rgb(127, 149, 235)",
+                                        lineHeight: 25,
+                                        transition: "width 0.3s ease 0s",
+                                        width: "0%"
+                                    }}
+                                >
+                                    <div
+                                        className="progressbar-label"
+                                        style={{
+                                            clipPath: "inset(0px)",
+                                            padding: "inherit",
+                                            transition: "width 0.3s ease 0s, clip-path 0.3s ease 0s",
+                                            width: 300
+                                        }}
+                                    >
+                                        0%
+                                    </div>
+                                    <div
+                                        className="progressbar-label-overlay"
+                                        style={{
+                                            clipPath: "inset(0px 300px 0px 0px)",
+                                            padding: "inherit",
+                                            transition: "width 0.3s ease 0s, clip-path 0.3s ease 0s",
+                                            width: 300
+                                        }}
+                                    >
+                                        0%
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    width: 0,
+                                    flexGrow: 1,
+                                    height: "max-content",
+                                    margin: "0px 0px 0px 10px",
+                                    whiteSpace: "pre-wrap"
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 4,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 20,
+                            opacity: 1,
+                            cursor: "pointer",
+                            transition: "background 200ms linear 0s"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1646656909311x277336483683550800/edit.svg")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection4()"
+                        >
+                            Create order
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 5,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 20,
+                            opacity: 1,
+                            cursor: "pointer",
+                            transition: "background 200ms linear 0s"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1646656633061x297849365330265150/user.svg")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection5()"
+                        >
+                            Profile
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 0,
+                            order: 10,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 0px)",
+                            margin: "0px 0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 20,
+                            opacity: 1,
+                            cursor: "pointer",
+                            transition: "background 200ms linear 0s"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 24,
+                                maxWidth: 24,
+                                order: 1,
+                                minHeight: 24,
+                                maxHeight: 24,
+                                width: 24,
+                                flexGrow: 1,
+                                height: 24,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470078185x821974678684926200/Settings.svg")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection6()"
+                        >
+                            Settings
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex row clickable-element"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 230,
+                            maxWidth: 230,
+                            order: 11,
+                            minHeight: 60,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: 230,
+                            margin: "60px 0px 0px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 20,
+                            opacity: 1,
+                            cursor: "pointer",
+                            transition: "background 200ms linear 0s"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container fixed"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 20,
+                                maxWidth: 20,
+                                order: 1,
+                                minHeight: 20,
+                                maxHeight: 20,
+                                width: 20,
+                                flexGrow: 1,
+                                height: 20,
+                                margin: "0px 0px 0px 20px",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: 0,
+                                opacity: 1,
+                                backgroundColor: "rgba(255, 255, 255, 0)",
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "cover",
+                                backgroundImage:
+                                    'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1646657123576x984020082182149600%2Flogout.png?w=24&h=24&auto=compress&fit=crop&dpr=2")'
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: "0px 0px 0px 10px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="Logout()"
+                        >
+                            Log out
+                        </div>
+                    </div>
+                </div>
+                {/* Elements */}
+                <div
+                    className="bubble-element Group bubble-r-container flex column"
+                    style={{
+                        zIndex: 4,
+                        alignSelf: "flex-start",
+                        minWidth: 0,
+                        maxWidth: 900,
+                        order: 5,
+                        minHeight: 0,
+                        width: 0,
+                        flexGrow: 1,
+                        height: "max-content",
+                        margin: "20px 0px 0px",
+                        justifyContent: "flex-start",
+                        overflow: "visible",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        style={{
+                            visibility: "hidden",
+                            zIndex: 8,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 1,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            display: "none",
+                            justifyContent: "flex-start"
+                        }}
+                    >
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: "0px 0px 30px"
+                            }}
+                        />
+                        <div
+                            className="bubble-element RepeatingGroup"
+                            style={{
+                                zIndex: 15,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 10px"
+                            }}
+                        />
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 16,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 4,
+                                minHeight: 1,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0
+                            }}
+                        />
+                    </div>
+                    {/* Enabled Section 1 */}
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        id="section-1"
+                        style={{
+                            zIndex: 2,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 2,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            padding: "0px 0px 100px",
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: "0px 0px 30px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 28,
+                                fontWeight: 600,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: 1,
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                            onClick="SetSection1"
+                        >
+                            Created orders
+                        </div>
+                        <div
+                            className="bubble-element RepeatingGroup bubble-rg"
+                            style={{
+                                zIndex: 15,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 4,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 10px",
+                                gap: 20,
+                                gridAutoRows: "minmax(max-content, 280px)",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                                gridAutoFlow: "row",
+                                overflow: "auto",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-1"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeftStyle: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative clickable-element"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px",
+                                        overflow: "visible",
+                                        borderRadius: 20,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1688368811224x263609441702520770%2F14f6944b242eef8884e860f46c01a291.png?w=384&h=357&auto=compress&fit=crop&dpr=2")'
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start",
+                                            overflow: "visible",
+                                            background:
+                                                "-webkit-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgb(33, 33, 33) 100%)",
+                                            borderRadius: 20,
+                                            padding: "15px 12px",
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between",
+                                                overflow: "visible",
+                                                borderRadius: 0,
+                                                opacity: 1
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px",
+                                                    whiteSpace: "pre-wrap",
+                                                    overflow: "visible",
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    color: "rgba(255, 255, 255, 0.77)",
+                                                    lineHeight: 1,
+                                                    borderRadius: 0,
+                                                    opacity: 1,
+                                                    wordBreak: "break-word"
+                                                }}
+                                            >
+                                                IgorTatarinov
+                                            </div>
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px",
+                                                    whiteSpace: "pre-wrap",
+                                                    overflow: "visible",
+                                                    wordBreak: "break-word",
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    color: "rgba(255, 255, 255, 0.77)",
+                                                    lineHeight: 1,
+                                                    borderRadius: 0,
+                                                    opacity: 1
+                                                }}
+                                            >
+                                                Lifestyle
+                                            </div>
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    whiteSpace: "pre-wrap",
+                                                    overflow: "visible",
+                                                    wordBreak: "break-word",
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 12,
+                                                    fontWeight: 600,
+                                                    color: "rgba(255, 255, 255, 0.77)",
+                                                    textAlign: "right",
+                                                    lineHeight: 1,
+                                                    borderRadius: 0,
+                                                    opacity: 1
+                                                }}
+                                            >
+                                                Price
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center",
+                                                overflow: "visible",
+                                                borderRadius: 0,
+                                                opacity: 1
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    whiteSpace: "pre-wrap",
+                                                    overflow: "visible",
+                                                    wordBreak: "break-word",
+                                                    fontFamily: "Poppins",
+                                                    fontSize: 14,
+                                                    fontWeight: 600,
+                                                    color: "rgb(255, 255, 255)",
+                                                    lineHeight: 1,
+                                                    borderRadius: 0,
+                                                    opacity: 1
+                                                }}
+                                            >
+                                                Costa Coffe
+                                            </div>
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end",
+                                                    overflow: "visible",
+                                                    borderRadius: 0,
+                                                    opacity: 1
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0,
+                                                        borderRadius: 0,
+                                                        opacity: 1
+                                                    }}
+                                                >
+                                                    <img
+                                                        alt=""
+                                                        style={{
+                                                            borderRadius: 0,
+                                                            position: "absolute",
+                                                            top: 0,
+                                                            left: 0,
+                                                            display: "block",
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            margin: 0,
+                                                            objectFit: "contain"
+                                                        }}
+                                                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                                    />
+                                                    <div
+                                                        style={{position: "relative", paddingTop: "100%"}}
+                                                    />
+                                                </div>
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0,
+                                                        whiteSpace: "pre-wrap",
+                                                        overflow: "visible",
+                                                        wordBreak: "break-word",
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 14,
+                                                        fontWeight: 600,
+                                                        color: "rgb(255, 255, 255)",
+                                                        textAlign: "right",
+                                                        lineHeight: 1,
+                                                        borderRadius: 0,
+                                                        opacity: 1
+                                                    }}
+                                                >
+                                                    0
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start",
+                                            overflow: "visible",
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image clickable-element"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0,
+                                                borderRadius: 0,
+                                                opacity: 1,
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            <img
+                                                alt=""
+                                                src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470239115x593164468864627600/Frame%2010.svg"
+                                                style={{
+                                                    position: "absolute",
+                                                    top: 0,
+                                                    left: 0,
+                                                    display: "block",
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    margin: 0,
+                                                    borderRadius: 0
+                                                }}
+                                            />
+                                            <div style={{position: "relative", paddingTop: "100%"}}/>
+                                        </div>
+                                        <div
+                                            className="bubble-element Image clickable-element"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px",
+                                                borderRadius: 0,
+                                                opacity: 1,
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            <img
+                                                alt=""
+                                                src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647470245189x925024197092840600/Frame%207.svg"
+                                                style={{
+                                                    position: "absolute",
+                                                    top: 0,
+                                                    left: 0,
+                                                    display: "block",
+                                                    width: "100%",
+                                                    height: "100%",
+                                                    margin: 0,
+                                                    borderRadius: 0
+                                                }}
+                                            />
+                                            <div style={{position: "relative", paddingTop: "100%"}}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-2"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-3"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-4"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-5"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-6"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-7"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-8"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-9"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-10"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 17,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 1,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element Image"
+                                            style={{
+                                                zIndex: 18,
+                                                alignSelf: "flex-start",
+                                                minWidth: 36,
+                                                maxWidth: 36,
+                                                order: 2,
+                                                width: 36,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: "0px 0px 0px 10px"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 16,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 5,
+                                minHeight: 1,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                color: "rgb(0, 0, 0)",
+                                letterSpacing: 1,
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            No orders founded.
+                        </div>
+                    </div>
+                    {/* Enabled Section 2 */}
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        id="section-2"
+                        style={{
+                            zIndex: 7,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 3,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            padding: "0px 0px 100px",
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: "0px 0px 30px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 28,
+                                fontWeight: 600,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: 1,
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Accepted orders
+                        </div>
+                        <div
+                            className="bubble-element RepeatingGroup bubble-rg"
+                            style={{
+                                zIndex: 15,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 10px",
+                                gap: 20,
+                                gridAutoRows: "minmax(max-content, 280px)",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                                gridAutoFlow: "row",
+                                overflow: "auto",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-1"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-2"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-3"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-4"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-5"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-6"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-7"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-8"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-9"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-10"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 16,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 4,
+                                minHeight: 1,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                color: "rgb(0, 0, 0)",
+                                letterSpacing: 1,
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            No orders founded.
+                        </div>
+                    </div>
+                    {/* Enabled Section 3 */}
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        id="section-3"
+                        style={{
+                            zIndex: 8,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 1,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            padding: "0px 0px 100px",
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: "0px 0px 30px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 28,
+                                fontWeight: 600,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: 1,
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Assinged orders
+                        </div>
+                        <div
+                            className="bubble-element RepeatingGroup bubble-rg"
+                            style={{
+                                zIndex: 15,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 2,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 10px",
+                                gap: 20,
+                                gridAutoRows: "minmax(max-content, 280px)",
+                                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                                gridAutoFlow: "row",
+                                overflow: "auto",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-1"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-2"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-3"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTopStyle: "none",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-4"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-5"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-6"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-7"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-8"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-9"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeft: "20px solid rgba(150, 150, 150, 0)",
+                                    marginLeft: "-20px",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element GroupItem bubble-r-container flex column group-item entry-10"
+                                style={{
+                                    justifyContent: "flex-start",
+                                    boxSizing: "content-box",
+                                    minHeight: 280,
+                                    borderTop: "20px solid rgba(150, 150, 150, 0)",
+                                    marginTop: "-20px",
+                                    borderLeftStyle: "none",
+                                    display: "none"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container relative"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 280,
+                                        maxWidth: 280,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: 0,
+                                        flexGrow: 1,
+                                        width: 280,
+                                        margin: "0px 0px 20px"
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex column"
+                                        style={{
+                                            zIndex: 16,
+                                            placeSelf: "end center",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "calc(100% - 0px)",
+                                            height: "max-content",
+                                            margin: 0,
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 2,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "space-between"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: "0px 10px 0px 0px"
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 3,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    maxWidth: 80,
+                                                    order: 3,
+                                                    minHeight: 0,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className="bubble-element Group bubble-r-container flex row"
+                                            style={{
+                                                zIndex: 3,
+                                                alignSelf: "flex-end",
+                                                minWidth: 0,
+                                                order: 2,
+                                                minHeight: 17,
+                                                height: "max-content",
+                                                flexGrow: 0,
+                                                flexShrink: 0,
+                                                width: "calc(100% - 0px)",
+                                                margin: 0,
+                                                justifyContent: "center"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Text"
+                                                style={{
+                                                    zIndex: 2,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 5,
+                                                    alignSelf: "center",
+                                                    minWidth: 0,
+                                                    order: 2,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-end"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 1,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 2,
+                                                        minHeight: 0,
+                                                        width: "max-content",
+                                                        flexGrow: 0,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 19,
+                                            placeSelf: "start end",
+                                            minWidth: 0,
+                                            minHeight: 0,
+                                            width: "max-content",
+                                            height: "max-content",
+                                            margin: "10px 10px 0px 0px",
+                                            justifyContent: "flex-start"
+                                        }}
+                                    >
+                                        <button
+                                            className="bubble-element Button"
+                                            style={{
+                                                zIndex: 25,
+                                                alignSelf: "flex-start",
+                                                minWidth: 100,
+                                                maxWidth: 140,
+                                                order: 28,
+                                                minHeight: 35,
+                                                width: 100,
+                                                flexGrow: 1,
+                                                height: "max-content",
+                                                margin: 0
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 16,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 4,
+                                minHeight: 1,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 16,
+                                fontWeight: 500,
+                                color: "rgb(0, 0, 0)",
+                                letterSpacing: 1,
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            No orders founded.
+                        </div>
+                    </div>
+                    {/* Enabled Section 4 */}
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        id="section-4"
+                        style={{
+                            zIndex: 3,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 4,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            padding: "0px 0px 100px",
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 24,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 580,
+                                order: 27,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: 0,
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 2,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 50px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 28,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Create Ad
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Insert order preview picture <font color="#ff0000">*</font>
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 15px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB
+                            </div>
+                            <div
+                                className="bubble-element PictureInput clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    maxWidth: 280,
+                                    order: 4,
+                                    minHeight: 280,
+                                    height: 280,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    borderStyle: "solid",
+                                    borderWidth: 2,
+                                    borderColor: "rgb(237, 237, 237)",
+                                    borderRadius: 20,
+                                    opacity: 1
+                                }}
+                            >
+                                <img
+                                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        zIndex: 5,
+                                        position: "absolute",
+                                        objectFit: "contain",
+                                        opacity: 0
+                                    }}
+                                />
+                                <button
+                                    className="button_for_file_uploader"
+                                    style={{
+                                        border: "none",
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        zIndex: 4,
+                                        position: "absolute",
+                                        left: 0,
+                                        top: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        cursor: "pointer",
+                                        opacity: 1,
+                                        fontFamily: "Barlow",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(58, 77, 143)",
+                                        textAlign: "center",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundPosition: "center center",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648463175515x503048959543825900%2FGroup%25201000000914.png?w=384&h=&auto=compress&dpr=1&fit=max")'
+                                    }}
+                                />
+                                <input
+                                    id="input-preview"
+                                    type="file"
+                                    accept="image/*"
+                                    style={{
+                                        opacity: 0,
+                                        position: "absolute",
+                                        zIndex: 15,
+                                        left: 0,
+                                        width: "100%",
+                                        height: "100%",
+                                        fontSize: 0,
+                                        cursor: "pointer"
+                                    }}
+                                />
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 5,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Order Title <font color="#ff0000">*</font>
+                            </div>
+                            <input
+                                id="input-title"
+                                type="input"
+                                className="bubble-element Input a1689834994986x14741"
+                                placeholder="Set the name of Ad"
+                                maxLength=""
+                                style={{
+                                    zIndex: 7,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 6,
+                                    minHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    padding: "0px 15px",
+                                    opacity: 1
+                                }}
+                            />
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 8,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 7,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Your refferal link or code (only for online businesses)
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 9,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    maxWidth: 580,
+                                    order: 8,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                We will include a link to this URL on this item's detail page, so
+                                that users can click to learn more about it. You are welcome to link
+                                to your own webpage with more details.
+                            </div>
+                            <input
+                                id="input-link"
+                                type="input"
+                                className="bubble-element Input a1689834994986x14741"
+                                placeholder="Type here..."
+                                maxLength=""
+                                style={{
+                                    zIndex: 10,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 9,
+                                    minHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    padding: "0px 15px",
+                                    opacity: 1
+                                }}
+                            />
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 11,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 10,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Description
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 11,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 11,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                The description will be included on the item's detail page
+                                underneath its image.
+                            </div>
+                            <textarea
+                                id="input-description"
+                                className="bubble-element MultiLineInput a1689834994986x14741"
+                                data-gramm_editor="false"
+                                maxLength=""
+                                placeholder="Provide a detailed description of your item."
+                                style={{
+                                    zIndex: 12,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 12,
+                                    minHeight: 150,
+                                    height: 150,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: "1.5",
+                                    padding: "15px 18px",
+                                    opacity: 1
+                                }}
+                                defaultValue={""}
+                            />
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 23,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 13,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                I am looking for: <font color="#ff0000">*</font>
+                            </div>
+                            <select
+                                id="input-look-for"
+                                className="bubble-element Dropdown"
+                                style={{
+                                    zIndex: 22,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 14,
+                                    minHeight: 49,
+                                    height: 49,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    display: "block",
+                                    border: "1px solid rgb(237, 237, 237)",
+                                    backgroundColor: "transparent",
+                                    color: "rgb(153, 153, 153)",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    borderRadius: 15,
+                                    letterSpacing: "0.3px",
+                                    padding: "0px 15px 0px 5px",
+                                    opacity: 1
+                                }}
+                            >
+                                <option
+                                    className="dropdown-choice dropdown-placeholder"
+                                    value='"PLACEHOLDER_1427118222253"'
+                                    style={{color: "rgb(0, 0, 0)", display: "none"}}
+                                >
+                                    Choose an option...
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655914521354x993542613203760600"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Blogger
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655914531378x292482317519252160"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Advertiser
+                                </option>
+                            </select>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 24,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 17,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Categories <font color="#ff0000">*</font>
+                            </div>
+                            <select
+                                id="input-category"
+                                className="bubble-element Dropdown"
+                                style={{
+                                    zIndex: 24,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 18,
+                                    minHeight: 49,
+                                    height: 49,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    display: "block",
+                                    border: "1px solid rgb(237, 237, 237)",
+                                    backgroundColor: "transparent",
+                                    color: "rgb(153, 153, 153)",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    borderRadius: 15,
+                                    letterSpacing: "0.3px",
+                                    padding: "0px 15px 0px 5px",
+                                    opacity: 1
+                                }}
+                            >
+                                <option
+                                    className="dropdown-choice dropdown-placeholder"
+                                    value='"PLACEHOLDER_1427118222253"'
+                                    style={{color: "rgb(0, 0, 0)", display: "none"}}
+                                >
+                                    Choose an option...
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915048958x774413879836322000"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Fashion
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915103865x604125479111830300"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Lifestyle
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915114633x686655037183082900"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Beauty
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915125148x581360832021081500"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Music
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915152856x133988939524297700"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Crypto
+                                </option>
+                                <option
+                                    className="dropdown-choice"
+                                    value='"1348695171700984260__LOOKUP__1655915161895x165208841614873820"'
+                                    style={{color: "rgb(0, 0, 0)"}}
+                                >
+                                    Other
+                                </option>
+                            </select>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 13,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 19,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Currency
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row clickable-element"
+                                style={{
+                                    zIndex: 14,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 20,
+                                    minHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    justifyContent: "space-between",
+                                    overflow: "visible",
+                                    backgroundColor: "rgba(255, 255, 255, 0.7)",
+                                    borderStyle: "solid",
+                                    borderWidth: 1,
+                                    borderColor: "rgb(238, 238, 238)",
+                                    borderRadius: 15,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container flex row"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "center",
+                                        minWidth: 0,
+                                        order: 1,
+                                        minHeight: 30,
+                                        width: "max-content",
+                                        flexGrow: 0,
+                                        height: "max-content",
+                                        margin: "0px 0px 0px 20px",
+                                        justifyContent: "flex-start",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Group bubble-r-container fixed"
+                                        style={{
+                                            zIndex: 2,
+                                            alignSelf: "center",
+                                            minWidth: 24,
+                                            maxWidth: 24,
+                                            order: 1,
+                                            minHeight: 24,
+                                            maxHeight: 24,
+                                            width: 24,
+                                            flexGrow: 1,
+                                            height: 24,
+                                            margin: 0,
+                                            overflow: "visible",
+                                            backgroundColor: "rgba(255, 255, 255, 0)",
+                                            borderStyle: "solid",
+                                            borderWidth: 1,
+                                            borderColor: "rgb(238, 238, 238)",
+                                            borderRadius: 20,
+                                            padding: 0,
+                                            opacity: 1,
+                                            backgroundImage:
+                                                'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1657633985492x211575392420328060%2F25228.png?w=32&h=32&auto=compress&fit=crop&dpr=2")',
+                                            backgroundSize: "cover",
+                                            backgroundRepeat: "no-repeat",
+                                            backgroundAttachment: "initial",
+                                            backgroundOrigin: "initial",
+                                            backgroundClip: "initial"
+                                        }}
+                                    />
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 3,
+                                            alignSelf: "center",
+                                            minWidth: 158,
+                                            order: 2,
+                                            minHeight: 0,
+                                            maxHeight: 30,
+                                            width: 158,
+                                            flexGrow: 1,
+                                            height: "max-content",
+                                            margin: "0px 0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 16,
+                                            fontWeight: 500,
+                                            color: "rgb(123, 123, 123)",
+                                            letterSpacing: 1,
+                                            lineHeight: "1.5",
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <div>USD</div>
+                                    </div>
+                                </div>
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "center",
+                                        minWidth: 24,
+                                        maxWidth: 24,
+                                        order: 2,
+                                        minHeight: 24,
+                                        maxHeight: 24,
+                                        width: 24,
+                                        flexGrow: 1,
+                                        height: 24,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647516484530x217959983199276220/Carret%20Down.svg")'
+                                    }}
+                                />
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 15,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 21,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Price <font color="#ff0000">*</font>
+                            </div>
+                            <input
+                                id="input-price"
+                                type="input"
+                                className="bubble-element Input a1689834994986x14741"
+                                style={{
+                                    zIndex: 16,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 22,
+                                    minHeight: 50,
+                                    maxHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    padding: "0px 15px",
+                                    opacity: 1
+                                }}
+                                placeholder="Type here..."
+                                inputMode="text"
+                            />
+                            <button
+                                className="bubble-element Button clickable-element"
+                                style={{
+                                    zIndex: 20,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    maxWidth: 140,
+                                    order: 23,
+                                    minHeight: 46,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    padding: 0,
+                                    cursor: "pointer",
+                                    background:
+                                        "linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%)",
+                                    border: "none",
+                                    textAlign: "center",
+                                    fontFamily: "Poppins",
+                                    fontSize: 16,
+                                    fontWeight: 500,
+                                    color: "rgb(255, 255, 255)",
+                                    letterSpacing: 1,
+                                    lineHeight: 1,
+                                    borderRadius: 5,
+                                    opacity: 1,
+                                    transition: "background 200ms ease 0s"
+                                }}
+                                onClick="CreateOrder()"
+                            >
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                    {/* Enabled Section 5 */}
+                    <div id="section-5">
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "flex-start",
+                                minWidth: 320,
+                                order: 5,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                padding: "0px 0px 100px",
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 2,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 50px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 28,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Profile Settings
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 31,
+                                    alignSelf: "center",
+                                    minWidth: 320,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    justifyContent: "space-between",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container flex column"
+                                    style={{
+                                        zIndex: 29,
+                                        alignSelf: "flex-start",
+                                        minWidth: 300,
+                                        maxWidth: 380,
+                                        order: 1,
+                                        minHeight: 0,
+                                        width: 300,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: "0px 10px",
+                                        justifyContent: "flex-start",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 21,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 2,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Username <font color="#ff0000">*</font>
+                                    </div>
+                                    <input
+                                        id="input-username"
+                                        type="input"
+                                        className="bubble-element Input a1689834994986x14741"
+                                        placeholder="Username"
+                                        maxLength=""
+                                        style={{
+                                            zIndex: 21,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 3,
+                                            minHeight: 50,
+                                            height: 50,
+                                            flexGrow: 1,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            border: "1px solid rgb(238, 238, 238)",
+                                            backgroundColor: "transparent",
+                                            borderRadius: 15,
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            padding: "0px 15px",
+                                            opacity: 1
+                                        }}
+                                    />
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 21,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 4,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Bio
+                                    </div>
+                                    <textarea
+                                        id="input-bio"
+                                        className="bubble-element MultiLineInput a1689834994986x14741"
+                                        data-gramm_editor="false"
+                                        maxLength=""
+                                        placeholder="Tell the world your story!"
+                                        style={{
+                                            zIndex: 21,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            maxWidth: 380,
+                                            order: 5,
+                                            minHeight: 100,
+                                            height: 100,
+                                            flexGrow: 1,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            border: "1px solid rgb(238, 238, 238)",
+                                            backgroundColor: "transparent",
+                                            borderRadius: 15,
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: "1.5",
+                                            padding: "15px 18px",
+                                            opacity: 1
+                                        }}
+                                        defaultValue={""}
+                                    />
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 32,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 6,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Email Address <font color="#ff0000">*</font>
+                                    </div>
+                                    <input
+                                        type="input"
+                                        className="bubble-element Input a1689834994986x14741"
+                                        placeholder="Email"
+                                        maxLength=""
+                                        disabled=""
+                                        style={{
+                                            zIndex: 32,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 7,
+                                            minHeight: 50,
+                                            height: 50,
+                                            flexGrow: 1,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            border: "1px solid rgb(238, 238, 238)",
+                                            backgroundColor: "rgb(235, 235, 235)",
+                                            borderRadius: 15,
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            padding: "0px 15px",
+                                            opacity: 1
+                                        }}
+                                    />
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 24,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 8,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Social media or product links
+                                    </div>
+                                    <div
+                                        className="bubble-element Group bubble-r-container flex row"
+                                        style={{
+                                            zIndex: 30,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 9,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            justifyContent: "flex-start",
+                                            overflow: "visible",
+                                            borderStyle: "solid",
+                                            borderWidth: 1,
+                                            borderColor: "rgb(238, 238, 238)",
+                                            borderRadius: 15,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <input
+                                            type="input"
+                                            className="bubble-element Input a1689834994986x14741"
+                                            placeholder="Enter link"
+                                            maxLength=""
+                                            style={{
+                                                zIndex: 28,
+                                                alignSelf: "flex-start",
+                                                minWidth: 0,
+                                                order: 1,
+                                                minHeight: 50,
+                                                width: 0,
+                                                flexGrow: 1,
+                                                height: 50,
+                                                margin: 0,
+                                                border: "none",
+                                                backgroundColor: "transparent",
+                                                borderRadius: 0,
+                                                fontFamily: "Poppins",
+                                                fontSize: 14,
+                                                fontWeight: 500,
+                                                color: "rgb(0, 0, 0)",
+                                                padding: "0px 15px",
+                                                opacity: 1
+                                            }}
+                                        />
+                                        <div
+                                            className="bubble-element CustomElement bubble-r-container flex row clickable-element"
+                                            style={{
+                                                zIndex: 29,
+                                                alignSelf: "center",
+                                                minWidth: 0,
+                                                maxWidth: 48,
+                                                order: 2,
+                                                minHeight: 24,
+                                                maxHeight: 24,
+                                                width: 0,
+                                                flexGrow: 1,
+                                                height: 24,
+                                                margin: "0px 5px 0px 0px",
+                                                justifyContent: "center",
+                                                overflow: "visible",
+                                                borderRadius: 0,
+                                                opacity: 1,
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Group bubble-r-container fixed"
+                                                style={{
+                                                    zIndex: 6,
+                                                    alignSelf: "flex-start",
+                                                    minWidth: 24,
+                                                    maxWidth: 24,
+                                                    order: 1,
+                                                    minHeight: 24,
+                                                    maxHeight: 24,
+                                                    width: 24,
+                                                    flexGrow: 1,
+                                                    height: 24,
+                                                    margin: 0,
+                                                    overflow: "visible",
+                                                    borderRadius: 0,
+                                                    padding: 0,
+                                                    opacity: 1,
+                                                    backgroundColor: "rgba(255, 255, 255, 0)",
+                                                    backgroundRepeat: "no-repeat",
+                                                    backgroundSize: "cover",
+                                                    backgroundImage:
+                                                        'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647536585250x463795952349799200/Property%3Dfilled%2C%20Network%3Dgoogle.svg")'
+                                                }}
+                                            />
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 6,
+                                                    alignSelf: "flex-start",
+                                                    minWidth: 24,
+                                                    order: 2,
+                                                    minHeight: 24,
+                                                    width: "max-content",
+                                                    flexGrow: 0,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-start",
+                                                    overflow: "visible",
+                                                    borderRadius: 0,
+                                                    opacity: 1,
+                                                    backgroundColor: "rgba(255, 255, 255, 0)",
+                                                    backgroundRepeat: "no-repeat",
+                                                    backgroundSize: "cover",
+                                                    backgroundImage:
+                                                        'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1644856829814x920083039750816600/Carret%20Down.svg")'
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div
+                                        className="bubble-element RepeatingGroup bubble-rg"
+                                        style={{
+                                            zIndex: 23,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 11,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            gap: 0,
+                                            gridAutoRows: "minmax(max-content, 0px)",
+                                            gridTemplateColumns: "repeat(1, minmax(0px, 1fr))",
+                                            gridAutoFlow: "row",
+                                            overflow: "auto",
+                                            borderStyle: "solid",
+                                            borderWidth: 1,
+                                            borderColor: "rgb(238, 238, 238)",
+                                            borderRadius: 15,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <div
+                                            className="bubble-element GroupItem bubble-r-container flex row group-item entry-1"
+                                            style={{
+                                                justifyContent: "flex-start",
+                                                boxSizing: "content-box",
+                                                minHeight: 0,
+                                                borderTopStyle: "none",
+                                                borderLeftStyle: "none"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "flex-start",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-start",
+                                                    overflow: "visible",
+                                                    borderRadius: 0,
+                                                    padding: 13,
+                                                    opacity: 1
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 2,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0,
+                                                        borderRadius: 0,
+                                                        opacity: 1
+                                                    }}
+                                                >
+                                                    <img
+                                                        alt=""
+                                                        src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647536889240x427907597683149250/website.svg"
+                                                        style={{
+                                                            borderRadius: 0,
+                                                            position: "absolute",
+                                                            top: 0,
+                                                            left: 0,
+                                                            display: "block",
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            margin: 0,
+                                                            objectFit: "contain"
+                                                        }}
+                                                    />
+                                                    <div
+                                                        style={{position: "relative", paddingTop: "100%"}}
+                                                    />
+                                                </div>
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 2,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 3,
+                                                        minHeight: 32,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: "0px 0px 0px 10px",
+                                                        whiteSpace: "pre-wrap",
+                                                        overflow: "visible",
+                                                        fontFamily: "Poppins",
+                                                        fontSize: 14,
+                                                        fontWeight: 500,
+                                                        color: "rgb(33, 33, 33)",
+                                                        letterSpacing: "0.1px",
+                                                        lineHeight: "1.5",
+                                                        padding: "5px 1px",
+                                                        borderRadius: 0,
+                                                        opacity: 1,
+                                                        wordBreak: "break-word"
+                                                    }}
+                                                >
+                                                    birdhouse.technology
+                                                </div>
+                                                <div
+                                                    className="bubble-element Group bubble-r-container relative clickable-element"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 24,
+                                                        maxWidth: 24,
+                                                        order: 4,
+                                                        minHeight: 24,
+                                                        maxHeight: 24,
+                                                        width: 24,
+                                                        flexGrow: 1,
+                                                        height: 24,
+                                                        margin: 0,
+                                                        overflow: "visible",
+                                                        backgroundColor: "rgb(255, 255, 255)",
+                                                        borderRadius: 0,
+                                                        opacity: 1,
+                                                        cursor: "pointer"
+                                                    }}
+                                                >
+                                                    <div
+                                                        className="bubble-element HTML"
+                                                        style={{
+                                                            zIndex: 2,
+                                                            placeSelf: "center",
+                                                            minWidth: 24,
+                                                            minHeight: 24,
+                                                            width: "calc(100% - 0px)",
+                                                            height: "calc(100% - 0px)",
+                                                            margin: 0,
+                                                            borderRadius: 0,
+                                                            opacity: 1
+                                                        }}
+                                                    >
+                                                        <svg
+                                                            width={24}
+                                                            height={24}
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M16.7437 8.49378C17.0854 8.15206 17.0854 7.59802 16.7437 7.25629C16.402 6.91457 15.8479 6.91457 15.5062 7.25629L12 10.7625L8.49379 7.25629C8.15207 6.91457 7.59803 6.91457 7.2563 7.25629C6.91458 7.59802 6.91458 8.15206 7.2563 8.49378L10.7625 12L7.25629 15.5062C6.91457 15.8479 6.91457 16.402 7.25629 16.7437C7.59801 17.0854 8.15206 17.0854 8.49378 16.7437L12 13.2375L15.5062 16.7437C15.8479 17.0854 16.402 17.0854 16.7437 16.7437C17.0854 16.402 17.0854 15.8479 16.7437 15.5062L13.2375 12L16.7437 8.49378Z"
+                                                                fill="#212121"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="bubble-element GroupItem bubble-r-container flex row group-item entry-2"
+                                            style={{
+                                                justifyContent: "flex-start",
+                                                boxSizing: "content-box",
+                                                minHeight: 0,
+                                                borderTop: "0px none rgba(238, 238, 238, 0.5)",
+                                                marginTop: 0,
+                                                borderLeftStyle: "none",
+                                                display: "none"
+                                            }}
+                                        >
+                                            <div
+                                                className="bubble-element Group bubble-r-container flex row"
+                                                style={{
+                                                    zIndex: 4,
+                                                    alignSelf: "flex-start",
+                                                    minWidth: 0,
+                                                    order: 1,
+                                                    minHeight: 0,
+                                                    width: 0,
+                                                    flexGrow: 1,
+                                                    height: "max-content",
+                                                    margin: 0,
+                                                    justifyContent: "flex-start"
+                                                }}
+                                            >
+                                                <div
+                                                    className="bubble-element Image"
+                                                    style={{
+                                                        zIndex: 3,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        maxWidth: 24,
+                                                        order: 2,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: 0
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Text"
+                                                    style={{
+                                                        zIndex: 2,
+                                                        alignSelf: "center",
+                                                        minWidth: 0,
+                                                        order: 3,
+                                                        minHeight: 32,
+                                                        width: 0,
+                                                        flexGrow: 1,
+                                                        height: "max-content",
+                                                        margin: "0px 0px 0px 10px"
+                                                    }}
+                                                />
+                                                <div
+                                                    className="bubble-element Group bubble-r-container relative"
+                                                    style={{
+                                                        zIndex: 4,
+                                                        alignSelf: "center",
+                                                        minWidth: 24,
+                                                        maxWidth: 24,
+                                                        order: 4,
+                                                        minHeight: 24,
+                                                        maxHeight: 24,
+                                                        width: 24,
+                                                        flexGrow: 1,
+                                                        height: 24,
+                                                        margin: 0
+                                                    }}
+                                                >
+                                                    <div
+                                                        className="bubble-element HTML"
+                                                        style={{
+                                                            zIndex: 2,
+                                                            placeSelf: "center",
+                                                            minWidth: 24,
+                                                            minHeight: 24,
+                                                            width: "calc(100% - 0px)",
+                                                            height: "calc(100% - 0px)",
+                                                            margin: 0
+                                                        }}
+                                                    >
+                                                        <svg
+                                                            width={24}
+                                                            height={24}
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                d="M16.7437 8.49378C17.0854 8.15206 17.0854 7.59802 16.7437 7.25629C16.402 6.91457 15.8479 6.91457 15.5062 7.25629L12 10.7625L8.49379 7.25629C8.15207 6.91457 7.59803 6.91457 7.2563 7.25629C6.91458 7.59802 6.91458 8.15206 7.2563 8.49378L10.7625 12L7.25629 15.5062C6.91457 15.8479 6.91457 16.402 7.25629 16.7437C7.59801 17.0854 8.15206 17.0854 8.49378 16.7437L12 13.2375L15.5062 16.7437C15.8479 17.0854 16.402 17.0854 16.7437 16.7437C17.0854 16.402 17.0854 15.8479 16.7437 15.5062L13.2375 12L16.7437 8.49378Z"
+                                                                fill="#212121"
+                                                            />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    className="bubble-element Group bubble-r-container flex column"
+                                    style={{
+                                        zIndex: 30,
+                                        alignSelf: "flex-start",
+                                        minWidth: 300,
+                                        maxWidth: 500,
+                                        order: 2,
+                                        minHeight: 0,
+                                        width: 300,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: "0px 10px",
+                                        justifyContent: "flex-start",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 33,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 1,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Profile Image
+                                    </div>
+                                    <div
+                                        className="bubble-element PictureInput clickable-element"
+                                        style={{
+                                            zIndex: 24,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            maxWidth: 150,
+                                            order: 2,
+                                            minHeight: 150,
+                                            height: 150,
+                                            flexGrow: 1,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            borderStyle: "dotted",
+                                            borderWidth: 1,
+                                            borderColor: "rgb(237, 237, 237)",
+                                            borderRadius: 20,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <img
+                                            src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                zIndex: 5,
+                                                position: "absolute",
+                                                objectFit: "contain",
+                                                opacity: 1
+                                            }}
+                                        />
+                                        <button
+                                            className="button_for_file_uploader"
+                                            style={{
+                                                border: "none",
+                                                backgroundColor: "rgba(255, 255, 255, 0.63)",
+                                                zIndex: 4,
+                                                position: "absolute",
+                                                left: 0,
+                                                top: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                padding: 0,
+                                                cursor: "pointer",
+                                                opacity: 0,
+                                                fontFamily: "Barlow",
+                                                fontSize: 14,
+                                                fontWeight: 500,
+                                                color: "rgb(58, 77, 143)",
+                                                textAlign: "center"
+                                            }}
+                                        />
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            title="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg"
+                                            style={{
+                                                opacity: 0,
+                                                position: "absolute",
+                                                zIndex: 15,
+                                                left: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                fontSize: 0,
+                                                cursor: "pointer"
+                                            }}
+                                        />
+                                    </div>
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 34,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 3,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "auto",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 14,
+                                            fontWeight: 500,
+                                            color: "rgb(0, 0, 0)",
+                                            lineHeight: 1,
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Profile Banner
+                                    </div>
+                                    <div
+                                        className="bubble-element Text"
+                                        style={{
+                                            zIndex: 24,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 4,
+                                            minHeight: 0,
+                                            height: "max-content",
+                                            flexGrow: 0,
+                                            flexShrink: 0,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 10px",
+                                            whiteSpace: "pre-wrap",
+                                            overflow: "visible",
+                                            wordBreak: "break-word",
+                                            fontFamily: "Poppins",
+                                            fontSize: 12,
+                                            fontWeight: 400,
+                                            color: "rgb(123, 123, 123)",
+                                            lineHeight: "1.5",
+                                            borderRadius: 0,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        Recomendable size is 1440 x 250.
+                                    </div>
+                                    <div
+                                        className="bubble-element PictureInput clickable-element"
+                                        style={{
+                                            zIndex: 34,
+                                            alignSelf: "flex-start",
+                                            minWidth: 0,
+                                            order: 22,
+                                            minHeight: 85,
+                                            height: 85,
+                                            flexGrow: 1,
+                                            width: "calc(100% - 0px)",
+                                            margin: "0px 0px 30px",
+                                            borderStyle: "solid",
+                                            borderWidth: 1,
+                                            borderColor: "rgb(237, 237, 237)",
+                                            borderRadius: 20,
+                                            opacity: 1
+                                        }}
+                                    >
+                                        <img
+                                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                zIndex: 5,
+                                                position: "absolute",
+                                                objectFit: "contain",
+                                                opacity: 0
+                                            }}
+                                        />
+                                        <button
+                                            className="button_for_file_uploader"
+                                            style={{
+                                                border: "none",
+                                                backgroundColor: "rgba(255, 255, 255, 0.63)",
+                                                zIndex: 4,
+                                                position: "absolute",
+                                                left: 0,
+                                                top: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                padding: 0,
+                                                cursor: "pointer",
+                                                opacity: 1,
+                                                fontFamily: "Barlow",
+                                                fontSize: 14,
+                                                fontWeight: 500,
+                                                color: "rgb(58, 77, 143)",
+                                                textAlign: "center",
+                                                backgroundRepeat: "no-repeat",
+                                                backgroundPosition: "center center",
+                                                backgroundSize: "cover",
+                                                backgroundImage:
+                                                    'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647546632984x709636644989855000/Group%201000000914%20%281%29.svg")'
+                                            }}
+                                        />
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            style={{
+                                                opacity: 0,
+                                                position: "absolute",
+                                                zIndex: 15,
+                                                left: 0,
+                                                width: "100%",
+                                                height: "100%",
+                                                fontSize: 0,
+                                                cursor: "pointer"
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                className="bubble-element Button clickable-element"
+                                style={{
+                                    zIndex: 27,
+                                    alignSelf: "flex-start",
+                                    minWidth: 120,
+                                    maxWidth: 120,
+                                    order: 3,
+                                    minHeight: 50,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: 120,
+                                    margin: "0px 0px 0px 10px",
+                                    padding: 0,
+                                    cursor: "pointer",
+                                    background:
+                                        "linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%)",
+                                    border: "none",
+                                    textAlign: "center",
+                                    fontFamily: "Poppins",
+                                    fontSize: 16,
+                                    fontWeight: 500,
+                                    color: "rgb(255, 255, 255)",
+                                    letterSpacing: 1,
+                                    lineHeight: 1,
+                                    borderRadius: 5,
+                                    opacity: 1,
+                                    transition: "background 200ms ease 0s"
+                                }}
+                                onClick="UpdateProfile()"
+                            >
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                    {/* Enabled Section 6 */}
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        id="section-6"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 6,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "0px 10px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            padding: "0px 0px 100px",
+                            opacity: 1
+                        }}
+                    >
+                        <h2
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "auto",
+                                margin: "0px 0px 50px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 28,
+                                fontWeight: 600,
+                                color: "rgb(5, 5, 5)",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Settings
+                        </h2>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 39,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 580,
+                                order: 4,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 30,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Password
+                            </div>
+                            <input
+                                type="password"
+                                autoComplete="new-password"
+                                className="bubble-element Input a1689834994986x14741"
+                                placeholder=" Password"
+                                maxLength=""
+                                style={{
+                                    zIndex: 30,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 50,
+                                    maxHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    padding: "0px 15px",
+                                    opacity: 1
+                                }}
+                            />
+                            <div
+                                className="bubble-element Group bubble-r-container flex column"
+                                style={{
+                                    visibility: "hidden",
+                                    zIndex: 33,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    display: "none",
+                                    justifyContent: "flex-start"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 29,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "auto",
+                                        margin: "0px 0px 10px"
+                                    }}
+                                />
+                                <input
+                                    type="password"
+                                    autoComplete="new-password"
+                                    className="bubble-element Input"
+                                    style={{
+                                        zIndex: 29,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 2,
+                                        minHeight: 50,
+                                        maxHeight: 50,
+                                        height: 50,
+                                        flexGrow: 1,
+                                        width: "calc(100% - 0px)",
+                                        margin: "0px 0px 30px"
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 29,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 3,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "auto",
+                                        margin: "0px 0px 10px"
+                                    }}
+                                />
+                                <input
+                                    type="password"
+                                    autoComplete="new-password"
+                                    className="bubble-element Input"
+                                    style={{
+                                        zIndex: 29,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 4,
+                                        minHeight: 50,
+                                        maxHeight: 50,
+                                        height: 50,
+                                        flexGrow: 1,
+                                        width: "calc(100% - 0px)",
+                                        margin: 0
+                                    }}
+                                />
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 38,
+                                    alignSelf: "flex-end",
+                                    minWidth: 0,
+                                    order: 4,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "10px 0px 40px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                change password
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 36,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 5,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 10px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 600,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: "1.6",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Email
+                            </div>
+                            <input
+                                type="email"
+                                className="bubble-element Input a1689834994986x14741"
+                                placeholder="Email"
+                                maxLength=""
+                                style={{
+                                    zIndex: 29,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 6,
+                                    minHeight: 50,
+                                    maxHeight: 50,
+                                    height: 50,
+                                    flexGrow: 1,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    border: "1px solid rgb(238, 238, 238)",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 15,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(0, 0, 0)",
+                                    padding: "0px 15px",
+                                    opacity: 1
+                                }}
+                            />
+                            <div
+                                className="bubble-element Group bubble-r-container flex column"
+                                style={{
+                                    visibility: "hidden",
+                                    zIndex: 37,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 7,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    display: "none",
+                                    justifyContent: "flex-start"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 36,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "auto",
+                                        margin: "0px 0px 10px"
+                                    }}
+                                />
+                                <input
+                                    type="password"
+                                    autoComplete="new-password"
+                                    className="bubble-element Input"
+                                    style={{
+                                        zIndex: 35,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 2,
+                                        minHeight: 50,
+                                        maxHeight: 50,
+                                        height: 50,
+                                        flexGrow: 1,
+                                        width: "calc(100% - 0px)",
+                                        margin: 0
+                                    }}
+                                />
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id=""
+                                style={{
+                                    zIndex: 34,
+                                    alignSelf: "flex-end",
+                                    minWidth: 0,
+                                    order: 8,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "10px 0px 40px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                change email
+                            </div>
+                            <button
+                                className="bubble-element Button"
+                                style={{
+                                    visibility: "hidden",
+                                    zIndex: 33,
+                                    alignSelf: "flex-end",
+                                    minWidth: 0,
+                                    maxWidth: 120,
+                                    order: 9,
+                                    minHeight: 50,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    display: "none"
+                                }}
+                            />
+                            <div
+                                className="bubble-element Group bubble-r-container flex column"
+                                style={{
+                                    visibility: "hidden",
+                                    zIndex: 39,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 10,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    display: "none",
+                                    justifyContent: "flex-start"
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 30,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 1,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "auto",
+                                        margin: "0px 0px 20px"
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 31,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 2,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "calc(100% - 0px)",
+                                        margin: "0px 0px 10px"
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Text"
+                                    style={{
+                                        zIndex: 32,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 3,
+                                        minHeight: 0,
+                                        height: "max-content",
+                                        flexGrow: 0,
+                                        flexShrink: 0,
+                                        width: "auto",
+                                        margin: 0
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Footer starts here -*/}
+            <div
+                className="bubble-element CustomElement bubble-r-container flex column"
+                style={{
+                    zIndex: 6,
+                    alignSelf: "center",
+                    minWidth: 0,
+                    maxWidth: 1200,
+                    order: 8,
+                    minHeight: 0,
+                    height: "max-content",
+                    flexGrow: 0,
+                    flexShrink: 0,
+                    width: "calc(100% - 0px)",
+                    margin: 0,
+                    justifyContent: "flex-start",
+                    overflow: "visible",
+                    borderTop: "1px solid rgb(246, 246, 246)",
+                    borderRadius: 0,
+                    opacity: 1
+                }}
+                id=""
+            >
+                <div
+                    className="bubble-element CustomElement bubble-r-container flex column"
+                    style={{
+                        zIndex: 3,
+                        alignSelf: "center",
+                        minWidth: 0,
+                        maxWidth: 1200,
+                        order: 6,
+                        minHeight: 0,
+                        height: "max-content",
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        width: "calc(100% - 0px)",
+                        margin: 0,
+                        justifyContent: "flex-start",
+                        overflow: "visible",
+                        borderTop: "1px solid rgb(246, 246, 246)",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex row"
+                        style={{
+                            zIndex: 9,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            maxWidth: 1180,
+                            order: 2,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "46px 10px 36px",
+                            justifyContent: "space-between",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 8,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 1,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    maxWidth: 266,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                BirdHouse
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: 0,
+                                    justifyContent: "flex-start",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 1,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387110450x225588365466711900/Group%20252.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 2,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387114934x751236047018641900/Group%20253.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 3,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387119622x631156546568235800/Group%20254.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 4,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: 0,
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647453372274x846150973190001900/Group%20255%20%281%29.svg")'
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 6,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 2,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 2,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Navigation
+                            </h3>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                About Us
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                                onClick="location.href='contact_us'"
+                            >
+                                Contact Us
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 4,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                Terms &amp; Conditions
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 5,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 5px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                Privacy Policy
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 3,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Contact Us
+                            </h3>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                +1 23 456 789 123
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 5px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                itatarinov@gmail.com
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 7,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 4,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 7,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Soon available
+                            </h3>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 7,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 23px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Vulputate hac felis morbi egestas.
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "center",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    justifyContent: "space-between",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Image"
+                                    style={{
+                                        zIndex: 7,
+                                        alignSelf: "center",
+                                        minWidth: 132,
+                                        maxWidth: "45%",
+                                        order: 3,
+                                        width: 132,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: 0,
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <img
+                                        alt=""
+                                        src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg"
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            display: "block",
+                                            width: "100%",
+                                            height: "100%",
+                                            margin: 0,
+                                            borderRadius: 0
+                                        }}
+                                    />
+                                    <div style={{position: "relative", paddingTop: "34.0136%"}}/>
+                                </div>
+                                <div
+                                    className="bubble-element Image"
+                                    style={{
+                                        zIndex: 6,
+                                        alignSelf: "center",
+                                        minWidth: 146,
+                                        maxWidth: "45%",
+                                        order: 4,
+                                        width: 146,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: 0,
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <img
+                                        alt=""
+                                        src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg"
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            display: "block",
+                                            width: "100%",
+                                            height: "100%",
+                                            margin: 0,
+                                            borderRadius: 0
+                                        }}
+                                    />
+                                    <div style={{position: "relative", paddingTop: "29.8137%"}}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default Dashboard;

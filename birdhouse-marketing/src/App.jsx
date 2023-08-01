@@ -1,6 +1,9 @@
 import React, {Component, lazy} from 'react';
 import { FrontendApi, Configuration } from "@ory/client"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
 
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
 const AccountPreview = React.lazy(() => import("./pages/templates/AccountPreview/AccountPreview.jsx"))
@@ -18,25 +21,29 @@ const Login = React.lazy(() => import("./pages/templates/Login/Login.jsx"))
 const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/ProductPage.jsx"))
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
-import OryVerify from "./auth/verification.jsx";
-import OryRecovery from "./auth/recovery.jsx";
-import OryLogin from "./auth/login.jsx";
-import OryRegister from "./auth/registration.jsx";
+
 
 function App() {
-    // Get your Ory url from .env
-    // Or localhost for local development
-    const basePath = "http://127.0.0.1:4433"
-    const uiPath = "http://127.0.0.1:4455"
 
-    const ory = new FrontendApi(
-        new Configuration({
-            basePath,
-            baseOptions: {
-                withCredentials: true,
-            },
-        }),
-    )
+    // Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBkDkZ0uC_fWgufs0mVIgW_fFjQjSvrAHE",
+        authDomain: "birdhouse-6f71f.firebaseapp.com",
+        projectId: "birdhouse-6f71f",
+        storageBucket: "birdhouse-6f71f.appspot.com",
+        messagingSenderId: "1030264927942",
+        appId: "1:1030264927942:web:77617dfeed23a9b28d49c7",
+        measurementId: "G-JRWRECB89N"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
 
     return (
         <Router>
@@ -60,12 +67,6 @@ function App() {
                 <Route path="/product_page" element={<React.Suspense fallback='Loading...'> <ProductPage/> </React.Suspense>} />
                 <Route path="/withdraw_success" element={<React.Suspense fallback='Loading...'> <WithdrawSuccess/> </React.Suspense>} />
                 <Route path="/withdraw_unsuccess" element={<React.Suspense fallback='Loading...'> <WithdrawUnsuccess/> </React.Suspense>} />
-
-
-                <Route path="/ory_login" element={OryLogin(ory, uiPath)} />
-                <Route path="/ory_register" element={OryRegister(ory, uiPath)} />
-                <Route path="/ory_recovery" element={OryRecovery(ory,uiPath)} />
-                <Route path="/ory_verify" element={OryVerify(ory, uiPath)} />
             </Routes>
         </Router>
     );

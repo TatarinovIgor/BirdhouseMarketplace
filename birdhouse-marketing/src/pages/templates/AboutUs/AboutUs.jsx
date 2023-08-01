@@ -1,118 +1,1511 @@
 import React, { useEffect, useState } from 'react';
-import { FrontendApi, Configuration, Session, Identity } from "@ory/client"
-
-const html_template = "<html lang=\"en\">\n" +
-    "<head>\n" +
-    "  <meta charset=\"utf-8\">\n" +
-    "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n" +
-    "  <title>Product Page</title>\n" +
-    "  <meta name=\"referrer\" content=\"origin\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Barlow:500%7CBarlow:700%7CLato%7CLato:regular%7CLato:regular%7CMontserrat+Alternates:800%7CPoppins:regular%7CPoppins:500%7CPoppins:600%7CPoppins:700%7CPoppins:800italic%7CPoppins:italic%7CPoppins:regular\">\n" +
-    "  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://birdhouse-styles.s3.amazonaws.com/style.css\">\n" +
-    "  <link rel=\"stylesheet\" href=\"https://d2tf8y1b8kxrzw.cloudfront.net/serve_files/airalert/jquery.toast.min.css\">\n" +
-    "</head>\n" +
-    "<body style=\"height: 100%; display: flex; flex-direction: column;\" data-new-gr-c-s-check-loaded=\"14.1114.0\" data-gr-ext-installed=\"\">\n" +
-    "<img style=\"display: none;\" src=\"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7\">\n" +
-    "\n" +
-    "<!-- Header starts here -->\n" +
-    "<div class=\"main-page bubble-element Page bubble-r-container flex column\" style=\"width: 100%; margin-right: auto; margin-left: auto; position: relative; z-index: 1; min-height: max(0px, 100%); height: max-content; flex-shrink: 0; justify-content: flex-start; opacity: 1; background: url(&quot;https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648042080335x457986908089333950%2FGroup%25201000000957%2520%25281%2529.png?w=1536&amp;h=&amp;auto=compress&amp;dpr=2&amp;fit=max&quot;) center top / cover repeat-y rgba(255, 255, 255, 0);\">\n" +
-    "  <div class=\"bubble-element CustomElement bubble-r-container flex row\" id=\"header\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 1; min-height: 80px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: center; overflow: visible; background-color: rgb(255, 255, 255); border-radius: 0px; box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 25px 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 15; align-self: center; min-width: 300px; max-width: 1180px; order: 3; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px; justify-content: space-between; overflow: visible; background-color: rgb(255, 255, 255); border-radius: 0px; opacity: 1;\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 2; align-self: center; min-width: 82px; max-width: 82px; order: 1; min-height: 28px; width: 82px; flex-grow: 1; height: max-content; margin: 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\" onclick=\"location.href='landing_advertisers'\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"align-self: flex-start; min-width: 74px; max-width: 74px; order: 1; min-height: 21px; width: 74px; flex-grow: 1; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: &quot;Montserrat Alternates&quot;; font-size: 40px; font-weight: 800; color: rgb(3, 180, 198); letter-spacing: -5px; line-height: 1.5; border-radius: 0px; opacity: 1;\"><font color=\"#00ffff\">B</font><font color=\"#000000\">H</font></div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container relative\" style=\"z-index: 4; align-self: center; min-width: 0px; max-width: 394px; order: 2; min-height: 40px; width: 0px; flex-grow: 1; height: max-content; margin: 0px 10px; overflow: visible; border-style: solid; border-width: 1px; border-color: rgb(238, 238, 238); border-radius: 10px; padding: 0px 10px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; place-self: center start; min-width: 25px; max-width: 25px; min-height: 23px; max-height: 23px; width: 25px; height: 23px; margin: 0px 14px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387433266x621007601971848000/search.svg&quot;);\"></div>\n" +
-    "        <input type=\"input\" class=\"bubble-element Input\" placeholder=\"Search ads, usernames, categories\" maxlength=\"\" style=\"z-index: 3; place-self: center end; min-width: 0px; max-width: 337px; min-height: 40px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px; border: none; background-color: transparent; border-radius: 0px; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row clickable-element\" style=\"z-index: 4; place-self: center; min-width: 0px; min-height: 0px; width: calc(100% - 0px); height: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1; cursor: pointer;\"></div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 0px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 3; align-self: center; min-width: 0px; order: 3; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; justify-content: center; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='explore_bloggers'\">Bloggers</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='explore_advertisers'\">Advertisers</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='dashboard#create'\">Create</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 20px 0px 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\">About us</div>\n" +
-    "          <div class=\"bubble-element Text clickable-element\" id=\"\" style=\"z-index: 3; align-self: flex-start; min-width: 83px; order: 6; min-height: 0px; width: 83px; flex-grow: 1; height: max-content; margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='contact_us'\">Contact us</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container fixed clickable-element\" style=\"z-index: 4; align-self: center; min-width: 40px; max-width: 40px; order: 4; min-height: 40px; max-height: 40px; width: 40px; flex-grow: 1; height: 40px; margin: 0px; overflow: visible; border-radius: 100px; padding: 0px; opacity: 1; cursor: pointer; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg&quot;);\" onclick=\"location.href='dashboard'\" ></div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"visibility: hidden; z-index: 4; align-self: center; min-width: 83px; order: 5; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; display: none;\"></div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" id=\"gradient-text\" style=\"z-index: 5; align-self: center; min-width: 83px; order: 6; min-height: 0px; width: max-content; flex-grow: 0; height: max-content; margin: 0px 0px 0px 20px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer; transition: color 300ms linear 0s;\" onclick=\"location.href='deposit'\">Balance: </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <!-- Main content -->\n" +
-    "  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 2; align-self: center; min-width: 320px; max-width: 1200px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 150px 0px 70px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; align-self: flex-start; min-width: 300px; order: 1; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px 20px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "      <h1 class=\"bubble-element Text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; max-width: 478px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 36px; font-weight: 700; color: rgb(0, 0, 0); line-height: 1.5; border-radius: 0px; opacity: 1;\">Our unique solution</h1>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; max-width: 478px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">What do we do?</div>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">BirdHouse marketing is a unique influence marketing solution that is based on NFT. Our mission is to make influence marketing easier for businesses and simplify advertisers' search for influencers</div>\n" +
-    "    </div>\n" +
-    "    <div class=\"bubble-element Image\" style=\"z-index: 6; align-self: flex-end; min-width: 300px; max-width: 480px; order: 2; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px 20px; border-radius: 0px; opacity: 1;\">\n" +
-    "      <img alt=\"\" src=\"https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1646929483457x999133761311537000%2F5319229%25201.png?w=768&amp;h=526&amp;auto=compress&amp;dpr=2&amp;fit=max\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "      <div style=\"position: relative; padding-top: 68.5417%;\"></div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "  <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 5; align-self: center; min-width: 320px; max-width: 1200px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 100px 0px 70px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Image\" style=\"z-index: 6; align-self: flex-end; min-width: 300px; max-width: 480px; order: 3; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px; border-radius: 0px; opacity: 1;\">\n" +
-    "      <img alt=\"\" src=\"https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1651395155093x877349976850067700%2Funnamed%2520%25281%2529.png?w=768&amp;h=608&amp;auto=compress&amp;dpr=2&amp;fit=max\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "      <div style=\"position: relative; padding-top: 79.1667%;\"></div>\n" +
-    "    </div>\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; align-self: flex-start; min-width: 300px; order: 4; min-height: 0px; width: 300px; flex-grow: 1; height: max-content; margin: 0px 10px 20px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "      <h1 class=\"bubble-element Text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; max-width: 478px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 36px; font-weight: 700; color: rgb(0, 0, 0); line-height: 1.5; border-radius: 0px; opacity: 1;\">Our method</h1>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; max-width: 478px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(0, 0, 0); line-height: 1; border-radius: 0px; opacity: 1;\">How do we do it?</div>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 4; align-self: center; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">The system is based on NFT. Influencer issue their own NFT. However, instead of jpeg/png image NFT has advertising agreement. Then influencer publish &nbsp; his new-made NFT on our marketplace, where it is beign sold like any other NFT. </div>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 6; align-self: center; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">Then advertisers can buy issued NFT on our marketplace. Advertisers can use it at any moment. As soon as he uses his NFT, it is being transferred to its issuer and the issuer has to post an advertisement, which was discussed in the agreement.&nbsp;</div>\n" +
-    "      <div class=\"bubble-element Text\" style=\"z-index: 7; align-self: center; min-width: 0px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 14px; white-space: pre-wrap; overflow: visible; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 500; color: rgb(33, 33, 33); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">Also, advertisers can hold it, and resell it later. This will allow him to buy ads at a lower price when the influencer has a smaller audience. Later on, an advertiser can sell his NFT to other advertisers. Because an influencer has a larger audience, he can sell his NFT at a higher price.</div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "\n" +
-    "  <!-- Footer starts here --->\n" +
-    "  <div class=\"bubble-element CustomElement bubble-r-container flex column\" style=\"z-index: 3; align-self: center; min-width: 0px; max-width: 1200px; order: 6; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: flex-start; overflow: visible; border-top: 1px solid rgb(246, 246, 246); border-radius: 0px; opacity: 1;\">\n" +
-    "    <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 9; align-self: flex-start; min-width: 300px; max-width: 1180px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 20px); margin: 46px 10px 36px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 8; align-self: stretch; min-width: 280px; max-width: 300px; order: 1; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; max-width: 266px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 30px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.1px; line-height: 1.5; border-radius: 0px; opacity: 1;\">BirdHouse</div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 4; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 2; align-self: flex-start; min-width: 35px; max-width: 35px; order: 1; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387110450x225588365466711900/Group%20252.svg&quot;);\"></div>\n" +
-    "          <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 2; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387114934x751236047018641900/Group%20253.svg&quot;);\"></div>\n" +
-    "          <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 3; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px 10px 0px 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387119622x631156546568235800/Group%20254.svg&quot;);\"></div>\n" +
-    "          <div class=\"bubble-element Group bubble-r-container fixed\" style=\"z-index: 3; align-self: flex-start; min-width: 35px; max-width: 35px; order: 4; min-height: 35px; max-height: 35px; width: 35px; flex-grow: 1; height: 35px; margin: 0px; overflow: visible; border-radius: 0px; padding: 0px; opacity: 1; background-color: rgba(255, 255, 255, 0); background-repeat: no-repeat; background-size: cover; background-image: url(&quot;https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647453372274x846150973190001900/Group%20255%20%281%29.svg&quot;);\"></div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 6; align-self: stretch; min-width: 280px; max-width: 300px; order: 2; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <h3 class=\"bubble-element Text\" style=\"z-index: 2; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Navigation</h3>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" style=\"z-index: 3; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">About Us</div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1.5; border-radius: 0px; opacity: 1; cursor: pointer;\" onclick=\"location.href='contact_us'\">Contact Us</div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 4; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">Terms &amp; Conditions</div>\n" +
-    "        <div class=\"bubble-element Text clickable-element\" style=\"z-index: 5; align-self: flex-start; min-width: 0px; order: 5; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 5px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1; cursor: pointer;\">Privacy Policy</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 5; align-self: stretch; min-width: 280px; max-width: 300px; order: 3; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <h3 class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Contact Us</h3>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 18px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">+1 23 456 789 123</div>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 6; align-self: flex-start; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 5px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">itatarinov@gmail.com</div>\n" +
-    "      </div>\n" +
-    "      <div class=\"bubble-element Group bubble-r-container flex column\" style=\"z-index: 7; align-self: stretch; min-width: 280px; max-width: 300px; order: 4; min-height: 0px; width: 280px; flex-grow: 1; height: auto; margin: 0px 0px 30px; justify-content: flex-start; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "        <h3 class=\"bubble-element Text\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; order: 1; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: auto; margin: 0px 0px 20px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 18px; font-weight: 600; color: rgb(0, 0, 0); letter-spacing: 0.2px; line-height: 1; border-radius: 0px; opacity: 1;\">Soon available</h3>\n" +
-    "        <div class=\"bubble-element Text\" style=\"z-index: 7; align-self: flex-start; min-width: 0px; order: 2; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px 0px 23px; white-space: pre-wrap; overflow: visible; padding-bottom: 0px; word-break: break-word; font-family: Poppins; font-size: 14px; font-weight: 400; color: rgb(123, 123, 123); letter-spacing: 0.5px; line-height: 1; border-radius: 0px; opacity: 1;\">Vulputate hac felis morbi egestas.</div>\n" +
-    "        <div class=\"bubble-element Group bubble-r-container flex row\" style=\"z-index: 6; align-self: center; min-width: 0px; order: 3; min-height: 0px; height: max-content; flex-grow: 0; flex-shrink: 0; width: calc(100% - 0px); margin: 0px; justify-content: space-between; overflow: visible; border-radius: 0px; opacity: 1;\">\n" +
-    "          <div class=\"bubble-element Image\" style=\"z-index: 7; align-self: center; min-width: 132px; max-width: 45%; order: 3; width: 132px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\">\n" +
-    "            <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "            <div style=\"position: relative; padding-top: 34.0136%;\"></div>\n" +
-    "          </div>\n" +
-    "          <div class=\"bubble-element Image\" style=\"z-index: 6; align-self: center; min-width: 146px; max-width: 45%; order: 4; width: 146px; flex-grow: 1; height: max-content; margin: 0px; border-radius: 0px; opacity: 1;\">\n" +
-    "            <img alt=\"\" src=\"https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg\" style=\"position: absolute; top: 0px; left: 0px; display: block; width: 100%; height: 100%; margin: 0px; border-radius: 0px;\">\n" +
-    "            <div style=\"position: relative; padding-top: 29.8137%;\"></div>\n" +
-    "          </div>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
-    "    </div>\n" +
-    "  </div>\n" +
-    "</div>\n" +
-    "</body>\n" +
-    "</html>"
+import "./style.css"
 const About = () => {
-    return <div dangerouslySetInnerHTML={{ __html: html_template }} />;
+    return (
+        <>
+            {/* Header starts here */}
+            <div
+                className="main-page bubble-element Page bubble-r-container flex column"
+                style={{
+                    width: "100%",
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                    position: "relative",
+                    zIndex: 1,
+                    minHeight: "max(0px, 100%)",
+                    height: "max-content",
+                    flexShrink: 0,
+                    justifyContent: "flex-start",
+                    opacity: 1,
+                    background:
+                        'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648042080335x457986908089333950%2FGroup%25201000000957%2520%25281%2529.png?w=1536&h=&auto=compress&dpr=2&fit=max") center top / cover repeat-y rgba(255, 255, 255, 0)'
+                }}
+            >
+                <div
+                    className="bubble-element CustomElement bubble-r-container flex row"
+                    id="header"
+                    style={{
+                        zIndex: 4,
+                        alignSelf: "flex-start",
+                        minWidth: 0,
+                        order: 1,
+                        minHeight: 80,
+                        height: "max-content",
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        width: "calc(100% - 0px)",
+                        margin: 0,
+                        justifyContent: "center",
+                        overflow: "visible",
+                        backgroundColor: "rgb(255, 255, 255)",
+                        borderRadius: 0,
+                        boxShadow: "rgba(0, 0, 0, 0.05) 0px 4px 25px 0px",
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex row"
+                        style={{
+                            zIndex: 15,
+                            alignSelf: "center",
+                            minWidth: 300,
+                            maxWidth: 1180,
+                            order: 3,
+                            minHeight: 0,
+                            width: 300,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px",
+                            justifyContent: "space-between",
+                            overflow: "visible",
+                            backgroundColor: "rgb(255, 255, 255)",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container flex row clickable-element"
+                            style={{
+                                zIndex: 2,
+                                alignSelf: "center",
+                                minWidth: 82,
+                                maxWidth: 82,
+                                order: 1,
+                                minHeight: 28,
+                                width: 82,
+                                flexGrow: 1,
+                                height: "max-content",
+                                margin: 0,
+                                justifyContent: "center",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1,
+                                cursor: "pointer"
+                            }}
+                            onClick="location.href='landing_advertisers'">
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    alignSelf: "flex-start",
+                                    minWidth: 74,
+                                    maxWidth: 74,
+                                    order: 1,
+                                    minHeight: 21,
+                                    width: 74,
+                                    flexGrow: 1,
+                                    height: "max-content",
+                                    margin: 0,
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: '"Montserrat Alternates"',
+                                    fontSize: 40,
+                                    fontWeight: 800,
+                                    color: "rgb(3, 180, 198)",
+                                    letterSpacing: "-5px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <font color="#00ffff">B</font>
+                                <font color="#000000">H</font>
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container relative"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                maxWidth: 394,
+                                order: 2,
+                                minHeight: 40,
+                                width: 0,
+                                flexGrow: 1,
+                                height: "max-content",
+                                margin: "0px 10px",
+                                overflow: "visible",
+                                borderStyle: "solid",
+                                borderWidth: 1,
+                                borderColor: "rgb(238, 238, 238)",
+                                borderRadius: 10,
+                                padding: "0px 10px",
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Group bubble-r-container fixed"
+                                style={{
+                                    zIndex: 2,
+                                    placeSelf: "center start",
+                                    minWidth: 25,
+                                    maxWidth: 25,
+                                    minHeight: 23,
+                                    maxHeight: 23,
+                                    width: 25,
+                                    height: 23,
+                                    margin: "0px 14px 0px 0px",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    padding: 0,
+                                    opacity: 1,
+                                    backgroundColor: "rgba(255, 255, 255, 0)",
+                                    backgroundRepeat: "no-repeat",
+                                    backgroundSize: "cover",
+                                    backgroundImage:
+                                        'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387433266x621007601971848000/search.svg")'
+                                }}
+                            />
+                            <input
+                                type="input"
+                                className="bubble-element Input"
+                                placeholder="Search ads, usernames, categories"
+                                maxLength=""
+                                style={{
+                                    zIndex: 3,
+                                    placeSelf: "center end",
+                                    minWidth: 0,
+                                    maxWidth: 337,
+                                    minHeight: 40,
+                                    width: "calc(100% - 0px)",
+                                    height: "calc(100% - 0px)",
+                                    margin: 0,
+                                    border: "none",
+                                    backgroundColor: "transparent",
+                                    borderRadius: 0,
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    opacity: 1
+                                }}
+                            />
+                            <div
+                                className="bubble-element Group bubble-r-container flex row clickable-element"
+                                style={{
+                                    zIndex: 4,
+                                    placeSelf: "center",
+                                    minWidth: 0,
+                                    minHeight: 0,
+                                    width: "calc(100% - 0px)",
+                                    height: "calc(100% - 0px)",
+                                    margin: 0,
+                                    justifyContent: "flex-start",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            />
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex row"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 3,
+                                minHeight: 0,
+                                width: "max-content",
+                                flexGrow: 0,
+                                height: "max-content",
+                                margin: 0,
+                                justifyContent: "center",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "center",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 20px 0px 0px",
+                                    justifyContent: "center",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Text clickable-element"
+                                    id=""
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 1,
+                                        minHeight: 0,
+                                        width: "max-content",
+                                        flexGrow: 0,
+                                        height: "max-content",
+                                        margin: "0px 20px 0px 0px",
+                                        whiteSpace: "pre-wrap",
+                                        overflow: "visible",
+                                        wordBreak: "break-word",
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(33, 33, 33)",
+                                        letterSpacing: "0.1px",
+                                        lineHeight: "1.5",
+                                        borderRadius: 0,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        transition: "color 300ms linear 0s"
+                                    }}
+                                    onClick="location.href='explore_bloggers'"
+                                >
+                                    Bloggers
+                                </div>
+                                <div
+                                    className="bubble-element Text clickable-element"
+                                    id=""
+                                    style={{
+                                        zIndex: 4,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 2,
+                                        minHeight: 0,
+                                        width: "max-content",
+                                        flexGrow: 0,
+                                        height: "max-content",
+                                        margin: "0px 20px 0px 0px",
+                                        whiteSpace: "pre-wrap",
+                                        overflow: "visible",
+                                        wordBreak: "break-word",
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(33, 33, 33)",
+                                        letterSpacing: "0.1px",
+                                        lineHeight: "1.5",
+                                        borderRadius: 0,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        transition: "color 300ms linear 0s"
+                                    }}
+                                    onClick="location.href='explore_advertisers'"
+                                >
+                                    Advertisers
+                                </div>
+                                <div
+                                    className="bubble-element Text clickable-element"
+                                    id=""
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 4,
+                                        minHeight: 0,
+                                        width: "max-content",
+                                        flexGrow: 0,
+                                        height: "max-content",
+                                        margin: "0px 20px 0px 0px",
+                                        whiteSpace: "pre-wrap",
+                                        overflow: "visible",
+                                        wordBreak: "break-word",
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(33, 33, 33)",
+                                        letterSpacing: "0.1px",
+                                        lineHeight: "1.5",
+                                        borderRadius: 0,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        transition: "color 300ms linear 0s"
+                                    }}
+                                    onClick="location.href='dashboard#create'"
+                                >
+                                    Create
+                                </div>
+                                <div
+                                    className="bubble-element Text clickable-element"
+                                    id="gradient-text"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 0,
+                                        order: 5,
+                                        minHeight: 0,
+                                        width: "max-content",
+                                        flexGrow: 0,
+                                        height: "max-content",
+                                        margin: "0px 20px 0px 0px",
+                                        whiteSpace: "pre-wrap",
+                                        overflow: "visible",
+                                        wordBreak: "break-word",
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(33, 33, 33)",
+                                        letterSpacing: "0.1px",
+                                        lineHeight: "1.5",
+                                        borderRadius: 0,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        transition: "color 300ms linear 0s"
+                                    }}
+                                >
+                                    About us
+                                </div>
+                                <div
+                                    className="bubble-element Text clickable-element"
+                                    id=""
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 83,
+                                        order: 6,
+                                        minHeight: 0,
+                                        width: 83,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: 0,
+                                        whiteSpace: "pre-wrap",
+                                        overflow: "visible",
+                                        wordBreak: "break-word",
+                                        fontFamily: "Poppins",
+                                        fontSize: 14,
+                                        fontWeight: 500,
+                                        color: "rgb(33, 33, 33)",
+                                        letterSpacing: "0.1px",
+                                        lineHeight: "1.5",
+                                        borderRadius: 0,
+                                        opacity: 1,
+                                        cursor: "pointer",
+                                        transition: "color 300ms linear 0s"
+                                    }}
+                                    onClick="location.href='contact_us'"
+                                >
+                                    Contact us
+                                </div>
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container fixed clickable-element"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "center",
+                                    minWidth: 40,
+                                    maxWidth: 40,
+                                    order: 4,
+                                    minHeight: 40,
+                                    maxHeight: 40,
+                                    width: 40,
+                                    flexGrow: 1,
+                                    height: 40,
+                                    margin: 0,
+                                    overflow: "visible",
+                                    borderRadius: 100,
+                                    padding: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    backgroundColor: "rgba(255, 255, 255, 0)",
+                                    backgroundRepeat: "no-repeat",
+                                    backgroundSize: "cover",
+                                    backgroundImage:
+                                        'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg")'
+                                }}
+                                onClick="location.href='dashboard'"
+                            />
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    visibility: "hidden",
+                                    zIndex: 4,
+                                    alignSelf: "center",
+                                    minWidth: 83,
+                                    order: 5,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 0px 0px 20px",
+                                    display: "none"
+                                }}
+                            />
+                            <div
+                                className="bubble-element Text clickable-element"
+                                id="gradient-text"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "center",
+                                    minWidth: 83,
+                                    order: 6,
+                                    minHeight: 0,
+                                    width: "max-content",
+                                    flexGrow: 0,
+                                    height: "max-content",
+                                    margin: "0px 0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 500,
+                                    color: "rgb(33, 33, 33)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer",
+                                    transition: "color 300ms linear 0s"
+                                }}
+                                onClick="location.href='deposit'"
+                            >
+                                Balance:{" "}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Main content */}
+                <div
+                    className="bubble-element Group bubble-r-container flex row"
+                    style={{
+                        zIndex: 2,
+                        alignSelf: "center",
+                        minWidth: 320,
+                        maxWidth: 1200,
+                        order: 2,
+                        minHeight: 0,
+                        height: "max-content",
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        width: "calc(100% - 0px)",
+                        margin: "150px 0px 70px",
+                        justifyContent: "space-between",
+                        overflow: "visible",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 1,
+                            minHeight: 0,
+                            width: 300,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px 20px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <h1
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 478,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 36,
+                                fontWeight: 700,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Our unique solution
+                        </h1>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 478,
+                                order: 2,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: 1,
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            What do we do?
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 3,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: 0,
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            BirdHouse marketing is a unique influence marketing solution that is
+                            based on NFT. Our mission is to make influence marketing easier for
+                            businesses and simplify advertisers' search for influencers
+                        </div>
+                    </div>
+                    <div
+                        className="bubble-element Image"
+                        style={{
+                            zIndex: 6,
+                            alignSelf: "flex-end",
+                            minWidth: 300,
+                            maxWidth: 480,
+                            order: 2,
+                            width: 300,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px 20px",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <img
+                            alt=""
+                            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1646929483457x999133761311537000%2F5319229%25201.png?w=768&h=526&auto=compress&dpr=2&fit=max"
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                display: "block",
+                                width: "100%",
+                                height: "100%",
+                                margin: 0,
+                                borderRadius: 0
+                            }}
+                        />
+                        <div style={{ position: "relative", paddingTop: "68.5417%" }} />
+                    </div>
+                </div>
+                <div
+                    className="bubble-element Group bubble-r-container flex row"
+                    style={{
+                        zIndex: 5,
+                        alignSelf: "center",
+                        minWidth: 320,
+                        maxWidth: 1200,
+                        order: 3,
+                        minHeight: 0,
+                        height: "max-content",
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        width: "calc(100% - 0px)",
+                        margin: "100px 0px 70px",
+                        justifyContent: "space-between",
+                        overflow: "visible",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Image"
+                        style={{
+                            zIndex: 6,
+                            alignSelf: "flex-end",
+                            minWidth: 300,
+                            maxWidth: 480,
+                            order: 3,
+                            width: 300,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <img
+                            alt=""
+                            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1651395155093x877349976850067700%2Funnamed%2520%25281%2529.png?w=768&h=608&auto=compress&dpr=2&fit=max"
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                display: "block",
+                                width: "100%",
+                                height: "100%",
+                                margin: 0,
+                                borderRadius: 0
+                            }}
+                        />
+                        <div style={{ position: "relative", paddingTop: "79.1667%" }} />
+                    </div>
+                    <div
+                        className="bubble-element Group bubble-r-container flex column"
+                        style={{
+                            zIndex: 5,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            order: 4,
+                            minHeight: 0,
+                            width: 300,
+                            flexGrow: 1,
+                            height: "max-content",
+                            margin: "0px 10px 20px",
+                            justifyContent: "flex-start",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <h1
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 3,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 478,
+                                order: 1,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 36,
+                                fontWeight: 700,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Our method
+                        </h1>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "flex-start",
+                                minWidth: 0,
+                                maxWidth: 478,
+                                order: 2,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(0, 0, 0)",
+                                lineHeight: 1,
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            How do we do it?
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 4,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 3,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            The system is based on NFT. Influencer issue their own NFT. However,
+                            instead of jpeg/png image NFT has advertising agreement. Then
+                            influencer publish &nbsp; his new-made NFT on our marketplace, where
+                            it is beign sold like any other NFT.{" "}
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 6,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 4,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Then advertisers can buy issued NFT on our marketplace. Advertisers
+                            can use it at any moment. As soon as he uses his NFT, it is being
+                            transferred to its issuer and the issuer has to post an advertisement,
+                            which was discussed in the agreement.&nbsp;
+                        </div>
+                        <div
+                            className="bubble-element Text"
+                            style={{
+                                zIndex: 7,
+                                alignSelf: "center",
+                                minWidth: 0,
+                                order: 5,
+                                minHeight: 0,
+                                height: "max-content",
+                                flexGrow: 0,
+                                flexShrink: 0,
+                                width: "calc(100% - 0px)",
+                                margin: "0px 0px 14px",
+                                whiteSpace: "pre-wrap",
+                                overflow: "visible",
+                                wordBreak: "break-word",
+                                fontFamily: "Poppins",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "rgb(33, 33, 33)",
+                                letterSpacing: "0.1px",
+                                lineHeight: "1.5",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            Also, advertisers can hold it, and resell it later. This will allow
+                            him to buy ads at a lower price when the influencer has a smaller
+                            audience. Later on, an advertiser can sell his NFT to other
+                            advertisers. Because an influencer has a larger audience, he can sell
+                            his NFT at a higher price.
+                        </div>
+                    </div>
+                </div>
+                {/* Footer starts here -*/}
+                <div
+                    className="bubble-element CustomElement bubble-r-container flex column"
+                    style={{
+                        zIndex: 3,
+                        alignSelf: "center",
+                        minWidth: 0,
+                        maxWidth: 1200,
+                        order: 6,
+                        minHeight: 0,
+                        height: "max-content",
+                        flexGrow: 0,
+                        flexShrink: 0,
+                        width: "calc(100% - 0px)",
+                        margin: 0,
+                        justifyContent: "flex-start",
+                        overflow: "visible",
+                        borderTop: "1px solid rgb(246, 246, 246)",
+                        borderRadius: 0,
+                        opacity: 1
+                    }}
+                >
+                    <div
+                        className="bubble-element Group bubble-r-container flex row"
+                        style={{
+                            zIndex: 9,
+                            alignSelf: "flex-start",
+                            minWidth: 300,
+                            maxWidth: 1180,
+                            order: 2,
+                            minHeight: 0,
+                            height: "max-content",
+                            flexGrow: 0,
+                            flexShrink: 0,
+                            width: "calc(100% - 20px)",
+                            margin: "46px 10px 36px",
+                            justifyContent: "space-between",
+                            overflow: "visible",
+                            borderRadius: 0,
+                            opacity: 1
+                        }}
+                    >
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 8,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 1,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    maxWidth: 266,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 30px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.1px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                BirdHouse
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 4,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: 0,
+                                    justifyContent: "flex-start",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 2,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 1,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387110450x225588365466711900/Group%20252.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 2,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387114934x751236047018641900/Group%20253.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 3,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: "0px 10px 0px 0px",
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387119622x631156546568235800/Group%20254.svg")'
+                                    }}
+                                />
+                                <div
+                                    className="bubble-element Group bubble-r-container fixed"
+                                    style={{
+                                        zIndex: 3,
+                                        alignSelf: "flex-start",
+                                        minWidth: 35,
+                                        maxWidth: 35,
+                                        order: 4,
+                                        minHeight: 35,
+                                        maxHeight: 35,
+                                        width: 35,
+                                        flexGrow: 1,
+                                        height: 35,
+                                        margin: 0,
+                                        overflow: "visible",
+                                        borderRadius: 0,
+                                        padding: 0,
+                                        opacity: 1,
+                                        backgroundColor: "rgba(255, 255, 255, 0)",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundSize: "cover",
+                                        backgroundImage:
+                                            'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647453372274x846150973190001900/Group%20255%20%281%29.svg")'
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 6,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 2,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 2,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Navigation
+                            </h3>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 3,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                About Us
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: "1.5",
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                                onClick="location.href='contact_us'"
+                            >
+                                Contact Us
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 4,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                Terms &amp; Conditions
+                            </div>
+                            <div
+                                className="bubble-element Text clickable-element"
+                                style={{
+                                    zIndex: 5,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 5,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 5px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1,
+                                    cursor: "pointer"
+                                }}
+                            >
+                                Privacy Policy
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 5,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 3,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Contact Us
+                            </h3>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 18px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                +1 23 456 789 123
+                            </div>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 5px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                itatarinov@gmail.com
+                            </div>
+                        </div>
+                        <div
+                            className="bubble-element Group bubble-r-container flex column"
+                            style={{
+                                zIndex: 7,
+                                alignSelf: "stretch",
+                                minWidth: 280,
+                                maxWidth: 300,
+                                order: 4,
+                                minHeight: 0,
+                                width: 280,
+                                flexGrow: 1,
+                                height: "auto",
+                                margin: "0px 0px 30px",
+                                justifyContent: "flex-start",
+                                overflow: "visible",
+                                borderRadius: 0,
+                                opacity: 1
+                            }}
+                        >
+                            <h3
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 7,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 1,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "auto",
+                                    margin: "0px 0px 20px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 18,
+                                    fontWeight: 600,
+                                    color: "rgb(0, 0, 0)",
+                                    letterSpacing: "0.2px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Soon available
+                            </h3>
+                            <div
+                                className="bubble-element Text"
+                                style={{
+                                    zIndex: 7,
+                                    alignSelf: "flex-start",
+                                    minWidth: 0,
+                                    order: 2,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: "0px 0px 23px",
+                                    whiteSpace: "pre-wrap",
+                                    overflow: "visible",
+                                    paddingBottom: 0,
+                                    wordBreak: "break-word",
+                                    fontFamily: "Poppins",
+                                    fontSize: 14,
+                                    fontWeight: 400,
+                                    color: "rgb(123, 123, 123)",
+                                    letterSpacing: "0.5px",
+                                    lineHeight: 1,
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                Vulputate hac felis morbi egestas.
+                            </div>
+                            <div
+                                className="bubble-element Group bubble-r-container flex row"
+                                style={{
+                                    zIndex: 6,
+                                    alignSelf: "center",
+                                    minWidth: 0,
+                                    order: 3,
+                                    minHeight: 0,
+                                    height: "max-content",
+                                    flexGrow: 0,
+                                    flexShrink: 0,
+                                    width: "calc(100% - 0px)",
+                                    margin: 0,
+                                    justifyContent: "space-between",
+                                    overflow: "visible",
+                                    borderRadius: 0,
+                                    opacity: 1
+                                }}
+                            >
+                                <div
+                                    className="bubble-element Image"
+                                    style={{
+                                        zIndex: 7,
+                                        alignSelf: "center",
+                                        minWidth: 132,
+                                        maxWidth: "45%",
+                                        order: 3,
+                                        width: 132,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: 0,
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <img
+                                        alt=""
+                                        src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg"
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            display: "block",
+                                            width: "100%",
+                                            height: "100%",
+                                            margin: 0,
+                                            borderRadius: 0
+                                        }}
+                                    />
+                                    <div style={{ position: "relative", paddingTop: "34.0136%" }} />
+                                </div>
+                                <div
+                                    className="bubble-element Image"
+                                    style={{
+                                        zIndex: 6,
+                                        alignSelf: "center",
+                                        minWidth: 146,
+                                        maxWidth: "45%",
+                                        order: 4,
+                                        width: 146,
+                                        flexGrow: 1,
+                                        height: "max-content",
+                                        margin: 0,
+                                        borderRadius: 0,
+                                        opacity: 1
+                                    }}
+                                >
+                                    <img
+                                        alt=""
+                                        src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg"
+                                        style={{
+                                            position: "absolute",
+                                            top: 0,
+                                            left: 0,
+                                            display: "block",
+                                            width: "100%",
+                                            height: "100%",
+                                            margin: 0,
+                                            borderRadius: 0
+                                        }}
+                                    />
+                                    <div style={{ position: "relative", paddingTop: "29.8137%" }} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+
+    );
 };
 
 export default About;
