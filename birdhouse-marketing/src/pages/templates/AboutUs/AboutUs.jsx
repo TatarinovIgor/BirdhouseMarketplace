@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./style.css"
 const About = () => {
+
     return (
         <>
             {/* Header starts here */}
@@ -19,8 +20,7 @@ const About = () => {
                     opacity: 1,
                     background:
                         'url("https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1648042080335x457986908089333950%2FGroup%25201000000957%2520%25281%2529.png?w=1536&h=&auto=compress&dpr=2&fit=max") center top / cover repeat-y rgba(255, 255, 255, 0)'
-                }}
-            >
+                }}>
                 <div
                     className="bubble-element CustomElement bubble-r-container flex row"
                     id="header"
@@ -41,8 +41,7 @@ const About = () => {
                         borderRadius: 0,
                         boxShadow: "rgba(0, 0, 0, 0.05) 0px 4px 25px 0px",
                         opacity: 1
-                    }}
-                >
+                    }}>
                     <div
                         className="bubble-element Group bubble-r-container flex row"
                         style={{
@@ -61,8 +60,7 @@ const About = () => {
                             backgroundColor: "rgb(255, 255, 255)",
                             borderRadius: 0,
                             opacity: 1
-                        }}
-                    >
+                        }}>
                         <div
                             className="bubble-element Group bubble-r-container flex row clickable-element"
                             style={{
@@ -82,7 +80,7 @@ const About = () => {
                                 opacity: 1,
                                 cursor: "pointer"
                             }}
-                            onClick="location.href='landing_advertisers'">
+                            onClick={event => window.location.href='landing_advertisers'}>
                             <div
                                 className="bubble-element Text"
                                 style={{
@@ -106,8 +104,7 @@ const About = () => {
                                     lineHeight: "1.5",
                                     borderRadius: 0,
                                     opacity: 1
-                                }}
-                            >
+                                }}>
                                 <font color="#00ffff">B</font>
                                 <font color="#000000">H</font>
                             </div>
@@ -132,8 +129,7 @@ const About = () => {
                                 borderRadius: 10,
                                 padding: "0px 10px",
                                 opacity: 1
-                            }}
-                        >
+                            }}>
                             <div
                                 className="bubble-element Group bubble-r-container fixed"
                                 style={{
@@ -155,8 +151,7 @@ const About = () => {
                                     backgroundSize: "cover",
                                     backgroundImage:
                                         'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647387433266x621007601971848000/search.svg")'
-                                }}
-                            />
+                                }}/>
                             <input
                                 type="input"
                                 className="bubble-element Input"
@@ -180,8 +175,7 @@ const About = () => {
                                     color: "rgb(123, 123, 123)",
                                     letterSpacing: "0.5px",
                                     opacity: 1
-                                }}
-                            />
+                                }}/>
                             <div
                                 className="bubble-element Group bubble-r-container flex row clickable-element"
                                 style={{
@@ -197,8 +191,7 @@ const About = () => {
                                     borderRadius: 0,
                                     opacity: 1,
                                     cursor: "pointer"
-                                }}
-                            />
+                                }}/>
                         </div>
                         <div
                             className="bubble-element Group bubble-r-container flex row"
@@ -216,8 +209,7 @@ const About = () => {
                                 overflow: "visible",
                                 borderRadius: 0,
                                 opacity: 1
-                            }}
-                        >
+                            }}>
                             <div
                                 className="bubble-element Group bubble-r-container flex row"
                                 style={{
@@ -234,8 +226,7 @@ const About = () => {
                                     overflow: "visible",
                                     borderRadius: 0,
                                     opacity: 1
-                                }}
-                            >
+                                }}>
                                 <div
                                     className="bubble-element Text clickable-element"
                                     id=""
@@ -263,8 +254,7 @@ const About = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onClick="location.href='explore_bloggers'"
-                                >
+                                    onClick={event => window.location.href='explore_bloggers'}>
                                     Bloggers
                                 </div>
                                 <div
@@ -294,8 +284,7 @@ const About = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onClick="location.href='explore_advertisers'"
-                                >
+                                    onClick={event => window.location.href='explore_advertisers'}>
                                     Advertisers
                                 </div>
                                 <div
@@ -325,8 +314,7 @@ const About = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onClick="location.href='dashboard#create'"
-                                >
+                                    onClick={event => window.location.href='dashboard'}>
                                     Create
                                 </div>
                                 <div
@@ -355,8 +343,7 @@ const About = () => {
                                         opacity: 1,
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
-                                    }}
-                                >
+                                    }}>
                                     About us
                                 </div>
                                 <div
@@ -386,8 +373,7 @@ const About = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onClick="location.href='contact_us'"
-                                >
+                                    onClick={event => window.location.href='contact_us'}>
                                     Contact us
                                 </div>
                             </div>
@@ -416,8 +402,7 @@ const About = () => {
                                     backgroundImage:
                                         'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg")'
                                 }}
-                                onClick="location.href='dashboard'"
-                            />
+                                onClick={event => window.location.href='dashboard'}/>
                             <div
                                 className="bubble-element Text"
                                 style={{
@@ -461,7 +446,7 @@ const About = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onClick="location.href='deposit'"
+                                onClick={event => window.location.href='deposit'}
                             >
                                 Balance:{" "}
                             </div>
@@ -1166,7 +1151,7 @@ const About = () => {
                                     opacity: 1,
                                     cursor: "pointer"
                                 }}
-                                onClick="location.href='contact_us'"
+                                onClick={event => window.location.href='contact_us'}
                             >
                                 Contact Us
                             </div>
