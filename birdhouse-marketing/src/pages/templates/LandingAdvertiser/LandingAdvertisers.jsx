@@ -136,7 +136,8 @@ const LandingAdvertisers = () => {
                                     opacity: 1,
                                     cursor: "pointer"
                                 }}
-                                onclick="location.href='landing_bloggers'"
+
+                                onClick={event => window.location.href='landing_blogger'}
                             >
                                 I am blogger
                             </div>
@@ -281,7 +282,8 @@ const LandingAdvertisers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='explore_bloggers'"
+
+                                    onClick={event => window.location.href='explore_bloggers'}
                                 >
                                     Bloggers
                                 </div>
@@ -312,7 +314,8 @@ const LandingAdvertisers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='dashboard#create'"
+
+                                    onClick={event => window.location.href='dashboard'}
                                 >
                                     Create Campaign
                                 </div>
@@ -343,7 +346,8 @@ const LandingAdvertisers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='about'"
+
+                                    onClick={event => window.location.href='about'}
                                 >
                                     About us
                                 </div>
@@ -374,7 +378,8 @@ const LandingAdvertisers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='contact_us'"
+
+                                    onClick={event => window.location.href='contact_us'}
                                 >
                                     Contact us
                                 </div>

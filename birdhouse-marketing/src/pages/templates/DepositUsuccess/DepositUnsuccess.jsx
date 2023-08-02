@@ -82,7 +82,7 @@ const DepositUnsuccess = () => {
                             opacity: 1,
                             cursor: "pointer"
                         }}
-                        onClick="location.href='landing_advertisers'"
+                        onClick={event => window.location.href='landing_advertisers'}
                     >
                         <div
                             className="bubble-element Text"
@@ -264,7 +264,7 @@ const DepositUnsuccess = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onClick="location.href='explore_bloggers'"
+                                onClick={event => window.location.href='explore_bloggers'}
                             >
                                 Bloggers
                             </div>
@@ -295,7 +295,7 @@ const DepositUnsuccess = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onClick="location.href='explore_advertisers'"
+                                onClick={event => window.location.href='explore_advertisers'}
                             >
                                 Advertisers
                             </div>
@@ -326,7 +326,7 @@ const DepositUnsuccess = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onClick="location.href='dashboard#create'"
+                                onClick={event => window.location.href='dashboard'}
                             >
                                 Create
                             </div>
@@ -357,7 +357,7 @@ const DepositUnsuccess = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onClick="location.href='about'"
+                                onClick={event => window.location.href='about'}
                             >
                                 About us
                             </div>
@@ -417,7 +417,7 @@ const DepositUnsuccess = () => {
                                 backgroundImage:
                                     'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg")'
                             }}
-                            onClick="location.href='dashboard'"
+                            onClick={event => window.location.href='dashboard'}
                         />
                         <div
                             className="bubble-element Text"
@@ -462,7 +462,7 @@ const DepositUnsuccess = () => {
                                 cursor: "pointer",
                                 transition: "color 300ms linear 0s"
                             }}
-                            onClick="location.href='deposit'"
+                            onClick={event => window.location.href='deposit'}
                         >
                             <p id="UserBalance"/>{" "}
                         </div>
@@ -647,7 +647,7 @@ const DepositUnsuccess = () => {
                             opacity: 1,
                             transition: "background 200ms ease 0s"
                         }}
-                        onClick="location.href='dashboard'"
+                        onClick={event => window.location.href='dashboard'}
                     >
                         Back home
                     </button>
@@ -992,7 +992,7 @@ const DepositUnsuccess = () => {
                                     opacity: 1,
                                     cursor: "pointer"
                                 }}
-                                onClick="location.href='contact_us'"
+                                onClick={event => window.location.href='contact_us'}
                             >
                                 Contact Us
                             </div>

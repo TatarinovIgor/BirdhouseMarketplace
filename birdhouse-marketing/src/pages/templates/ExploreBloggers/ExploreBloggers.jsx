@@ -82,7 +82,7 @@ const ExploreBloggers = () => {
                                 opacity: 1,
                                 cursor: "pointer"
                             }}
-                            onclick="location.href='landing_'"
+                            onClick={event => window.location.href='landing_advertisers'}
                         >
                             <div
                                 className="bubble-element Text"
@@ -264,7 +264,8 @@ const ExploreBloggers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='explore_bloggers'"
+
+                                    onClick={event => window.location.href='explore_bloggers'}
                                 >
                                     Bloggers
                                 </div>
@@ -295,7 +296,7 @@ const ExploreBloggers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='explore_advertisers'"
+                                    onClick={event => window.location.href='explore_advertisers'}
                                 >
                                     Advertisers
                                 </div>
@@ -326,7 +327,8 @@ const ExploreBloggers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='dashboard#create'"
+
+                                    onClick={event => window.location.href='dashboard'}
                                 >
                                     Create
                                 </div>
@@ -357,7 +359,8 @@ const ExploreBloggers = () => {
                                         cursor: "pointer",
                                         transition: "color 300ms linear 0s"
                                     }}
-                                    onclick="location.href='about'"
+
+                                    onClick={event => window.location.href='about'}
                                 >
                                     About us
                                 </div>
@@ -417,7 +420,7 @@ const ExploreBloggers = () => {
                                     backgroundImage:
                                         'url("https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647552379244x207864892994998200/Group%20462.svg")'
                                 }}
-                                onclick="location.href='dashboard'"
+                                onClick={event => window.location.href='dashboard'}
                             />
                             <div
                                 className="bubble-element Text"
@@ -462,7 +465,8 @@ const ExploreBloggers = () => {
                                     cursor: "pointer",
                                     transition: "color 300ms linear 0s"
                                 }}
-                                onclick="location.href='deposit'"
+
+                                onClick={event => window.location.href='deposit'}
                             >
                                 <p id="UserBalance" />{" "}
                             </div>
@@ -4730,7 +4734,8 @@ const ExploreBloggers = () => {
                                         opacity: 1,
                                         cursor: "pointer"
                                     }}
-                                    onclick="location.href='contact_us'"
+
+                                    onClick={event => window.location.href='contact_us'}
                                 >
                                     Contact Us
                                 </div>

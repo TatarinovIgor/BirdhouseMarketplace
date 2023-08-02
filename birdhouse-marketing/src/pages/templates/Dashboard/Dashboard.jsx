@@ -462,7 +462,7 @@ const Dashboard = () => {
                                 cursor: "pointer",
                                 transition: "color 300ms linear 0s"
                             }}
-                            onClick="location.href='deposit'"
+                            onClick={event => window.location.href='depositdeposit'}
                         >
                             <p id="UserBalance"/>{" "}
                         </div>
@@ -634,7 +634,7 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection1()"
+                            onClick={event => SetSection1()}
                         >
                             Created orders
                         </div>
@@ -708,7 +708,7 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection2()"
+                            onClick={event => SetSection2()}
                         >
                             Accepted orders
                         </div>
@@ -864,7 +864,8 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection3()"
+                            onClick={event => SetSection3()}
+
                         >
                             Assigned orders
                         </div>
@@ -1021,8 +1022,7 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection4()"
-                        >
+                            onClick={event => SetSection4()}>
                             Create order
                         </div>
                     </div>
@@ -1096,7 +1096,8 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection5()"
+                            onClick={event => SetSection5()}
+
                         >
                             Profile
                         </div>
@@ -1171,7 +1172,8 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection6()"
+                            onClick={event => SetSection6()}
+
                         >
                             Settings
                         </div>
@@ -1247,7 +1249,8 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="Logout()"
+                            onClick={event => Logout()}
+
                         >
                             Log out
                         </div>
@@ -1383,7 +1386,8 @@ const Dashboard = () => {
                                 borderRadius: 0,
                                 opacity: 1
                             }}
-                            onClick="SetSection1"
+                            onClick={event => SetSection1()}
+
                         >
                             Created orders
                         </div>
@@ -8971,7 +8975,8 @@ const Dashboard = () => {
                                     opacity: 1,
                                     transition: "background 200ms ease 0s"
                                 }}
-                                onClick="CreateOrder()"
+                                onClick={event => CreateOrder()}
+
                             >
                                 Create
                             </button>
@@ -9915,7 +9920,7 @@ const Dashboard = () => {
                                     opacity: 1,
                                     transition: "background 200ms ease 0s"
                                 }}
-                                onClick="UpdateProfile()"
+                                onClick={event => UpdateProfile()}
                             >
                                 Update
                             </button>
@@ -10719,7 +10724,7 @@ const Dashboard = () => {
                                     opacity: 1,
                                     cursor: "pointer"
                                 }}
-                                onClick="location.href='contact_us'"
+                                onClick={event => window.location.href='contact_us'}
                             >
                                 Contact Us
                             </div>
