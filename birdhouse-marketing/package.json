@@ -9,7 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.4",
     "@ory/client": "^1.1.41",
+    "antd": "^5.8.2",
     "axios": "^1.4.0",
     "firebase": "^10.1.0",
     "react": "^18.2.0",
