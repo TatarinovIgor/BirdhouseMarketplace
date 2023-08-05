@@ -1,6 +1,5 @@
 import React from "react";
 import "./style.css"
-
 import {Layout, Input, Menu} from 'antd';
 
 const { Search } = Input;
@@ -17,7 +16,6 @@ export const BHHeader = () => {
                     position: 'sticky',
                     top: 0,
                     zIndex: 1,
-                    width: '100%',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

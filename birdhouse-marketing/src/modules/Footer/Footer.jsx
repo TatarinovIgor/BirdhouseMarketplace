@@ -6,11 +6,9 @@ export const Footer = () => {
             <div
                 className="bubble-element CustomElement bubble-r-container flex column"
                 style={{
-                    zIndex: 3,
                     alignSelf: "center",
                     minWidth: 0,
                     maxWidth: 1200,
-                    order: 6,
                     minHeight: 0,
                     height: "max-content",
                     flexGrow: 0,
@@ -27,11 +25,9 @@ export const Footer = () => {
                 <div
                     className="bubble-element Group bubble-r-container flex row"
                     style={{
-                        zIndex: 9,
                         alignSelf: "flex-start",
                         minWidth: 300,
                         maxWidth: 1180,
-                        order: 2,
                         minHeight: 0,
                         height: "max-content",
                         flexGrow: 0,
@@ -51,7 +47,6 @@ export const Footer = () => {
                             alignSelf: "stretch",
                             minWidth: 280,
                             maxWidth: 300,
-                            order: 1,
                             minHeight: 0,
                             width: 280,
                             flexGrow: 1,

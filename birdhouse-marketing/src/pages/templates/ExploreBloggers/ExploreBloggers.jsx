@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./style.css"
-import Header from "../../../modules/Header/Header.jsx";
+import BHHeader from "../../../modules/Header/BHHeader.jsx";
 import Footer from "../../../modules/Footer/Footer.jsx";
 const ExploreBloggers = () => {
     return (
