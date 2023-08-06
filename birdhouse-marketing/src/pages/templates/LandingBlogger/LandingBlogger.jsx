@@ -1,16 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
-import "./style.css";
 import {Row, Col, Typography, Button, Card, Table, Steps, Input} from 'antd';
 import {BHCard} from "../../../modules/BHCard.jsx";
 import {BHCarousel} from "../../../modules/BHCarousel.jsx";
 import {
     FacebookFilled,
-    FacebookOutlined,
-    GoogleOutlined,
     InstagramFilled,
-    InstagramOutlined, TwitterCircleFilled,
-    TwitterOutlined, TwitterSquareFilled
+    TwitterSquareFilled
 } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
@@ -44,15 +40,10 @@ const LandingBloggers = () => {
                 }}
             >
                 <Col
-                    xs={{ span: 24, order: 2 }}
-                    md={{ span: 12, order: 1 }}
+                    span={15}
                     style={{
                         alignSelf: "center",
                         minWidth: 300,
-                        order: 1,
-                        minHeight: 0,
-                        flexGrow: 1,
-                        margin: "0px 10px 40px",
                     }}
                 >
                     <Title style={{
@@ -82,6 +73,7 @@ const LandingBloggers = () => {
                             type="primary"
                             size="large"
                             style={{
+                                marginTop: 38,
                                 width: "100%",
                                 maxWidth: 138,
                                 background: "linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%)"
@@ -92,14 +84,9 @@ const LandingBloggers = () => {
                     </div>
                 </Col>
                 <Col
-                    xs={{ span: 24, order: 1 }}
-                    md={{ span: 12, order: 2 }}
+                    span={9}
                     style={{
-                        minWidth: 0,
-                        order: 3,
-                        minHeight: 0,
-                        flexGrow: 1,
-                        margin: "0px 10px 40px",
+                        minWidth: 300,
                     }}
                 >
                     <div
@@ -107,12 +94,11 @@ const LandingBloggers = () => {
                             position: "relative",
                             width: "100%",
                             paddingTop: "100%",
-                            borderRadius: 0,
                         }}
                     >
                         <img
                             alt=""
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1655838572205x412997318983146400%2FUntitled%2520design.png?w=512&h=512&auto=compress&dpr=2&fit=max"
                             style={{
                                 position: "absolute",
                                 top: 0,
@@ -239,14 +225,14 @@ const LandingBloggers = () => {
                 />
             </Row>
             <Col
-                 align="center"
-                 style={{
-                     alignSelf: "center",
-                     minWidth: 320,
-                     maxWidth: 1200,
-                     width: "calc(100% - 20px)",
-                     marginBottom: 100
-                 }}
+                align="center"
+                style={{
+                    alignSelf: "center",
+                    minWidth: 320,
+                    maxWidth: 1200,
+                    width: "calc(100% - 20px)",
+                    marginBottom: 100
+                }}
             >
                 <Title>Top campaigns <span style={{
                     backgroundClip: "text",
@@ -363,7 +349,7 @@ const LandingBloggers = () => {
                     />
                     <img
                         alt="Influenver with a laptop"
-                            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                         style={{
                             position: "absolute",
                             top: 0,
@@ -453,12 +439,10 @@ const LandingBloggers = () => {
                 justifyContent: "start",
             }}>
                 <Col span={12}>
-                    <div style={{
-                        width: 380,
-                    }}>
-                        <Title style={{
-                            fontFamily: "Poppins"
-                        }}>Stay in the loop</Title>
+                    <div style={{ width: 380, }}>
+                        <Title style={{ fontFamily: "Poppins" }}>
+                            Stay in the loop
+                        </Title>
                         <Text style={{
                             fontFamily: "Poppins",
                             color: "rgb(123, 123, 123)",

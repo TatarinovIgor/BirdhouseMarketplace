@@ -7,11 +7,9 @@ const Login = () => {
                 <div
                     className="bubble-element Group bubble-r-container flex column"
                     style={{
-                        zIndex: 2,
                         alignSelf: "center",
                         minWidth: 300,
                         maxWidth: 560,
-                        order: 2,
                         minHeight: 0,
                         height: "max-content",
                         flexGrow: 0,
@@ -29,7 +27,6 @@ const Login = () => {
                     <div
                         className="bubble-element Group bubble-r-container flex column"
                         style={{
-                            zIndex: 12,
                             alignSelf: "center",
                             minWidth: 0,
                             maxWidth: 370,
@@ -49,7 +46,6 @@ const Login = () => {
                         <div
                             className="bubble-element Text"
                             style={{
-                                zIndex: 2,
                                 alignSelf: "center",
                                 minWidth: 0,
                                 order: 1,
@@ -76,7 +72,6 @@ const Login = () => {
                         <div
                             className="bubble-element Group bubble-r-container flex row"
                             style={{
-                                zIndex: 11,
                                 alignSelf: "center",
                                 minWidth: 0,
                                 order: 2,
@@ -98,7 +93,6 @@ const Login = () => {
                             <div
                                 className="bubble-element Group bubble-r-container fixed"
                                 style={{
-                                    zIndex: 4,
                                     alignSelf: "center",
                                     minWidth: 24,
                                     maxWidth: 24,
@@ -126,7 +120,6 @@ const Login = () => {
                                 placeholder="Username"
                                 maxLength=""
                                 style={{
-                                    zIndex: 3,
                                     alignSelf: "center",
                                     minWidth: 0,
                                     maxWidth: 320,
@@ -152,7 +145,6 @@ const Login = () => {
                         <div
                             className="bubble-element Group bubble-r-container flex row"
                             style={{
-                                zIndex: 5,
                                 alignSelf: "center",
                                 minWidth: 0,
                                 order: 3,
@@ -174,7 +166,6 @@ const Login = () => {
                             <div
                                 className="bubble-element Group bubble-r-container fixed"
                                 style={{
-                                    zIndex: 4,
                                     alignSelf: "center",
                                     minWidth: 24,
                                     maxWidth: 24,
@@ -200,7 +191,6 @@ const Login = () => {
                                 type="email"
                                 className="bubble-element Input a1688714417222x6472"
                                 style={{
-                                    zIndex: 3,
                                     alignSelf: "center",
                                     minWidth: 0,
                                     maxWidth: 320,
@@ -228,7 +218,6 @@ const Login = () => {
                         <div
                             className="bubble-element Group bubble-r-container flex row"
                             style={{
-                                zIndex: 14,
                                 alignSelf: "center",
                                 minWidth: 0,
                                 order: 4,
@@ -250,7 +239,6 @@ const Login = () => {
                             <div
                                 className="bubble-element Group bubble-r-container fixed"
                                 style={{
-                                    zIndex: 4,
                                     alignSelf: "center",
                                     minWidth: 24,
                                     maxWidth: 24,
@@ -276,7 +264,6 @@ const Login = () => {
                                 type="tel"
                                 className="bubble-element Input a1688714417222x6472"
                                 style={{
-                                    zIndex: 3,
                                     alignSelf: "center",
                                     minWidth: 0,
                                     maxWidth: 320,

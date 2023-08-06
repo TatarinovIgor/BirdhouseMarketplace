@@ -1,8 +1,9 @@
 import React from "react";
 import "./style.css"
-import {Layout, Input, Menu} from 'antd';
+import {Layout, Input, Menu, Row, Col} from 'antd';
+import {SearchOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
-const { Search } = Input;
 const { Header} = Layout;
 
 export const BHHeader = () => {
@@ -16,32 +17,39 @@ export const BHHeader = () => {
                     position: 'sticky',
                     top: 0,
                     zIndex: 1,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
                     boxShadow: 'rgba(0, 0, 0, 0.05) 0px 4px 25px 0px',
                 }}
             >
-                <div
-                    style={{
-                        fontSize: 40,
-                        fontWeight: 800,
-                    }}
-                >
-                    <font color="#00ffff">B</font>
-                    <font color="#000000">H</font>
-                </div>
-                <Search size="middle" placeholder="Search ads, usernames, categories" style={{
-                    width: '395px',
-                    margin: '0px 20px',
-                }}/>
-                <Menu mode="horizontal" style={{width: '470px'}}>
-                    <Menu.Item key="1">Bloggers</Menu.Item>
-                    <Menu.Item key="2">Advertisers</Menu.Item>
-                    <Menu.Item key="3">Create</Menu.Item>
-                    <Menu.Item key="4">About us</Menu.Item>
-                    <Menu.Item key="5">Contact us</Menu.Item>
-                </Menu>
+                <Row style={{ maxWidth: 1180, margin: '0 auto', alignItems: 'center' }}>
+                    <Col span={4} style={{ fontSize: 40, fontWeight: 800 }}>
+                        <Link to="/">
+                            <span style={{ color: '#00ffff' }}>B</span>
+                            <span style={{ color: '#000000' }}>H</span>
+                        </Link>
+                    </Col>
+                    <Col span={6} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Input
+                            size="large"
+                            prefix={<SearchOutlined/>}
+                            placeholder="Search ads, usernames, categories"
+                        />
+                    </Col>
+                    <Col span={14}>
+                        <Menu mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <Menu.Item key="1">Bloggers</Menu.Item>
+                            <Menu.Item key="2">Advertisers</Menu.Item>
+                            <Menu.Item key="3">Create</Menu.Item>
+                            <Menu.Item key="4">About us</Menu.Item>
+                            <Menu.Item key="5">Contact us</Menu.Item>
+                            <Menu.Item key="6" style={{
+                                backgroundClip: "text",
+                                backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
+                                WebkitBackgroundClip: "text",
+                                color: "transparent"
+                            }}> <Link to="/login">Log in / Register</Link></Menu.Item>
+                        </Menu>
+                    </Col>
+                </Row>
             </Header>
         </>
     );
