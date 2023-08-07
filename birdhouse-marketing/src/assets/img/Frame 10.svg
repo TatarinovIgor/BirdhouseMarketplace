@@ -1,0 +1,18 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_b_291_3133)">
+<rect width="36" height="36" rx="18" fill="url(#paint0_radial_291_3133)" fill-opacity="0.5"/>
+<path d="M24.8377 11.1625C24.4128 10.7383 23.8369 10.5 23.2364 10.5C22.636 10.5 22.0601 10.7383 21.6352 11.1625L10.5 22.2975V25.5H13.7025L24.8377 14.365C25.2618 13.94 25.5 13.3642 25.5 12.7638C25.5 12.1634 25.2618 11.5875 24.8377 11.1625ZM13.1875 24.25H11.75V22.8125L20.0689 14.5L21.5064 15.9375L13.1875 24.25ZM23.9539 13.4813L22.387 15.0482L20.9527 13.6107L22.5189 12.0463C22.7096 11.8557 22.9681 11.7486 23.2377 11.7486C23.5073 11.7486 23.7658 11.8557 23.9564 12.0463C24.1471 12.2369 24.2542 12.4955 24.2542 12.765C24.2542 13.0346 24.1471 13.2932 23.9564 13.4838L23.9539 13.4813Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_b_291_3133" x="-5" y="-5" width="46" height="46" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImage" stdDeviation="2.5"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_291_3133"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_291_3133" result="shape"/>
+</filter>
+<radialGradient id="paint0_radial_291_3133" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(4.32 8.16) rotate(42.2475) scale(35.3395)">
+<stop/>
+<stop offset="1" stop-opacity="0.8"/>
+</radialGradient>
+</defs>
+</svg>
