@@ -1,2 +1,5 @@
 ./node_modules
 ./birdhouse-marketing/kratos.yaml
+/birdhouse-marketing/node_modules/
+/birdhouse-marketing/.idea/
+
