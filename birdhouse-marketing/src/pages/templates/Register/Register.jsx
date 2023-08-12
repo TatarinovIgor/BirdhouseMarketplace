@@ -9,7 +9,7 @@ import {BugFilled} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 
 const {Title} = Typography;
-const Login = () => {
+const Register = () => {
     const [value, setValue] = useState(1);
     const onChange = (e) => {
         console.log('radio checked', e.target.value);
@@ -43,29 +43,12 @@ const Login = () => {
                                 Register on BirdHouse
                             </div>
                             <Space style={{width: "100%"}} direction="vertical" size="large">
-                                <Input size="large" placeholder="Username" prefix={
-                                    <img style={{width: 24, marginRight: 10}} src={profile} alt="Username"/>
-                                }/>
                                 <Input size="large" placeholder="Email" prefix={
                                     <img style={{width: 24, marginRight: 10}} src={contact} alt="Email"/>
-                                }/>
-                                <Input size="large" placeholder="Phone number" prefix={
-                                    <img style={{width: 24, marginRight: 10}} src={phone} alt="Phone"/>
                                 }/>
                                 <Input.Password size="large" placeholder="Password" prefix={
                                     <img style={{width: 24, marginRight: 10}} src={password} alt="Password"/>
                                 }/>
-                                <Input.Password size="large" placeholder="Confirm password" prefix={
-                                    <img style={{width: 24, marginRight: 10}} src={password} alt="Password"/>
-                                }/>
-                                <div>
-                                    <Radio.Group onChange={onChange} value={value}>
-                                        <Space>
-                                            <Radio value={1}>I am advertiser</Radio>
-                                            <Radio value={2}>I am blogger</Radio>
-                                        </Space>
-                                    </Radio.Group>
-                                </div>
                                 <Button style={{
                                     background: "linear-gradient(120deg, rgb(45, 45, 255) 0%, rgb(0, 212, 255) 100%)",
                                     color: "white",
@@ -73,18 +56,18 @@ const Login = () => {
                                     width: 150,
                                     fontWeight: "bold"
                                 }}>
-                                    Continue
+                                    Log in
                                 </Button>
                                 <Divider>or</Divider>
                                 You already have an account?
-                                <Link to="/register" style={{
+                                <Link to="/login" style={{
                                     backgroundClip: "text",
                                     backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
                                     WebkitBackgroundClip: "text",
                                     color: "transparent",
                                     fontSize: 16,
                                     fontWeight: "bold"
-                                }}>Log in</Link>
+                                }}>Register</Link>
                             </Space>
                         </Col>
                 </div>
@@ -93,4 +76,4 @@ const Login = () => {
     )
 };
 
-export default Login;
+export default Register;

@@ -116,10 +116,6 @@ const ExploreBloggers = () => {
                             marginLeft: 50
                         }}>
                             <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
                         </Row>
                     </Col>
                 </Row>

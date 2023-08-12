@@ -3,13 +3,14 @@ import {UserOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 
 export const BHInfoCard = (props) => {
-    const {userName, adName, category, price} = props;
+    const {userName, adName, category, price, bg} = props;
     return (
         <div style={{
             height: 280,
             width: 280,
             borderRadius: 20,
-            backgroundColor: "black",
+            backgroundSize: "cover",
+            backgroundImage: `url(${bg})`,
             alignItems: "flex-end",
             display: "flex",
             marginBottom: 20,
@@ -29,13 +30,13 @@ export const BHInfoCard = (props) => {
                     <Col>
                         <Link to="/account_preview" style={{
                             fontSize: 12,
-                            marginBottom: 8,
                             color: "#d5cdcd",
                         }}>
                             <UserOutlined />{userName}
                         </Link>
                         <div style={{
                             fontSize: 14,
+                            marginTop: 8,
                             color: "#fdfefc",
                         }}>
                             {adName}
