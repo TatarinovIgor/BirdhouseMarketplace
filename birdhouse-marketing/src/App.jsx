@@ -1,11 +1,13 @@
 import React, {Component, lazy} from 'react';
 import {RouterProvider as Router, Route, Routes, createBrowserRouter, createRoutesFromElements} from 'react-router-dom';
+import { QueryClientProvider } from '@tanstack/react-query';
 import {initializeApp} from "firebase/app";
 import {getAnalytics} from "firebase/analytics";
 import {I18nextProvider} from 'react-i18next';
 import i18next from './i18in.jsx'
 import {App as AntApp} from './modules/antd/App';
-import {loader as kratosLoader} from "./pages/auth/login/login";
+import {loader as kratosLoader, action as kratosAction} from "./pages/auth/login/login";
+import {queryClient} from "./middleware/clients/query.client"
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
@@ -93,7 +95,7 @@ function App() {
                        element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
                        </React.Suspense>}/>
                 <Route path="/login"
-                       loader={kratosLoader}
+                       loader={kratosLoader} action={kratosAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
                        </React.Suspense>}/>
                 <Route path="/product_page"
@@ -113,11 +115,13 @@ function App() {
     );
 
     return (
-        <I18nextProvider i18n={i18next}>
-            <AntApp>
-                <Router router={router}/>
-            </AntApp>
-        </I18nextProvider>
+        <QueryClientProvider client={queryClient}>
+            <I18nextProvider i18n={i18next}>
+                <AntApp>
+                    <Router router={router}/>
+                </AntApp>
+            </I18nextProvider>
+        </QueryClientProvider>
     );
 }
 
