@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import {Row, Col, Typography, Button, Card, Table, Steps, Input} from 'antd';
-import {BHCard} from "../../../modules/BHCard.jsx";
+import {BHLandingCard} from "../../../modules/BHLandingCard.jsx";
 import {BHCarousel} from "../../../modules/BHCarousel.jsx";
 import {
     FacebookFilled,
@@ -135,7 +135,7 @@ const LandingBloggers = () => {
                     marginBottom: 105
                 }}
             >
-                <BHCard
+                <BHLandingCard
                     svgIcon={
                         <svg
                             width={36}
@@ -153,7 +153,7 @@ const LandingBloggers = () => {
                     title="Secure crypto wallet"
                     description="You can use your own wallet or we will create you our secure wallet"
                 />
-                <BHCard
+                <BHLandingCard
                     svgIcon={
                         <svg
                             width={36}
@@ -171,7 +171,7 @@ const LandingBloggers = () => {
                     title="40 of advertisers already registered"
                     description="You will have access to all our partners to sponsor your content"
                 />
-                <BHCard
+                <BHLandingCard
                     svgIcon={
                         <svg
                             width={36}
@@ -197,7 +197,7 @@ const LandingBloggers = () => {
                     title="High payment"
                     description="We are ensuring that our bloggers get fair payment according to market"
                 />
-                <BHCard
+                <BHLandingCard
                     svgIcon={
                         <svg
                             width={36}

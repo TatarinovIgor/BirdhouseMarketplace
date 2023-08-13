@@ -1,7 +1,7 @@
 import React from "react";
 import {Col, Row} from "antd";
 
-export const BHCard = (props) => {
+export const BHLandingCard = (props) => {
     const {svgIcon, title, description} = props;
     return (
         <Col

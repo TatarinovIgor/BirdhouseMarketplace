@@ -36,11 +36,21 @@ export const BHHeader = () => {
                     </Col>
                     <Col span={14}>
                         <Menu mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Menu.Item key="1">Bloggers</Menu.Item>
-                            <Menu.Item key="2">Advertisers</Menu.Item>
-                            <Menu.Item key="3">Create</Menu.Item>
-                            <Menu.Item key="4">About us</Menu.Item>
-                            <Menu.Item key="5">Contact us</Menu.Item>
+                            <Menu.Item key="1">
+                                <Link to="/explore_bloggers">Bloggers</Link>
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to="/explore_advertisers">Advertisers</Link>
+                            </Menu.Item>
+                            <Menu.Item key="3">
+                                <Link to="/dashboard?show=2">Create</Link>
+                            </Menu.Item>
+                            <Menu.Item key="4">
+                                <Link to="/about">About us</Link>
+                            </Menu.Item>
+                            <Menu.Item key="5">
+                                <Link to="/contact_us">Contact us</Link>
+                            </Menu.Item>
                             <Menu.Item key="6" style={{
                                 backgroundClip: "text",
                                 backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
