@@ -27,6 +27,7 @@ const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSucce
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
 const Register = React.lazy(() => import("./pages/templates/Register/Register.jsx"))
+const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
 function App() {
@@ -109,7 +110,10 @@ function App() {
                        </React.Suspense>}/>
                 <Route path="/register"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={Register}/>
-                       </React.Suspense>}/> #Done
+                       </React.Suspense>}/>
+                <Route path="/docs"
+                       element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>
+                       </React.Suspense>}/>
             </Route>
         )
     );

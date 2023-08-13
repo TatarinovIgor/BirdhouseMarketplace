@@ -3,6 +3,7 @@ import {Button, Col, Input, Row, Typography} from "antd";
 import nftImg from "../../../assets/img/images/nft.png";
 import phoneIcon from "../../../assets/img/icons/phone.svg";
 import locationIcon from "../../../assets/img/icons/locationIcon.svg"
+
 const { Title, Text} = Typography;
 const { TextArea } = Input;
 

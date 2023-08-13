@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css"
 import {Col, Row, Typography} from "antd";
+import {Link} from "react-router-dom";
 
 const { Title, Text } = Typography;
 export const Footer = () => {
@@ -42,10 +43,20 @@ export const Footer = () => {
                                         fontWeight: 600,
                                 }}>Navigation</Title>
                                 <div style={{ marginBottom: 30, letterSpacing: "0.5px", }}>
-                                        <div style={{ marginBottom: 18, cursor: 'pointer' }}>About Us</div>
-                                        <div style={{ marginBottom: 18, cursor: 'pointer' }} onClick={() => window.location.href='contact_us'}>Contact Us</div>
-                                        <div style={{ marginBottom: 18, cursor: 'pointer' }}>Terms & Conditions</div>
-                                        <div style={{ cursor: 'pointer' }}>Privacy Policy</div>
+                                        <div style={{
+                                                marginBottom: 18
+                                        }}>
+                                                <Link to="/about">About Us</Link>
+                                        </div>
+                                        <div style={{ marginBottom: 18 }}>
+                                                <Link to="/contact_us">Contact Us</Link>
+                                        </div>
+                                        <div style={{ marginBottom: 18 }}>
+                                                <Link to="/docs" >Terms & Conditions</Link>
+                                        </div>
+                                        <div>
+                                                <Link to="/docs">Privacy Policy</Link>
+                                        </div>
                                 </div>
                         </Col>
                         <Col span={6}>

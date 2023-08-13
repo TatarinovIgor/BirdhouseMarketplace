@@ -202,6 +202,7 @@ export const LoginPage = () => {
   return (
     <S.Card>
       <Form initialValues={initialValues} onFinish={handleSubmit}>
+        <span style={{fontSize: 30, fontWeight: 500}}>Login</span>
         {flow.ui.nodes.map(renderNode)}
       </Form>
     </S.Card>

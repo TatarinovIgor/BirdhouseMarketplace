@@ -1,49 +1,28 @@
 import "./style.css";
-import {Layout, Menu} from "antd";
-import {CheckCircleOutlined, FileDoneOutlined, PlusOutlined, ProfileOutlined, SettingOutlined} from "@ant-design/icons";
+import {Tabs, Typography} from "antd";
 import {CreatedOrders} from "./pages/CreatedOrders.jsx";
 import {AcceptedOrders} from "./pages/AcceptedOrders.jsx";
 import {AssignedOrders} from "./pages/AssignedOrders.jsx";
-import {useState} from "react";
 import {CreateOrderPage} from "./pages/CreateOrderPage.jsx";
 import {Profile} from "./pages/Profile.jsx";
 import {Settings} from "./pages/Settings.jsx";
+import createdOrdersIcon from "../../../assets/img/icons/toDoListIcon.png"
+import acceptedOrdersIcon from "../../../assets/img/icons/dashboardIcon.png"
+import assignedOrdersIcon from "../../../assets/img/icons/checkboxIcon.png"
+import createOrderIcon from "../../../assets/img/icons/edit.svg"
+import profileIcon from "../../../assets/img/icons/user.svg"
+import settingsIcon from "../../../assets/img/icons/settings.svg"
+import React from "react";
 
-const { Sider } = Layout;
-const { SubMenu } = Menu;
-
+const { TabPane } = Tabs;
+const { Title } = Typography;
 
 const Dashboard = () => {
-    const [selectedMenuItem, setSelectedMenuItem] = useState('created-orders');
-
-    const handleMenuItemClick = (itemKey) => {
-        setSelectedMenuItem(itemKey);
-    };
-
-    const renderSelectedContent = () => {
-        switch (selectedMenuItem) {
-            case 'created-orders':
-                return <CreatedOrders/>;
-            case 'accepted-orders':
-                return <AcceptedOrders/>;
-            case 'assigned-orders':
-                return <AssignedOrders/>;
-            case 'create-order':
-                return <CreateOrderPage/>;
-            case 'profile':
-                return <Profile/>;
-            case 'settings':
-                return <Settings/>;
-            default:
-                return null;
-        }
-    };
 
 
     return (
         <>
-            {/* Content */}
-                <div
+            <div
                 style={{
                     alignSelf: "center",
                     minWidth: 320,
@@ -53,29 +32,81 @@ const Dashboard = () => {
                     justifyContent: "space-between",
                 }}
             >
-                <Sider>
-                    <Menu mode="inline" selectedKeys={[selectedMenuItem]} onSelect={(e) => handleMenuItemClick(e.key)}>
-                        <Menu.Item key="created-orders" icon={<FileDoneOutlined />}>
-                            Created orders
-                        </Menu.Item>
-                        <Menu.Item key="accepted-orders" icon={<CheckCircleOutlined />}>
-                            Accepted orders
-                        </Menu.Item>
-                        <Menu.Item key="assigned-orders" icon={<CheckCircleOutlined />}>
-                            Assigned orders
-                        </Menu.Item>
-                        <Menu.Item key="create-order" icon={<PlusOutlined />}>
-                            Create order
-                        </Menu.Item>
-                        <Menu.Item key="profile" icon={<ProfileOutlined />}>
-                            Profile
-                        </Menu.Item>
-                        <Menu.Item key="settings" icon={<SettingOutlined />}>
-                            Settings
-                        </Menu.Item>
-                    </Menu>
-                </Sider>
-                {renderSelectedContent()}
+                <div style={{
+                    position: "sticky",
+                    top: "100px"
+                }}>
+                    <Tabs size="large" tabPosition="left">
+                        <TabPane tab={
+                            <span style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}>
+                                <img style={{width: 24, marginRight: 10}} src={createdOrdersIcon} alt="Created orders icon"/>
+                                Created orders
+                            </span>
+                        } key="1">
+                            <CreatedOrders/>
+                        </TabPane>
+                        <TabPane tab={
+                            <span style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}>
+                                <img style={{width: 24, marginRight: 10}} src={acceptedOrdersIcon} alt="Accepted orders icon"/>
+                                Accepted orders
+                            </span>
+                        } key="2">
+                            <AcceptedOrders />
+                        </TabPane>
+                        <TabPane tab={
+                            <span style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}>
+                                <img style={{width: 24, marginRight: 10}} src={assignedOrdersIcon} alt="Assigned orders icon"/>
+                                Assigned orders
+                            </span>
+                        } key="3">
+                            <AssignedOrders />
+                        </TabPane>
+                        <TabPane tab={
+                            <span style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}>
+                                <img style={{width: 24, marginRight: 10}} src={createOrderIcon} alt="Create order icon"/>
+                                Create order
+                            </span>
+                        } key="4">
+                            <CreateOrderPage />
+                        </TabPane>
+                        <TabPane tab={
+                            <span style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}>
+                                <img style={{width: 24, marginRight: 10}} src={profileIcon} alt="Profile icon"/>
+                                Profile
+                            </span>
+                        } key="5">
+                            <Title>Profile settings</Title>
+                            <Profile />
+                        </TabPane>
+                        <TabPane tab={
+                                <span style={{
+                                    display: "flex",
+                                    alignItems: "center"
+                                }}>
+                                    <img style={{width: 24, marginRight: 10}} src={settingsIcon} alt="Settings icon"/>
+                                    Settings
+                                </span>
+                        } key="6">
+                            <Title> Settings </Title>
+                            <Settings />
+                        </TabPane>
+                    </Tabs>
+                </div>
             </div>
         </>
     );
