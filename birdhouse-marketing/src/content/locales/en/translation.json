@@ -1,0 +1,22 @@
+{
+  "validation.required": "This field is required",
+
+  "auth.identifier": "Email",
+  "auth.password": "Password",
+  "auth.checkbox.rememberMe": "Remember me",
+  "auth.newPassword.placeholder": "Enter your new password",
+  "auth.button.update": "Update",
+  "auth.button.forgotPassword": "Forgot Password?",
+  "auth.confirmCode.text": "We have sent a confirmation code to",
+  "auth.createNewPassord.errorText": "The password must contain at least 8 characters and be complex (contain letters and numbers).",
+  "auth.resetPassword": "Reset password",
+  "auth.didYouForgetPassword": "Forgot password?",
+  "auth.rememberMe": "Remember me",
+  "auth.signIn": "Sign in",
+  "auth.logout": "Logout",
+  "auth.messages.sessionExpired": "Session expired",
+  "auth.messages.loginSuccessful": "Successful login",
+  "auth.messages.userNotFound": "User is not found",
+  "auth.confirmCode": "Confirm Code",
+  "auth.resend": "Resend"
+}
