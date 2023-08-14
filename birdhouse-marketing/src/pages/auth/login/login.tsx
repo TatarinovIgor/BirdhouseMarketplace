@@ -175,7 +175,7 @@ export const LoginPage = () => {
             <div key="submit">
               <S.Wrapper>
                 <Checkbox>{t('auth.checkbox.rememberMe')}</Checkbox>
-                <Link to={MappingPaths.PUBLIC.RESET_PASSWORD}>{t('auth.button.forgotPassword')}</Link>
+                <Link to={MappingPaths.PUBLIC.CHANGE_PASSWORD}>{t('auth.button.forgotPassword')}</Link>
               </S.Wrapper>
 
               <Form.Item name={node.attributes.name} key={index} noStyle>
@@ -206,7 +206,6 @@ export const LoginPage = () => {
         {flow.ui.nodes.map(renderNode)}
       </Form>
       <Link to={MappingPaths.PUBLIC.REGISTRATION}>{t('auth.login.signUp')}</Link>
-
     </S.Card>
   );
 };

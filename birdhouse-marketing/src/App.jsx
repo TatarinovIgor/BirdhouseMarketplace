@@ -8,6 +8,10 @@ import i18next from './i18in.jsx'
 import {App as AntApp} from './modules/antd/App';
 import {loader as loginLoader, action as loginAction} from "./pages/auth/login/login";
 import {loader as registrationLoader, action as registrationAction} from "./pages/auth/registration/registration";
+import {
+    loader as changePasswordLoader,
+    action as changePasswordAction
+} from "./pages/auth/changepassword/changepassword";
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
 
@@ -29,7 +33,7 @@ const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSucce
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
 const RegistrationPage = () => import('./pages/auth/registration/registration.tsx');
-const Register = React.lazy(() => import("./pages/templates/Register/Register.jsx"))
+const ChangePasswordPage = () => import('./pages/auth/changepassword/changepassword.tsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
@@ -106,6 +110,11 @@ function App() {
                        loader={registrationLoader} action={registrationAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage
                            content={React.lazy(RegistrationPage)}/>
+                       </React.Suspense>}/>
+                <Route path={MappingPaths.PUBLIC.CHANGE_PASSWORD}
+                       loader={changePasswordLoader} action={changePasswordAction}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(ChangePasswordPage)}/>
                        </React.Suspense>}/>
                 <Route path="/product_page"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
