@@ -205,6 +205,8 @@ export const LoginPage = () => {
         <span style={{fontSize: 30, fontWeight: 500}}>Login</span>
         {flow.ui.nodes.map(renderNode)}
       </Form>
+      <Link to={MappingPaths.PUBLIC.REGISTRATION}>{t('auth.login.signUp')}</Link>
+
     </S.Card>
   );
 };

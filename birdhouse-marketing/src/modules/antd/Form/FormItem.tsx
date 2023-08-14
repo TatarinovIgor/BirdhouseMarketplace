@@ -6,7 +6,6 @@ export const FormItem = ({
                              rootClassName,
                              ...restProps
                          }: FormItemProps & {
-    dataTestId?: string;
     children?: ReactNode;
 }) => (
     <AntForm.Item colon={false} rootClassName={['custom-ant-form-item', rootClassName].join(' ')} {...restProps}>

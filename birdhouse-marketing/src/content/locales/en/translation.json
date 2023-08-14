@@ -13,10 +13,17 @@
   "auth.didYouForgetPassword": "Forgot password?",
   "auth.rememberMe": "Remember me",
   "auth.signIn": "Sign in",
+  "auth.signUp": "Sign Up",
   "auth.logout": "Logout",
+  "auth.registration.signIn": "If you have account please Sign in",
+  "auth.login.signUp": "If you don't have account please Sign up",
   "auth.messages.sessionExpired": "Session expired",
   "auth.messages.loginSuccessful": "Successful login",
   "auth.messages.userNotFound": "User is not found",
   "auth.confirmCode": "Confirm Code",
-  "auth.resend": "Resend"
+  "auth.resend": "Resend",
+
+  "traits.username": "User Name",
+  "traits.email": "Email",
+  "traits.tos": "Terms and Conditions"
 }

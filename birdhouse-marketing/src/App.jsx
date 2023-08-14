@@ -1,13 +1,15 @@
 import React, {Component, lazy} from 'react';
 import {RouterProvider as Router, Route, Routes, createBrowserRouter, createRoutesFromElements} from 'react-router-dom';
-import { QueryClientProvider } from '@tanstack/react-query';
+import {QueryClientProvider} from '@tanstack/react-query';
 import {initializeApp} from "firebase/app";
 import {getAnalytics} from "firebase/analytics";
 import {I18nextProvider} from 'react-i18next';
 import i18next from './i18in.jsx'
 import {App as AntApp} from './modules/antd/App';
-import {loader as kratosLoader, action as kratosAction} from "./pages/auth/login/login";
+import {loader as loginLoader, action as loginAction} from "./pages/auth/login/login";
+import {loader as registrationLoader, action as registrationAction} from "./pages/auth/registration/registration";
 import {queryClient} from "./middleware/clients/query.client"
+import {MappingPaths} from './constants/mapping.paths.js';
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
@@ -26,6 +28,7 @@ const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/Produ
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
+const RegistrationPage = () => import('./pages/auth/registration/registration.tsx');
 const Register = React.lazy(() => import("./pages/templates/Register/Register.jsx"))
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
@@ -95,9 +98,14 @@ function App() {
                 <Route path="/landing_bloggers"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
                        </React.Suspense>}/>
-                <Route path="/login"
-                       loader={kratosLoader} action={kratosAction}
+                <Route path={MappingPaths.PUBLIC.LOGIN}
+                       loader={loginLoader} action={loginAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
+                       </React.Suspense>}/>
+                <Route path={MappingPaths.PUBLIC.REGISTRATION}
+                       loader={registrationLoader} action={registrationAction}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(RegistrationPage)}/>
                        </React.Suspense>}/>
                 <Route path="/product_page"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
@@ -107,9 +115,6 @@ function App() {
                        </React.Suspense>}/>
                 <Route path="/withdraw_unsuccess"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawUnsuccess}/>
-                       </React.Suspense>}/>
-                <Route path="/register"
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={Register}/>
                        </React.Suspense>}/>
                 <Route path="/docs"
                        element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>

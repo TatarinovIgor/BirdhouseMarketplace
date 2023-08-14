@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ae4a3daf-af87-47df-bfa4-7636ae31d7cf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/kubernetes-settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/untitled3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/birdhouse-marketing/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/birdhouse-marketing/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/birdhouse-marketing/src/constants/mapping.paths.js" beforeDir="false" afterPath="$PROJECT_DIR$/birdhouse-marketing/src/constants/mapping.paths.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/birdhouse-marketing/src/content/locales/en/translation.json" beforeDir="false" afterPath="$PROJECT_DIR$/birdhouse-marketing/src/content/locales/en/translation.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/birdhouse-marketing/src/modules/antd/Form/FormItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/birdhouse-marketing/src/modules/antd/Form/FormItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/birdhouse-marketing/src/modules/antd/Input/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/birdhouse-marketing/src/modules/antd/Input/Input.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2TwKpvXQa7rrlwUihQ6eYQdFCpM" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "basePage",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "C:\\Users\\vladi\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="JavaScript Debug.bh-debug">
+    <configuration name="bh-debug" type="JavascriptDebugType" uri="http://127.0.0.1:5173" useFirstLineBreakpoints="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/birdhouse-marketing/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.bh-debug" />
+      <item itemvalue="npm.dev" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ae4a3daf-af87-47df-bfa4-7636ae31d7cf" name="Changes" comment="" />
+      <created>1691948889756</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691948889756</updated>
+      <workItem from="1691948892943" duration="77000" />
+      <workItem from="1691948989250" duration="3553000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/birdhouse-marketing/src/pages/auth/registration/registration.tsx</url>
+          <line>275</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

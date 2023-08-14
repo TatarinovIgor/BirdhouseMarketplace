@@ -6,6 +6,8 @@ export const MappingPaths = {
     },
     PUBLIC: {
         RESET_PASSWORD: '/reset-password',
-        LOGIN: '/login'
+        LOGIN: '/login',
+        REGISTRATION: "/registration",
+        TERMS_AND_CONDITION: "/tos"
     }
 }

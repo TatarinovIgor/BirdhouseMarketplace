@@ -1,5 +1,5 @@
 import {Ref, forwardRef} from 'react';
-import {Input as AntInput, InputProps, InputRef} from 'antd';
+import {Checkbox, Input as AntInput, InputProps, InputRef} from 'antd';
 import {InputPassword} from './InputPassword';
 import {TextArea} from './TextArea';
 
