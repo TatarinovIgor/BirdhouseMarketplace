@@ -11,7 +11,8 @@ import {loader as registrationLoader, action as registrationAction} from "./page
 import {
     loader as changePasswordLoader,
     action as changePasswordAction
-} from "./pages/auth/changepassword/changepassword";
+} from "./pages/auth/change-password/changepassword";
+import {loader as createNewPasswordLoader, action as createNewPasswordAction} from "./pages/auth/create-new-password/create-new-password";
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
 
@@ -33,7 +34,8 @@ const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSucce
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
 const RegistrationPage = () => import('./pages/auth/registration/registration.tsx');
-const ChangePasswordPage = () => import('./pages/auth/changepassword/changepassword.tsx')
+const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
+const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
@@ -115,6 +117,11 @@ function App() {
                        loader={changePasswordLoader} action={changePasswordAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage
                            content={React.lazy(ChangePasswordPage)}/>
+                       </React.Suspense>}/>
+                <Route path={MappingPaths.PUBLIC.CREATE_NEW_PASSWORD}
+                       loader={createNewPasswordLoader} action={createNewPasswordLoader}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(CreateNewPasswordPage)}/>
                        </React.Suspense>}/>
                 <Route path="/product_page"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
