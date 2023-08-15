@@ -1,6 +1,6 @@
 import {Configuration, FrontendApi} from '@ory/kratos-client';
 import axios from '@ory/kratos-client/node_modules/axios';
-import {KRATOS_SELF_SERVICE_BASE_URL} from '../constants/endpoint.kratos.js';
+import {KRATOS_SELF_SERVICE_BASE_URL} from '../constants/endpoins.js';
 import {MappingPaths} from '../constants/mapping.paths.js';
 
 const configuration = new Configuration({

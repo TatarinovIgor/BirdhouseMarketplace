@@ -6,8 +6,14 @@ import {getAnalytics} from "firebase/analytics";
 import {I18nextProvider} from 'react-i18next';
 import i18next from './i18in.jsx'
 import {App as AntApp} from './modules/antd/App';
-import {loader as loginLoader, action as loginAction} from "./pages/auth/login/login";
-import {loader as registrationLoader, action as registrationAction} from "./pages/auth/registration/registration";
+import {
+    loader as loginLoader,
+    action as loginAction
+} from "./pages/auth/login/login";
+import {
+    loader as registrationLoader,
+    action as registrationAction
+} from "./pages/auth/registration/registration";
 import {
     loader as changePasswordLoader,
     action as changePasswordAction
@@ -20,6 +26,11 @@ import {
     loader as createConfirmCodeLoader,
     action as createConfirmCodeAction
 } from "./pages/auth/confirm-code/confirm-code";
+import {
+    loader as createDashboardLoader,
+    action as createDashboardAction
+} from "./pages/dashboard/dashboard";
+
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
 
@@ -44,6 +55,7 @@ const RegistrationPage = () => import('./pages/auth/registration/registration.ts
 const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
 const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
 const CreateConfirmCodePage = () => import('./pages/auth/confirm-code/confirm-code.tsx')
+const CreateDashboardPage = () => import('./pages/dashboard/dashboard.tsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
@@ -118,7 +130,9 @@ function App() {
                        </React.Suspense>}/>
 
                 <Route path={MappingPaths.PRIVATE.DASHBOARD}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
+                       loader={createDashboardLoader} action={createDashboardAction}
+                       element={<React.Suspense fallback='Loading...'>
+                           <BasePage content={React.lazy(CreateDashboardPage)}/>
                        </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.ACCOUNT_PREVIEW}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={AccountPreview}/>
