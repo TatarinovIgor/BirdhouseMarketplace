@@ -216,9 +216,6 @@ export default LoginPage;
 export const loader = async () => {
   try {
     const response = await kratos.createBrowserLoginFlow();
-    console.log(response);
-    console.log(response.headers['Cookie']);
-
     return {
       flow: response.data,
     };
