@@ -116,7 +116,7 @@ function App() {
                 <Route path="/withdraw_unsuccess"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawUnsuccess}/>
                        </React.Suspense>}/>
-                <Route path="/docs"
+                <Route path="/tos"
                        element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>
                        </React.Suspense>}/>
             </Route>

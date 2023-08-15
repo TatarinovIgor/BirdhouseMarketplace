@@ -35,7 +35,7 @@ const {useApp} = App;
 
 export const RegistrationPage = () => {
 
-    const {t} = useTranslation();
+    const { t} = useTranslation();
     const {notification} = useApp();
     const [searchParams] = useSearchParams();
     const actionData = useActionData() as LoginPageActionData;
@@ -172,7 +172,7 @@ export const RegistrationPage = () => {
 
                     >
                         <Checkbox>
-                            <Link to={MappingPaths.PUBLIC.TERMS_AND_CONDITION}>{t(node.attributes.name)}</Link>
+                            I agree with <Link style={{textDecoration: "underline"}} to={MappingPaths.PUBLIC.TERMS_AND_CONDITION}>{t(node.attributes.name)}</Link>
                         </Checkbox>
                     </Form.Item>
                 );
@@ -228,7 +228,15 @@ export const RegistrationPage = () => {
                 <span style={{fontSize: 30, fontWeight: 500}}>Registration</span>
                 {flow.ui.nodes.map(renderNode)}
             </Form>
-            <Link to={MappingPaths.PUBLIC.LOGIN}>{t('auth.registration.signIn')}</Link>
+            <div> Already have an account? </div>
+            <Link style={{
+                backgroundClip: "text",
+                backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                fontSize: 16,
+                fontWeight: "bold"
+            }} to={MappingPaths.PUBLIC.LOGIN}>{t('Sign in')}</Link>
         </S.Card>
     );
 };

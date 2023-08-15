@@ -7,11 +7,11 @@ import {AppstoreOutlined, ThunderboltOutlined} from "@ant-design/icons";
 const {Title, Text} = Typography;
 const {TabPane} = Tabs;
 const ProductPage = () => {
+
     return (
         <>
                 {/* Content */}
                 <div
-                    className="bubble-element Group bubble-r-container flex column"
                     style={{
                         alignSelf: "center",
                         maxWidth: 1200,

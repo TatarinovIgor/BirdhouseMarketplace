@@ -6,6 +6,19 @@ import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
 
 const { Title, Text} = Typography;
 const ExploreAdvertisers = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        // Define the API URL
+        const apiUrl = 'https://crm.com/merchants/guid/products';
+
+        // Make a GET request using fetch
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
     const [selectedFilter, setSelectedFilter] = useState("LowHigh");
 
     const handleFilterChange = (value) => {
@@ -114,7 +127,16 @@ const ExploreAdvertisers = () => {
                         <Row gutter={20} style={{
                             marginLeft: 50
                         }}>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
+                            {data.map(item => (
+                                <BHInfoCard
+                                    key={item.guid} // Assuming 'guid' is a unique identifier
+                                    userName={item.name}
+                                    adName={item.description}
+                                    category={item.category}
+                                    price={item.price}
+                                    bg={item.bg}
+                                />
+                            ))}
                         </Row>
                     </Col>
                 </Row>

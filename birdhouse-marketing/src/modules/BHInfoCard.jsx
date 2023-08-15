@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 export const BHInfoCard = (props) => {
     const {userName, adName, category, price, bg} = props;
     return (
-        <div style={{
+        <Link to={`/product_page`} style={{
             height: 280,
             width: 280,
             borderRadius: 20,
@@ -15,16 +15,20 @@ export const BHInfoCard = (props) => {
             display: "flex",
             marginBottom: 20,
             marginRight: 20,
+            textDecoration: "none"
         }}>
             <div style={{
                 width: "100%",
+                background: "-webkit-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgb(33, 33, 33) 100%)",
+                borderRadius: 20,
             }}>
                 <Row style={{
                     display: "flex",
                     justifyContent: "space-between",
                     marginLeft: 12,
                     marginRight: 12,
-                    marginBottom: 20,
+                    marginBottom: 10,
+                    marginTop: 18,
                     fontWeight: "bold"
                 }}>
                     <Col>
@@ -36,7 +40,6 @@ export const BHInfoCard = (props) => {
                         </Link>
                         <div style={{
                             fontSize: 14,
-                            marginTop: 8,
                             color: "#fdfefc",
                         }}>
                             {adName}
@@ -45,7 +48,6 @@ export const BHInfoCard = (props) => {
                     <Col>
                         <div style={{
                             fontSize: 12,
-                            marginBottom: 10,
                             color: "#d5cdcd",
                         }}>
                             {category}
@@ -54,7 +56,6 @@ export const BHInfoCard = (props) => {
                     <Col>
                         <div style={{
                             fontSize: 12,
-                            marginBottom: 10,
                             color: "#d5cdcd",
                         }}>
                             Price
@@ -71,6 +72,6 @@ export const BHInfoCard = (props) => {
             <Row>
 
             </Row>
-        </div>
+        </Link>
     )
 }

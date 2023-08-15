@@ -3,9 +3,21 @@ import "./style.css"
 import {Row, Typography, Col, Divider, Button, Card, Space, Radio, Checkbox, Slider, InputNumber, Select} from "antd";
 import {AppstoreOutlined, BarsOutlined, SortAscendingOutlined} from "@ant-design/icons";
 import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
+import axios from "axios";
 
 const { Title, Text} = Typography;
 const ExploreBloggers = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        // Define the API URL
+        const apiUrl = 'https://127.0.0.1:9009/merchants/guid/products';
+
+        axios.get(apiUrl)
+            .then(response => setData(response.data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
     const [selectedFilter, setSelectedFilter] = useState("LowHigh");
 
     const handleFilterChange = (value) => {
@@ -115,7 +127,16 @@ const ExploreBloggers = () => {
                         <Row gutter={20} style={{
                             marginLeft: 50
                         }}>
-                            <BHInfoCard userName="Qwerty" adName="Res" category="Lifestyle" price="10$"/>
+                            {data.map(item => (
+                                <BHInfoCard
+                                    key={item.guid} // Assuming 'guid' is a unique identifier
+                                    userName={item.name}
+                                    adName={item.description}
+                                    category={item.category}
+                                    price={item.price}
+                                    bg={item.bg}
+                                />
+                            ))}
                         </Row>
                     </Col>
                 </Row>

@@ -1,7 +1,8 @@
-import {Button, Col, Input, InputNumber, message, Select, Typography, Upload} from "antd";
+import {Button, Col, Form, Input, InputNumber, message, Select, Typography, Upload} from "antd";
 import imagePlaceholder from "../../../../assets/img/images/imagePlaceholder.svg";
 import React, {useState} from "react";
 import {InboxOutlined} from "@ant-design/icons";
+import axios from "axios";
 
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
@@ -63,6 +64,11 @@ const ImageUpload = () => {
 export const CreateOrderPage = () => {
     const [selectedType, setSelectedType] = useState("Choose an option...");
     const [selectedCategory, setSelectedCategory] = useState("Choose an option...");
+    const [title, setTitle] = useState('');
+    const [link, setLink] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(100);
+
 
     const handleTypeChange = (value) => {
         setSelectedType(value);
@@ -72,6 +78,28 @@ export const CreateOrderPage = () => {
         setSelectedCategory(value);
     };
 
+    const handleSubmit = (event) => {
+        axios.post('https://httpbin.org/post', {
+            "created_at": "",
+            "updated_at": "",
+            "guid": "",
+            "name": event.target.value,
+            "description": "string",
+            "merchant": {
+                "guid": "string",
+                "name": "string"
+            },
+            "meta_data": "string"
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
     return (
         <div style={{
             marginLeft: 50,
@@ -80,26 +108,25 @@ export const CreateOrderPage = () => {
             <Title>
                 Create Ad
             </Title>
-            <Col>
+            <Form>
                 <div style={{
                     fontWeight: 500
                 }}>
                     Insert order preview picture <span style={{color: "red"}}>*</span>
                 </div>
-                <div style={{ fontSize: 13, marginBottom: 15 }}>
+                <Form.Item style={{ fontSize: 13, marginBottom: 15 }}>
                     File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB
-                </div>
-
-                <ImageUpload />
-                <div style={{
+                    <ImageUpload />
+                </Form.Item>
+                <Form.Item style={{
                     fontWeight: 500,
                     marginBottom: 30
                 }}>
                     Order Title <span style={{color: "red"}}>*</span>
                     <Input size="large" placeholder="Set the name of an advertisement" />
-                </div>
+                </Form.Item>
 
-                <div style={{
+                <Form.Item style={{
                     fontWeight: 500,
                     marginBottom: 30
                 }}>
@@ -112,8 +139,8 @@ export const CreateOrderPage = () => {
                         We will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.
                     </div>
                     <Input size="large" placeholder="Type here" />
-                </div>
-                <div style={{
+                </Form.Item>
+                <Form.Item style={{
                     fontWeight: 500,
                     marginBottom: 30
                 }}>
@@ -126,14 +153,14 @@ export const CreateOrderPage = () => {
                         The description will be included on the item's detail page underneath its image.
                     </div>
                     <TextArea size="large" placeholder="Detailed description of your item" />
-                </div>
+                </Form.Item>
 
                 <div style={{
                     fontWeight: 500,
                     marginBottom: 30
                 }}>
                     I am looking for <span style={{color: "red"}}>*</span>
-                    <div>
+                    <Form.Item>
                         <Select
                             value={selectedType}
                             defaultValue="Select an option..."
@@ -144,7 +171,7 @@ export const CreateOrderPage = () => {
                             <Option value="blogger">Blogger</Option>
                             <Option value="advertiser">Advertiser</Option>
                         </Select>
-                    </div>
+                    </Form.Item>
                 </div>
 
                 <div style={{
@@ -152,7 +179,7 @@ export const CreateOrderPage = () => {
                     marginBottom: 30
                 }}>
                     Categories <span style={{color: "red"}}>*</span>
-                    <div>
+                    <Form.Item>
                         <Select
                             value={selectedCategory}
                             defaultValue="Select an option..."
@@ -167,18 +194,18 @@ export const CreateOrderPage = () => {
                             <Option value="Crypto">Crypto</Option>
                             <Option value="Other">Other</Option>
                         </Select>
-                    </div>
+                    </Form.Item>
                 </div>
-                <div style={{marginBottom: 30}}>
+                <Form.Item style={{marginBottom: 30}}>
                     Price <span style={{color: "red"}}>*</span>
                     <InputNumber style={{ width: "100%" }} size="large" addonBefore={SelectCurrency} defaultValue={100} />
-                </div>
-                <div>
+                </Form.Item>
+                <Form.Item>
                     <Button size="large">
                         Create
                     </Button>
-                </div>
-            </Col>
+                </Form.Item>
+            </Form>
         </div>
     )
 }

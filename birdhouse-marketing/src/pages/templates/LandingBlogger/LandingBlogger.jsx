@@ -8,6 +8,14 @@ import {
     InstagramFilled,
     TwitterSquareFilled
 } from "@ant-design/icons";
+import influencer from "../../../assets/img/images/influencer2.png"
+import influencerWithALaptop from "../../../assets/img/images/influencer.png"
+import othersImage from "../../../assets/img/images/target.png"
+import musicImage from "../../../assets/img/images/circlePause.png"
+import lifestyleImage from "../../../assets/img/images/sun.png"
+import fashionImage from "../../../assets/img/images/skirt.png"
+import cryptoImage from "../../../assets/img/images/bitcoin.png"
+import beautyImage from "../../../assets/img/images/makeupBag.png"
 
 const { Title, Text } = Typography;
 const { Meta } = Card;
@@ -89,27 +97,14 @@ const LandingBloggers = () => {
                         minWidth: 300,
                     }}
                 >
-                    <div
+                    <img
+                        alt="influencer"
+                        src={influencer}
                         style={{
-                            position: "relative",
                             width: "100%",
-                            paddingTop: "100%",
+                            height: "100%",
                         }}
-                    >
-                        <img
-                            alt=""
-                            src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2F38a0942e450bdb16ca9cf24659307840.cdn.bubble.io%2Ff1655838572205x412997318983146400%2FUntitled%2520design.png?w=512&h=512&auto=compress&dpr=2&fit=max"
-                            style={{
-                                position: "absolute",
-                                top: 0,
-                                left: 0,
-                                width: "100%",
-                                height: "100%",
-                                margin: 0,
-                                borderRadius: 0,
-                            }}
-                        />
-                    </div>
+                    />
                 </Col>
             </Row>
             <div
@@ -249,14 +244,14 @@ const LandingBloggers = () => {
                     <Column title="Price per post" dataIndex="pricePerPost" key="pricePerPost" width={150} />
                 </Table>
             </Col>
-            <Col style={{
+            <Row style={{
                 alignSelf: "center",
                 minWidth: 320,
                 maxWidth: 1200,
                 width: "calc(100% - 20px)",
                 marginBottom: 100
             }}>
-                <div>
+                <Col span={15}>
                     <Title>How does it work?</Title>
                     <Steps
                         style={{
@@ -347,22 +342,6 @@ const LandingBloggers = () => {
                             }
                         ]}
                     />
-                    <img
-                        alt="Influenver with a laptop"
-                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                        style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            display: "block",
-                            width: "100%",
-                            height: "100%",
-                            margin: 0,
-                            borderRadius: 0
-                        }}
-                    />
-                </div>
-                <div>
                     <Button
                         type="primary"
                         size="large"
@@ -380,8 +359,18 @@ const LandingBloggers = () => {
                     >
                         Register
                     </Button>
-                </div>
-            </Col>
+                </Col>
+                <Col span={9}>
+                    <img
+                        alt="Influencer with a laptop"
+                        src={influencerWithALaptop}
+                        style={{
+                            width: 300,
+                            height: 600,
+                        }}
+                    />
+                </Col>
+            </Row>
             <div
                 className="bubble-element Text"
                 style={{
@@ -405,12 +394,12 @@ const LandingBloggers = () => {
                     justifyContent: "start",
                 }}
             >
-                <BHCarousel title="Others" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-                <BHCarousel title="Music" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-                <BHCarousel title="Lifestyle" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-                <BHCarousel title="Fashion" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-                <BHCarousel title="Crypto" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
-                <BHCarousel title="Beauty" imgUrl="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+                <BHCarousel title="Others" imgUrl={othersImage}/>
+                <BHCarousel title="Music" imgUrl={musicImage}/>
+                <BHCarousel title="Lifestyle" imgUrl={lifestyleImage}/>
+                <BHCarousel title="Fashion" imgUrl={fashionImage}/>
+                <BHCarousel title="Crypto" imgUrl={cryptoImage}/>
+                <BHCarousel title="Beauty" imgUrl={beautyImage}/>
             </Row>
             <button
                 className="bubble-element Button"
