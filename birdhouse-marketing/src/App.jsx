@@ -70,10 +70,10 @@ function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route>
-                <!-- Error page -->
+
                 <Route path={MappingPaths.ERROR}
                        element={<React.Suspense fallback='Loading...'> <Error/> </React.Suspense>}/>
-                <!-- No sign in/sign up required pages -->
+
                 <Route path={MappingPaths.ROOT}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
                        </React.Suspense>}/>
@@ -91,7 +91,7 @@ function App() {
                 <Route path={MappingPaths.PUBLIC.TERMS_AND_CONDITION}
                        element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>
                        </React.Suspense>}/>
-                <!-- AUTH pages -->
+
                 <Route path={MappingPaths.PUBLIC.LOGIN}
                        loader={loginLoader} action={loginAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
@@ -116,7 +116,7 @@ function App() {
                        element={<React.Suspense fallback='Loading...'> <BasePage
                            content={React.lazy(CreateConfirmCodePage)}/>
                        </React.Suspense>}/>
-                <!-- sign in/sign up required pages -->
+
                 <Route path={MappingPaths.PRIVATE.DASHBOARD}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
                        </React.Suspense>}/>
@@ -132,7 +132,7 @@ function App() {
                 <Route path={MappingPaths.PRIVATE.PRODUCT_PAGE}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
                        </React.Suspense>}/>
-                <!-- payments pages -->
+
                 <Route path={MappingPaths.PRIVATE.PAYMENTS_PAGE}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
                        </React.Suspense>}/>
