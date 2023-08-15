@@ -8,6 +8,12 @@ import i18next from './i18in.jsx'
 import {App as AntApp} from './modules/antd/App';
 import {loader as loginLoader, action as loginAction} from "./pages/auth/login/login";
 import {loader as registrationLoader, action as registrationAction} from "./pages/auth/registration/registration";
+import {
+    loader as changePasswordLoader,
+    action as changePasswordAction
+} from "./pages/auth/change-password/changepassword";
+import {loader as createNewPasswordLoader, action as createNewPasswordAction} from "./pages/auth/create-new-password/create-new-password";
+import {loader as createConfirmCodeLoader, action as createConfirmCodeAction} from "./pages/auth/confirm-code/confirm-code";
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
 
@@ -29,7 +35,9 @@ const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSucce
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
 const RegistrationPage = () => import('./pages/auth/registration/registration.tsx');
-const Register = React.lazy(() => import("./pages/templates/Register/Register.jsx"))
+const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
+const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
+const CreateConfirmCodePage = () => import('./pages/auth/confirm-code/confirm-code.tsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
@@ -53,10 +61,11 @@ function App() {
 
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    const basePath = '/ui'
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route>
-                <Route path="/"
+                <Route path={MappingPaths.ROOT}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
                        </React.Suspense>}/>
                 <Route path="/about"
@@ -68,7 +77,7 @@ function App() {
                 <Route path="/contact_us"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ContactUs}/>
                        </React.Suspense>}/>
-                <Route path="/dashboard"
+                <Route path={MappingPaths.PRIVATE.DASHBOARD}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
                        </React.Suspense>}/>
                 <Route path="/deposit_success"
@@ -98,7 +107,7 @@ function App() {
                 <Route path="/landing_bloggers"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
                        </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.LOGIN}
+                <Route path={ MappingPaths.PUBLIC.LOGIN}
                        loader={loginLoader} action={loginAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
                        </React.Suspense>}/>
@@ -106,6 +115,21 @@ function App() {
                        loader={registrationLoader} action={registrationAction}
                        element={<React.Suspense fallback='Loading...'> <BasePage
                            content={React.lazy(RegistrationPage)}/>
+                       </React.Suspense>}/>
+                <Route path={MappingPaths.PUBLIC.CHANGE_PASSWORD}
+                       loader={changePasswordLoader} action={changePasswordAction}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(ChangePasswordPage)}/>
+                       </React.Suspense>}/>
+                <Route path={ MappingPaths.PUBLIC.CREATE_NEW_PASSWORD}
+                       loader={createNewPasswordLoader} action={createNewPasswordAction}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(CreateNewPasswordPage)}/>
+                       </React.Suspense>}/>
+                <Route path={ MappingPaths.PUBLIC.CONFIRM_CODE}
+                       loader={createConfirmCodeLoader} action={createConfirmCodeAction}
+                       element={<React.Suspense fallback='Loading...'> <BasePage
+                           content={React.lazy(CreateConfirmCodePage)}/>
                        </React.Suspense>}/>
                 <Route path="/product_page"
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>

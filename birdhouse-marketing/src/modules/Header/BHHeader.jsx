@@ -3,6 +3,7 @@ import "./style.css"
 import {Layout, Input, Menu, Row, Col} from 'antd';
 import {SearchOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
+import {MappingPaths} from '../../constants/mapping.paths.js';
 
 const { Header} = Layout;
 
@@ -56,7 +57,7 @@ export const BHHeader = () => {
                                 backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
                                 WebkitBackgroundClip: "text",
                                 color: "transparent"
-                            }}> <Link to="/login">Log in / Register</Link></Menu.Item>
+                            }}> <Link to={MappingPaths.PUBLIC.LOGIN}>Log in / Register</Link></Menu.Item>
                         </Menu>
                     </Col>
                 </Row>

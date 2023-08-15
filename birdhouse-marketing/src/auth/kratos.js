@@ -6,7 +6,7 @@ import {MappingPaths} from '../constants/mapping.paths.js';
 const configuration = new Configuration({
     basePath: KRATOS_SELF_SERVICE_BASE_URL,
     baseOptions: {
-        withCredentials: false,
+        withCredentials: true,
     },
 });
 

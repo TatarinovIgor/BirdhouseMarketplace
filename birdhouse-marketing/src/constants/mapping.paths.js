@@ -1,13 +1,15 @@
-
+const basePath = '/ui'
 export const MappingPaths = {
-    ROOT: '/',
+    ROOT: basePath + '/',
     PRIVATE: {
-        DASHBOARD: '/dashboard'
+        DASHBOARD: basePath + '/dashboard'
     },
     PUBLIC: {
-        RESET_PASSWORD: '/reset-password',
-        LOGIN: '/login',
-        REGISTRATION: "/registration",
-        TERMS_AND_CONDITION: "/tos"
+        LOGIN: basePath + '/login',
+        REGISTRATION: basePath + '/registration',
+        CHANGE_PASSWORD: basePath + '/change-password',
+        CONFIRM_CODE: basePath + '/confirm-code',
+        CREATE_NEW_PASSWORD: basePath + '/create-new-password',
+        TERMS_AND_CONDITION: basePath + '/tos'
     }
 }
