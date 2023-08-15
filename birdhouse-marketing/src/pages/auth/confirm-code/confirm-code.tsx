@@ -175,7 +175,7 @@ export const ConfirmCodePage = () => {
   );
 };
 // for react-router lazy loading
-export const Component = ConfirmCodePage;
+export default ConfirmCodePage;
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
 
@@ -268,7 +268,3 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export const ErrorBoundary = DefaultErrorBoundary;
-
-Object.assign(Component, {
-  displayName: 'LazyConfirmCodePage',
-});

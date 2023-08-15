@@ -141,7 +141,7 @@ export const LoginPage = () => {
                 display: 'none',
               }}
             >
-              <Input size="large" type={node.attributes.type} />
+              <Input size="large" type={node.attributes.type} value = {node.attributes.value} />
             </Form.Item>
           );
         }
@@ -215,8 +215,10 @@ export default LoginPage;
 
 export const loader = async () => {
   try {
-    console.log("call kratos");
     const response = await kratos.createBrowserLoginFlow();
+    console.log(response);
+    console.log(response.headers['Cookie']);
+
     return {
       flow: response.data,
     };
@@ -230,7 +232,7 @@ export const loader = async () => {
 
     if (data.error) {
       if ((data.error as GenericError).id === EAuthLoginFlowId.SessionAlreadyAvailable) {
-        return redirect(MappingPaths.PROTECTED.DASHBOARD);
+        return redirect(MappingPaths.PRIVATE.DASHBOARD);
       }
     }
 

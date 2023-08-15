@@ -105,7 +105,7 @@ export const CreateNewPasswordPage = () => {
   );
 };
 
-export const Component = CreateNewPasswordPage;
+export default CreateNewPasswordPage;
 
 export const loader = async () => {
   const { data } = await kratos.createBrowserSettingsFlow();
@@ -159,7 +159,3 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     throw e;
   }
 };
-
-Object.assign(Component, {
-  displayName: 'LazyCreateNewPasswordPage',
-});

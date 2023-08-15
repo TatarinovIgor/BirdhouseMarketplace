@@ -124,6 +124,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const email = formData.get('login') as string;
   const csrf_token = formData.get('csrf_token') as string;
   const flow_id = formData.get('flow_id') as string;
+  const cookie = request.headers.get('cookie');
   const method = 'code';
 
   await kratos.updateRecoveryFlow({
