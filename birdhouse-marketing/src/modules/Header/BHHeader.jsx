@@ -38,19 +38,19 @@ export const BHHeader = () => {
                     <Col span={14}>
                         <Menu mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Menu.Item key="1">
-                                <Link to="/explore_bloggers">Bloggers</Link>
+                                <Link to={MappingPaths.PRIVATE.EXPLORE_BLOGGERS}>Bloggers</Link>
                             </Menu.Item>
                             <Menu.Item key="2">
-                                <Link to="/explore_advertisers">Advertisers</Link>
+                                <Link to={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}>Advertisers</Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Link to="/dashboard?show=2">Create</Link>
+                                <Link to={MappingPaths.PRIVATE.DASHBOARD + '?show=2'}>Create</Link>
                             </Menu.Item>
                             <Menu.Item key="4">
-                                <Link to="/about">About us</Link>
+                                <Link to={MappingPaths.PUBLIC.ABOUT}>About us</Link>
                             </Menu.Item>
                             <Menu.Item key="5">
-                                <Link to="/contact_us">Contact us</Link>
+                                <Link to={MappingPaths.PUBLIC.CONTACT_US}>Contact us</Link>
                             </Menu.Item>
                             <Menu.Item key="6" style={{
                                 backgroundClip: "text",
