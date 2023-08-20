@@ -25,5 +25,9 @@
 
   "traits.username": "User Name",
   "traits.email": "Email",
-  "traits.tos": "Terms and Conditions"
+  "traits.tos": "Terms and Conditions",
+
+  "dashboard.first_name": "First Name",
+  "dashboard.last_name": "Last Name",
+  "dashboard.submit": "Update"
 }

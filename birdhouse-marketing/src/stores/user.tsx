@@ -82,7 +82,6 @@ export class UserStore {
             const response = await fetch(CRM_BASE_URL + 'users/');
 
             return response.json().then(res => {
-                    console.log(res);
                     this.user = res;
                     this.is_authenticated = true;
                     return this.is_authenticated;

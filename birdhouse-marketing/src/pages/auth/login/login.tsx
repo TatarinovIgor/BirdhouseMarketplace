@@ -29,6 +29,7 @@ import {kratos,EAuthLoginFlowId} from '../kratos';
 import {LoginPageActionData, LoginPageLoaderData} from '../../../types/kratos';
 import * as S from './login.style';
 import { DefaultErrorBoundary } from '../../../modules/DefaultErrorBoundary/DefaultErrorBoundary';
+import {AxiosError} from "axios";
 
 const { useApp } = App;
 
@@ -209,7 +210,8 @@ export default LoginPage;
 
 export const loader = async () => {
   try {
-    const response = await kratos.createBrowserLoginFlow();
+    const response =
+        await kratos.createBrowserLoginFlow();
     return {
       flow: response.data,
     };
@@ -218,7 +220,6 @@ export const loader = async () => {
     if (!e.isAxiosError) {
       throw e;
     }
-
     const { data } = e.response;
 
     if (data.error) {
