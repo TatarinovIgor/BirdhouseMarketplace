@@ -55,7 +55,7 @@ const RegistrationPage = () => import('./pages/auth/registration/registration.ts
 const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
 const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
 const CreateConfirmCodePage = () => import('./pages/auth/confirm-code/confirm-code.tsx')
-const CreateDashboardPage = () => import('./pages/dashboard/dashboard.tsx')
+const CreateDashboardPage = () => import('./pages/templates/Dashboard/Dashboard.jsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 

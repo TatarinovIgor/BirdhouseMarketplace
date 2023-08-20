@@ -23,7 +23,7 @@ export const BHHeader = () => {
             >
                 <Row style={{ maxWidth: 1180, margin: '0 auto', alignItems: 'center' }}>
                     <Col span={4} style={{ fontSize: 40, fontWeight: 800 }}>
-                        <Link to="/">
+                        <Link to={MappingPaths.ROOT}>
                             <span style={{ color: '#00ffff' }}>B</span>
                             <span style={{ color: '#000000' }}>H</span>
                         </Link>
@@ -44,7 +44,7 @@ export const BHHeader = () => {
                                 <Link to={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}>Advertisers</Link>
                             </Menu.Item>
                             <Menu.Item key="3">
-                                <Link to={MappingPaths.PRIVATE.DASHBOARD + '?show=2'}>Create</Link>
+                                <Link to={MappingPaths.PRIVATE.DASHBOARD}>Create</Link>
                             </Menu.Item>
                             <Menu.Item key="4">
                                 <Link to={MappingPaths.PUBLIC.ABOUT}>About us</Link>

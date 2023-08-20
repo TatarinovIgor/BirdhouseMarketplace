@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 export const BHInfoCard = (props) => {
     const {userName, adName, category, price, bg} = props;
     return (
-        <Link to={`/product_page`} style={{
+        <Link to={`/ui/product_page`} style={{
             height: 280,
             width: 280,
             borderRadius: 20,

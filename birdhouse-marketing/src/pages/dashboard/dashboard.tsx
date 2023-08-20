@@ -16,7 +16,7 @@ export const action = async ({request}: ActionFunctionArgs) => {
 }
 export const loader = async ({request}: LoaderFunctionArgs) => {
     try {
-        const response = await fetch(CRM_BASE_URL + 'users/');
+        const response = await fetch(CRM_BASE_URL + '/users/');
         response.json().then(res => {
                 console.log(res);
             }

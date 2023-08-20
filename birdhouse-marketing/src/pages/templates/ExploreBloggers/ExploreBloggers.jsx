@@ -4,6 +4,7 @@ import {Row, Typography, Col, Divider, Button, Card, Space, Radio, Checkbox, Sli
 import {AppstoreOutlined, BarsOutlined, SortAscendingOutlined} from "@ant-design/icons";
 import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
 import axios from "axios";
+import {CRM_BASE_URL} from '../../../constants/endpoins';
 
 const { Title, Text} = Typography;
 const ExploreBloggers = () => {
@@ -11,7 +12,8 @@ const ExploreBloggers = () => {
 
     useEffect(() => {
         // Define the API URL
-        const apiUrl = 'https://127.0.0.1:9009/merchants/guid/products';
+
+        const apiUrl = `${CRM_BASE_URL}/partners/63c53aa5-5165-49c5-8b81-b01b1362a4d5/services`;
 
         axios.get(apiUrl)
             .then(response => setData(response.data))
@@ -127,16 +129,19 @@ const ExploreBloggers = () => {
                         <Row gutter={20} style={{
                             marginLeft: 50
                         }}>
-                            {data.map(item => (
-                                <BHInfoCard
-                                    key={item.guid} // Assuming 'guid' is a unique identifier
-                                    userName={item.name}
-                                    adName={item.description}
-                                    category={item.category}
-                                    price={item.price}
-                                    bg={item.bg}
-                                />
-                            ))}
+                            {data.map(item => {
+                                const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                                return (
+                                    <BHInfoCard
+                                        key={item.guid}
+                                        userName={item.name}
+                                        adName={item.description}
+                                        category={metaData.category}
+                                        price={metaData.price}
+                                        bg={item.bg}
+                                    />
+                                );
+                            })}
                         </Row>
                     </Col>
                 </Row>

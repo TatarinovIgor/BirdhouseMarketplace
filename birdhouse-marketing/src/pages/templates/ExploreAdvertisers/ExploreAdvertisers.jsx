@@ -3,16 +3,15 @@ import "./style.css";
 import {Button, Checkbox, Col, Divider, InputNumber, Row, Select, Slider, Typography} from "antd";
 import {AppstoreOutlined, BarsOutlined} from "@ant-design/icons";
 import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
+import {CRM_BASE_URL} from "../../../constants/endpoins.js";
 
 const { Title, Text} = Typography;
 const ExploreAdvertisers = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        // Define the API URL
-        const apiUrl = 'https://crm.com/merchants/guid/products';
-
         // Make a GET request using fetch
+        const apiUrl = `${CRM_BASE_URL}/merchants/88cf844b-14f9-423c-93ad-ddc8abc3b479/products`;
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => setData(data))
