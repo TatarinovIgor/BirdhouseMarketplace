@@ -5,9 +5,9 @@ import { ActionFunctionArgs, redirect, useLoaderData, useSearchParams, useSubmit
 import { Button } from '../../../modules/antd/Button/Button';
 import { Form } from '../../../modules/antd/Form/Form';
 import { Input } from '../../../modules/antd/Input/Input';
-import { EAuthLoginFlowId } from '../../../auth/kratos';
-import { kratos } from '../../../auth/kratos';
-import { BrowserRecoveryFlow } from '../../../auth/types';
+import { EAuthLoginFlowId } from '../kratos';
+import { kratos } from '../kratos';
+import { BrowserRecoveryFlow } from '../../../types/kratos';
 import { MappingPaths } from '../../../constants/mapping.paths';
 import * as S from './changepassword.style';
 

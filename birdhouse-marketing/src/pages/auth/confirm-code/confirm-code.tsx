@@ -14,8 +14,8 @@ import { Button } from '../../../modules/antd/Button/Button';
 import { Form } from '../../../modules/antd/Form/Form';
 import { Input } from '../../../modules/antd/Input/Input';
 import { DefaultErrorBoundary } from '../../../modules/DefaultErrorBoundary/DefaultErrorBoundary';
-import { kratos } from '../../../auth/kratos';
-import { LoginPageActionData } from '../../../auth/types';
+import { kratos } from '../kratos';
+import { LoginPageActionData } from '../../../types/kratos';
 import { MappingPaths } from '../../../constants/mapping.paths';
 import * as S from './confirm-code.style';
 
