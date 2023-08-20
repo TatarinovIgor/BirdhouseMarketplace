@@ -25,15 +25,14 @@ import { Form } from '../../../modules/antd/Form/Form';
 import { Input } from '../../../modules/antd/Input/Input';
 import {Loader} from '../../../modules/antd/Loader/Loader';
 import {MappingPaths} from '../../../constants/mapping.paths';
-import {kratos,EAuthLoginFlowId} from '../../../auth/kratos';
-import {LoginPageActionData, LoginPageLoaderData} from  '../../../auth/types';
+import {kratos,EAuthLoginFlowId} from '../kratos';
+import {LoginPageActionData, LoginPageLoaderData} from '../../../types/kratos';
 import * as S from './login.style';
 import { DefaultErrorBoundary } from '../../../modules/DefaultErrorBoundary/DefaultErrorBoundary';
 
 const { useApp } = App;
 
 export const LoginPage = () => {
-  console.log('start LoginPage');
 
   const { t } = useTranslation();
   const { notification } = useApp();
@@ -45,8 +44,6 @@ export const LoginPage = () => {
   const { flow } = (useLoaderData() || {}) as LoginPageLoaderData;
 
   useEffect(() => {
-    console.log('searchParams kratos');
-
     const message = searchParams.get('message');
     if (message) {
       notification.info({
@@ -58,7 +55,6 @@ export const LoginPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('actionData kratos');
     if (actionData?.errors) {
       actionData.errors.forEach((error) => {
         notification.error({
@@ -69,7 +65,6 @@ export const LoginPage = () => {
   }, [actionData]);
 
   if (!flow) {
-    console.log('request kratos');
     return <Loader />;
   }
 
@@ -100,7 +95,6 @@ export const LoginPage = () => {
   );
 
   const renderNode = (node: any, index: number) => {
-    console.log("render start")
     if (node.group === UiNodeGroupEnum.Oidc) {
       // skip oids group.
       return null;

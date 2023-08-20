@@ -1,10 +1,13 @@
-import React, {Component, lazy} from 'react';
+import React, {Component, lazy, createContext, useContext} from 'react';
 import {RouterProvider as Router, Route, Routes, createBrowserRouter, createRoutesFromElements} from 'react-router-dom';
 import {QueryClientProvider} from '@tanstack/react-query';
-import {initializeApp} from "firebase/app";
-import {getAnalytics} from "firebase/analytics";
+
 import {I18nextProvider} from 'react-i18next';
 import i18next from './i18in.jsx'
+
+import {initializeApp} from "firebase/app";
+import {getAnalytics} from "firebase/analytics";
+
 import {App as AntApp} from './modules/antd/App';
 import {
     loader as loginLoader,
@@ -33,6 +36,7 @@ import {
 
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
+import UserStoreContext, {UserStore } from "./stores/user";
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
@@ -134,6 +138,9 @@ function App() {
                        element={<React.Suspense fallback='Loading...'>
                            <BasePage content={React.lazy(CreateDashboardPage)}/>
                        </React.Suspense>}/>
+                <Route path={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}
+                       element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
+                       </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.ACCOUNT_PREVIEW}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={AccountPreview}/>
                        </React.Suspense>}/>
@@ -171,15 +178,17 @@ function App() {
             </Route>
         )
     );
-
+    const userStore = useContext(UserStoreContext);
     return (
-        <QueryClientProvider client={queryClient}>
-            <I18nextProvider i18n={i18next}>
-                <AntApp>
-                    <Router router={router}/>
-                </AntApp>
-            </I18nextProvider>
-        </QueryClientProvider>
+        <UserStoreContext.Provider value={userStore}>
+            <QueryClientProvider client={queryClient}>
+                <I18nextProvider i18n={i18next}>
+                    <AntApp>
+                        <Router router={router}/>
+                    </AntApp>
+                </I18nextProvider>
+            </QueryClientProvider>
+        </UserStoreContext.Provider>
     );
 }
 
