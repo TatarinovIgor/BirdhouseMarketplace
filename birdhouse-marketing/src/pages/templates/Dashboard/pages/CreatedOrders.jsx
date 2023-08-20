@@ -23,16 +23,19 @@ export const CreatedOrders = () => {
             <Title>
                 Created Orders
             </Title>
-            {data.map(item => (
-                <BHInfoCard
-                    key={item.guid} // Assuming 'guid' is a unique identifier
-                    userName={item.name}
-                    adName={item.description}
-                    category={item.category}
-                    price={item.price}
-                    bg={item.bg}
-                />
-            ))}
+            {data.map(item => {
+                const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                return (
+                    <BHInfoCard
+                        key={item.guid}
+                        userName={item.name}
+                        adName={item.description}
+                        category={metaData.category}
+                        price={metaData.price}
+                        bg={item.bg}
+                    />
+                );
+            })}
         </>
     )
 }

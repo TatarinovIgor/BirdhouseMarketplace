@@ -28,7 +28,7 @@ const Dashboard = () => {
                     minWidth: 320,
                     maxWidth: 1200,
                     width: "calc(100% - 0px)",
-                    margin: "100px 0px 0px",
+                    margin: "100px 0px",
                     justifyContent: "space-between",
                 }}
             >

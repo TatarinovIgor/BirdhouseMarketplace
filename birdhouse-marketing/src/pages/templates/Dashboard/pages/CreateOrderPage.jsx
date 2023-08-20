@@ -1,4 +1,4 @@
-import {Button, Col, Form, Input, InputNumber, message, Select, Typography, Upload} from "antd";
+import {Button, Col, Form, Input, InputNumber, message, Select, Space, Typography, Upload} from "antd";
 import imagePlaceholder from "../../../../assets/img/images/imagePlaceholder.svg";
 import React, {useState} from "react";
 import {InboxOutlined} from "@ant-design/icons";
@@ -64,6 +64,7 @@ const ImageUpload = () => {
 };
 
 export const CreateOrderPage = () => {
+    const [messageApi, contextHolder] = message.useMessage();
     const [selectedType, setSelectedType] = useState("Choose an option...");
     const [selectedCategory, setSelectedCategory] = useState("Choose an option...");
     const [title, setTitle] = useState('');
@@ -107,18 +108,19 @@ export const CreateOrderPage = () => {
                 meta_data: metaDataString,
             };
 
-            console.log(data)
-
             const response = await axios.post( `${CRM_BASE_URL}/services/`, data);
 
             console.log('Response:', response.data);
 
             axios.put(`${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services/${response.data}`)
-                .then(response => {
-                    // Handle success or response data
+                .then(() => {
+                    messageApi.open({
+                        type: 'success',
+                        content: 'The order was created successfully',
+                    });
                 })
                 .catch(error => {
-                    // Handle error
+                    console.log('Error:', error)
                 });
         } catch (error) {
             // Handle errors (e.g., show error message)
@@ -131,6 +133,7 @@ export const CreateOrderPage = () => {
             marginLeft: 50,
             width: 580
         }}>
+            {contextHolder}
             <Title>
                 Create Ad
             </Title>
