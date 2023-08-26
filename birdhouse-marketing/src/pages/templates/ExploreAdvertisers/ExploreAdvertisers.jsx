@@ -4,6 +4,7 @@ import {Button, Checkbox, Col, Divider, InputNumber, Row, Select, Slider, Typogr
 import {AppstoreOutlined, BarsOutlined} from "@ant-design/icons";
 import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
 import {CRM_BASE_URL} from "../../../constants/endpoins.js";
+import {Link} from "react-router-dom";
 
 const { Title, Text} = Typography;
 const ExploreAdvertisers = () => {
@@ -11,10 +12,9 @@ const ExploreAdvertisers = () => {
 
     useEffect(() => {
         // Make a GET request using fetch
-        const apiUrl = `${CRM_BASE_URL}/merchants/88cf844b-14f9-423c-93ad-ddc8abc3b479/products`;
+        const apiUrl = `${CRM_BASE_URL}/partners/63c53aa5-5165-49c5-8b81-b01b1362a4d5/services`;
         fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => setData(data))
+            .then(response => setData(response.data))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
@@ -126,16 +126,32 @@ const ExploreAdvertisers = () => {
                         <Row gutter={20} style={{
                             marginLeft: 50
                         }}>
-                            {data.map(item => (
-                                <BHInfoCard
-                                    key={item.guid} // Assuming 'guid' is a unique identifier
-                                    userName={item.name}
-                                    adName={item.description}
-                                    category={item.category}
-                                    price={item.price}
-                                    bg={item.bg}
-                                />
-                            ))}
+                            {data.map(item => {
+                                const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                                return (
+                                    <Link
+                                        to={'/ui/product_page'}
+                                        state={{
+                                            userName: item.name,
+                                            description: item.description,
+                                            adName: item.name,
+                                            category: metaData.category,
+                                            price: metaData.price,
+                                            bg: item.bg,
+                                        }}
+                                        style={{ textDecoration: "none" }}
+                                    >
+                                        <BHInfoCard
+                                            key={item.guid}
+                                            userName={item.name}
+                                            adName={item.description}
+                                            category={metaData.category}
+                                            price={metaData.price}
+                                            bg={item.bg}
+                                        />
+                                    </Link>
+                                );
+                            })}
                         </Row>
                     </Col>
                 </Row>

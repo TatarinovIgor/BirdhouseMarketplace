@@ -5,6 +5,7 @@ import {AppstoreOutlined, BarsOutlined, SortAscendingOutlined} from "@ant-design
 import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
 import axios from "axios";
 import {CRM_BASE_URL} from '../../../constants/endpoins';
+import {Link} from "react-router-dom";
 
 const { Title, Text} = Typography;
 const ExploreBloggers = () => {
@@ -51,7 +52,7 @@ const ExploreBloggers = () => {
                 minHeight: 150,
                 width: "calc(100% - 0px)",
                 marginBottom: 100,
-                marginTop: 150
+                marginTop: 150,
             }}>
                 {/* Upper panel */}
                 <Row justify="space-between" gutter={20} align="middle">
@@ -129,19 +130,32 @@ const ExploreBloggers = () => {
                         <Row gutter={20} style={{
                             marginLeft: 50
                         }}>
-                            {data.map(item => {
-                                const metaData = JSON.parse(item.meta_data); // Parse the JSON string
-                                return (
-                                    <BHInfoCard
-                                        key={item.guid}
-                                        userName={item.name}
-                                        adName={item.description}
-                                        category={metaData.category}
-                                        price={metaData.price}
-                                        bg={item.bg}
-                                    />
-                                );
-                            })}
+                                {data.map(item => {
+                                    const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                                    return (
+                                        <Link
+                                            to={'/ui/product_page'}
+                                            state={{
+                                                userName: item.name,
+                                                description: item.description,
+                                                adName: item.name,
+                                                category: metaData.category,
+                                                price: metaData.price,
+                                                bg: item.bg,
+                                            }}
+                                            style={{ textDecoration: "none" }}
+                                        >
+                                            <BHInfoCard
+                                                key={item.guid}
+                                                userName={item.name}
+                                                adName={item.description}
+                                                category={metaData.category}
+                                                price={metaData.price}
+                                                bg={item.bg}
+                                            />
+                                        </Link>
+                                    );
+                                })}
                         </Row>
                     </Col>
                 </Row>

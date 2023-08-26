@@ -4,10 +4,9 @@ export const Card = styled.div`
   width: 364px;
   align-self: center;
   text-align: center;
+  margin: 150px auto;
   background: white;
   padding: 20px;
-  margin-top: 150px;
-  margin-bottom: 150px;
   border-radius: 20px;
 `;
 

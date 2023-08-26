@@ -8,14 +8,12 @@ export const Footer = () => {
     return (
         <>
                 <Row
-                    justify="space-between"
                     align="center"
                     style={{
                         alignSelf: "center",
                         minWidth: 320,
                         maxWidth: 1200,
                         width: "calc(100% - 20px)",
-                        marginBottom: 70,
                 }}>
                         <Col span={6}>
                                 <div>

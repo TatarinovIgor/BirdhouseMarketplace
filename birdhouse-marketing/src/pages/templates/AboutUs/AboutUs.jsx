@@ -49,7 +49,7 @@ const About = () => {
                         }}>
                             <img style={{
                                 width: "100%",
-                                height: "100%",
+                                height: "auto",
                             }} src={nft} alt="N F T"/>
                         </div>
                     </Col>
@@ -58,7 +58,7 @@ const About = () => {
                     <Col span={10}>
                         <img style={{
                             width: "100%",
-                            height: "100%"
+                            height: "auto"
                         }} src={nftNotMonkey} alt="NFT for advertising agreement"/>
                     </Col>
                     <Col span={14}>

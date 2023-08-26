@@ -5,18 +5,19 @@ import {Link} from "react-router-dom";
 export const BHInfoCard = (props) => {
     const {userName, adName, category, price, bg} = props;
     return (
-        <Link to={`/ui/product_page`} style={{
-            height: 280,
-            width: 280,
-            borderRadius: 20,
-            backgroundSize: "cover",
-            backgroundImage: `url(${bg})`,
-            alignItems: "flex-end",
-            display: "flex",
-            marginBottom: 20,
-            marginRight: 20,
-            textDecoration: "none"
-        }}>
+        <div
+            style={{
+                height: 280,
+                width: 280,
+                borderRadius: 20,
+                backgroundSize: "cover",
+                backgroundImage: `url(${bg})`,
+                alignItems: "flex-end",
+                display: "flex",
+                marginBottom: 20,
+                marginRight: 20,
+            }}
+        >
             <div style={{
                 width: "100%",
                 background: "-webkit-linear-gradient(top, rgba(33, 33, 33, 0) 0%, rgb(33, 33, 33) 100%)",
@@ -72,6 +73,6 @@ export const BHInfoCard = (props) => {
             <Row>
 
             </Row>
-        </Link>
+        </div>
     )
 }

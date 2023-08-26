@@ -1,5 +1,6 @@
-import {Button, Col, Input, Row, Select, Typography, Upload} from "antd";
-import React from "react";
+import ImgCrop from 'antd-img-crop';
+import {Button, Col, Form, Input, message, Row, Select, Typography, Upload} from "antd";
+import React, {useState} from "react";
 import twitterIcon from "../../../../assets/img/icons/twitterIcon.svg";
 import instagramIcon from "../../../../assets/img/icons/instagramIcon.svg";
 import websiteIcon from "../../../../assets/img/icons/website.svg";
@@ -7,11 +8,14 @@ import facebookIcon from "../../../../assets/img/icons/facebookIcon.svg";
 import youtubeIcon from "../../../../assets/img/icons/youtubeIcon.svg";
 import pinterestIcon from "../../../../assets/img/icons/pinterestIcon.svg";
 import imagePlaceholder from "../../../../assets/img/images/imagePlaceholder.svg";
+import axios from 'axios';
+import {CRM_BASE_URL} from "../../../../constants/endpoins.js";
+import {PlusOutlined} from "@ant-design/icons";
 
-const { Title } = Typography;
-const { TextArea } = Input;
 const { Option } = Select;
 const { Dragger } = Upload;
+const { Title } = Typography;
+const { TextArea } = Input;
 
 const selectOptionStyle = {
     display: "flex",
@@ -72,64 +76,126 @@ const SelectSocialMedia = (
 );
 
 export const Profile = () => {
+    const [messageApi, contextHolder] = message.useMessage();
+    const [username, setUsername] = useState('');
+    const [bio, setBio] = useState('');
+    const [imageUrl, setImageUrl] = useState();
+    const [email, setEmail] = useState('');
+    const [selectedSocialMedia, setSelectedSocialMedia] = useState('twitter');
+    const [profilePicture, setProfilePicture] = useState([]);
+
+
+    const handleSubmit = async () => {
+        try {
+            // Define the URL for the resource you want to update
+            const updateUrl = `${CRM_BASE_URL}/users`;
+
+            // Create the updated data object
+            const updatedData = {
+                first_name: username,
+                last_name: bio
+            };
+
+            axios
+                .put(updateUrl, updatedData)
+                .then(response => {
+                    // Handle success
+                    console.log('Update successful', response.data);
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('Error updating resource', error);
+                });
+
+        } catch (error) {
+            // Handle error message
+            messageApi.error('Failed to update profile');
+        }
+    };
+
+    const handleProfileChange = ({ fileList: newFileList }) => setProfilePicture(newFileList);
+
+    const uploadButtonProfile = (
+        <div>
+            <PlusOutlined />
+            <div
+                style={{
+                    marginTop: 8,
+                }}
+            >
+                Upload
+            </div>
+        </div>
+    );
+
     return (
-        <Row gutter={20}>
-            <Col span={12}>
-                <div style={{ fontWeight: 500, marginBottom: 30 }}>
-                    Username<span style={{ color: "red" }}>*</span>
-                    <Input size="large" placeholder="*Actual username*" />
-                </div>
+        <div>
+            {contextHolder}
+            <Form
+                style={{
+                    margin: 50
+                }}
+                layout="vertical"
+                onFinish={handleSubmit}
+            >
+                <Row gutter={20}>
+                    <Col span={15}>
+                        <Row>
+                            <Col>
+                                {/* Username */}
+                                <Form.Item
+                                    label="Username"
+                                    name="username"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                >
+                                    <Input size="large" placeholder="*Actual username*" />
+                                </Form.Item>
+                                {/* Email */}
+                                <Form.Item
+                                    label="Email address"
+                                    name="email"
+                                >
+                                    <Input size="large" value="*Actual Email*" disabled />
+                                </Form.Item>
+                            </Col>
+                                <Form.Item
+                                    label="Profile"
+                                    name="profile"
+                                    style={{ fontWeight: 500 }}>
+                                    <ImgCrop rotationSlider cropShape="round">
+                                        <Upload
+                                            listType="picture-circle"
+                                            fileList={profilePicture}
+                                            onChange={handleProfileChange}
+                                        >
+                                            {profilePicture.length >= 1 ? null : uploadButtonProfile}
+                                        </Upload>
+                                    </ImgCrop>
+                                </Form.Item>
+                        </Row>
+                        {/* Bio */}
+                        <Form.Item
+                            label="Bio"
+                            name="bio"
+                        >
+                            <TextArea size="large" placeholder="Tell the world your story!" />
+                        </Form.Item>
 
-                <div style={{ fontWeight: 500, marginBottom: 30 }}>
-                    Bio
-                    <TextArea size="large" placeholder="Tell the world your story!" />
-                </div>
-
-                <div style={{ fontWeight: 500, marginBottom: 30 }}>
-                    Email address<span style={{ color: "red" }}>*</span>
-                    <Input size="large" value="*Actual Email*" disabled />
-                </div>
-
-                <div style={{ fontWeight: 500, marginBottom: 30 }}>
-                    Social media product links
-                    <Input size="large" addonBefore={SelectSocialMedia} />
-                </div>
-                <Button size="large">
-                    Update
-                </Button>
-            </Col>
-            <Col span={12}>
-                <div style={{ fontWeight: 500 }}>
-                    Profile picture
-                </div>
-                <Dragger style={{
-                    width: 148,
-                    backgroundImage: `url("${imagePlaceholder}")`,
-                    backgroundSize: "contain",
-                    borderRadius: 10,
-                    maxHeight: 148
-                }}>
-                    <div style={{
-                        width: 148,
-                        height: 148
-                    }}></div>
-                </Dragger>
-                <div style={{ fontWeight: 500 }}>
-                    Profile banner
-                </div>
-                <Dragger style={{
-                    width: 478,
-                    backgroundImage: `url("${imagePlaceholder}")`,
-                    backgroundSize: "contain",
-                    borderRadius: 10,
-                    maxHeight: 83
-                }}>
-                    <div style={{
-                        width: 478,
-                        height: 83
-                    }}></div>
-                </Dragger>
-            </Col>
-        </Row>
+                        {/* Social media */}
+                        <Form.Item
+                            label="Social media product links"
+                            name="socialMedia"
+                        >
+                            <Input size="large" addonBefore={SelectSocialMedia} />
+                        </Form.Item>
+                        <Form.Item>
+                            <Button size="large" htmlType="submit">
+                                Update
+                            </Button>
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+        </div>
     );
 };

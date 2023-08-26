@@ -1,13 +1,12 @@
 import {Button, Col, Form, Input, InputNumber, message, Select, Space, Typography, Upload} from "antd";
 import imagePlaceholder from "../../../../assets/img/images/imagePlaceholder.svg";
 import React, {useState} from "react";
-import {InboxOutlined} from "@ant-design/icons";
+import {InboxOutlined, PlusOutlined, UploadOutlined} from "@ant-design/icons";
 import axios from "axios";
 import {CRM_BASE_URL} from "../../../../constants/endpoins.js";
 import {json} from "react-router-dom";
 
 const { Title, Text } = Typography;
-const { Dragger } = Upload;
 const { TextArea } = Input;
 
 const SelectCurrency = (
@@ -24,53 +23,16 @@ const SelectCurrency = (
     </Select>
 );
 
-const ImageUpload = () => {
-    const [imageUrl, setImageUrl] = useState("");
-
-    const handleUpload = (info) => {
-        if (info.file.status === "done") {
-            // File has been uploaded successfully
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setImageUrl(e.target.result);
-            };
-            reader.readAsDataURL(info.file.originFileObj);
-        } else if (info.file.status === "error") {
-            message.error("File upload failed.");
-        }
-    };
-
-    return (
-        <div>
-            <Dragger
-                name="file"
-                showUploadList={false}
-                onChange={handleUpload}
-            >
-                <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">Drag & Drop an image here</p>
-                <p className="ant-upload-hint">Supports single image upload.</p>
-            </Dragger>
-            {imageUrl && (
-                <div
-                    className="image-preview"
-                    style={{ backgroundImage: `url(${imageUrl})` }}
-                />
-            )}
-        </div>
-    );
-};
-
 export const CreateOrderPage = () => {
     const [messageApi, contextHolder] = message.useMessage();
+    const [imageUrl, setImageUrl] = useState("");
     const [selectedType, setSelectedType] = useState("Choose an option...");
     const [selectedCategory, setSelectedCategory] = useState("Choose an option...");
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(100);
+    const [fileList, setFileList] = useState([]);
 
     const handleTypeChange = (value) => {
         setSelectedType(value);
@@ -92,25 +54,16 @@ export const CreateOrderPage = () => {
 
 
             const data = {
-                created_at: "2023-08-19T07:40:13.702Z",
-                updated_at: "2023-08-19T07:40:13.702Z",
                 name: title,
                 description: description,
-                guid: "string",
-                partner: {
-                    guid: "63c53aa5-5165-49c5-8b81-b01b1362a4d5",
-                    name: "string",
-                    merchant: {
-                        guid: "string",
-                        name: "string"
-                    },
-                },
-                meta_data: metaDataString,
+                partnerGuid: "63c53aa5-5165-49c5-8b81-b01b1362a4d5",
+                meta_data: metaDataString
             };
 
             const response = await axios.post( `${CRM_BASE_URL}/services/`, data);
 
             console.log('Response:', response.data);
+
 
             axios.put(`${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services/${response.data}`)
                 .then(() => {
@@ -128,10 +81,27 @@ export const CreateOrderPage = () => {
         }
     };
 
+    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div
+                style={{
+                    marginTop: 8,
+                }}
+            >
+                Upload
+            </div>
+        </div>
+    );
+
+
     return (
         <div style={{
             marginLeft: 50,
-            width: 580
+            maxWidth: 580
         }}>
             {contextHolder}
             <Title>
@@ -156,7 +126,15 @@ export const CreateOrderPage = () => {
                 >
                     <div style={{ fontSize: 13, marginBottom: 15 }}>
                         File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB
-                        <ImageUpload />
+                        <div>
+                            <Upload
+                                listType="picture-card"
+                                fileList={fileList}
+                                onChange={handleChange}
+                            >
+                                {fileList.length >= 8 ? null : uploadButton}
+                            </Upload>
+                        </div>
                     </div>
                 </Form.Item>
                 <Form.Item

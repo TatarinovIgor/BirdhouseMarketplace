@@ -48,7 +48,7 @@ export class UserStore {
     fetchData = async () => {
         try {
             this.is_authenticated = false;
-            const response = await fetch(CRM_BASE_URL + 'users/');
+            const response = await fetch(CRM_BASE_URL + '/users/');
 
             return response.json().then(res => {
                     console.log(res);

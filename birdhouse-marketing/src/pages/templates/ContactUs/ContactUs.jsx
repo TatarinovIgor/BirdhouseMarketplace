@@ -98,11 +98,16 @@ const ContactUs = () => {
                                         </div>
                                 </div>
                         </Col>
-                        <Col span={12}>
+                        <Col span={12} style={{
+                                display: "flex",
+                                alignItems: "center"
+                        }}>
                                 <img style={{
-                                        margin: 30,
+                                        marginLeft: 30,
                                         maxWidth: 643,
-                                        textAlign: "left"
+                                        textAlign: "left",
+                                        width: "100%",
+                                        height: "auto",
                                 }} src={nftImg} alt="N F T image"/>
                         </Col>
                 </Row>
