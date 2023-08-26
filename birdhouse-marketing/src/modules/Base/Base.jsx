@@ -5,6 +5,7 @@ import {Divider} from "antd";
 
 export const Base = (props) => {
     const { content: Content } = props;
+    const isMobile = window.innerWidth <= 768;
 
 
     return (
@@ -16,13 +17,20 @@ export const Base = (props) => {
                     backgroundRepeat: 'repeat-y',
             }}>
                 <BHHeader/>
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingBottom: 70,
-                    paddingLeft: 30,
-                    paddingRight: 30
-                }}>
+                <div style={
+                    isMobile
+                        ? {
+                            display: "flex",
+                            justifyContent: "center",
+                        }
+                        : {
+                            display: "flex",
+                            justifyContent: "center",
+                            paddingBottom: 70,
+                            paddingLeft: 30,
+                            paddingRight: 30,
+                        }
+                }>
                     <Content/>
                 </div>
                 <Divider/>
