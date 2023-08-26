@@ -25,5 +25,10 @@
 
   "traits.username": "User Name",
   "traits.email": "Email",
-  "traits.tos": "Terms and Conditions"
+  "traits.tos": "Terms and Conditions",
+
+
+  "account.first_name": "First Name",
+  "account.last_name": "Last Name",
+  "account.submit": "Update"
 }

@@ -49,7 +49,7 @@ export const BHHeader = () => {
         {
             key: '1',
             label: (
-                <Link to={MappingPaths.PRIVATE.ACCOUNT_PREVIEW}>Account</Link>
+                <Link to={MappingPaths.PRIVATE.ACCOUNT}>Account</Link>
             ),
             icon: <UserOutlined />
         },
@@ -159,7 +159,7 @@ export const BHHeader = () => {
                                                     <span style={{
                                                         marginRight: 10,
                                                     }}>
-                                                        AntonTat27
+                                                        {userStore.User.first_name}
                                                     </span>
                                                     <img src={profileIcon} alt="profile icon"/>
                                                     <img src={caretDownIcon} alt="Caret down icon"/>

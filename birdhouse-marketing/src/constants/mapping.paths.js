@@ -18,7 +18,7 @@ export const MappingPaths = {
         DASHBOARD: basePath + '/dashboard',
         DASHBOARD_ADVERTISERS: basePath + '/dashboard_advertisers',
         DASHBOARD_BLOGGERS: basePath + '/dashboard_bloggers',
-        ACCOUNT_PREVIEW: basePath + '/account_preview',
+        ACCOUNT: basePath + '/account',
         EXPLORE_ADVERTISES: basePath + '/explore_advertisers',
         EXPLORE_BLOGGERS: basePath + '/explore_bloggers',
         PRODUCT_PAGE: basePath + '/product_page',

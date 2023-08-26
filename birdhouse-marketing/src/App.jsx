@@ -40,7 +40,7 @@ import UserStoreContext, {UserStore } from "./stores/user";
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
-const AccountPreview = React.lazy(() => import("./pages/templates/AccountPreview/AccountPreview.jsx"))
+const AccountPreview = React.lazy(() => import("./pages/account/account.tsx"))
 const ContactUs = React.lazy(() => import("./pages/templates/ContactUs/ContactUs.jsx"))
 const Dashboard = React.lazy(() => import("./pages/templates/Dashboard/Dashboard.jsx"))
 const DepositSuccess = React.lazy(() => import("./pages/templates/DepositSuccess/DepositSuccess.jsx"))
@@ -141,7 +141,7 @@ function App() {
                 <Route path={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
                        </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.ACCOUNT_PREVIEW}
+                <Route path={MappingPaths.PRIVATE.ACCOUNT}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={AccountPreview}/>
                        </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}
