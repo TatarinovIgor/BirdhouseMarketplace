@@ -192,8 +192,6 @@ const ExploreBloggers = () => {
                                 <Option value="ZA">Name: Z - A</Option>
                                 {/* Add more Option components for additional filters */}
                             </Select>
-                            <Button icon={<AppstoreOutlined />} />
-                            <Button icon={<BarsOutlined />} />
                         </div>
                         <Divider />
                         <Row gutter={20} style={{

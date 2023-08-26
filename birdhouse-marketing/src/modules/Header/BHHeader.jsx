@@ -12,6 +12,7 @@ import {MappingPaths} from '../../constants/mapping.paths.js';
 import UserStoreContext from "../../stores/user.tsx";
 import profileIcon from "../../assets/img/icons/profileIcon.svg";
 import caretDownIcon from "../../assets/img/icons/carretDown.svg"
+import settingsIcon from "../../assets/img/icons/settings.svg";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -37,8 +38,12 @@ const useWindowWidth = () => {
 
 export const BHHeader = () => {
     const userStore = useContext(UserStoreContext);
-    const [collapsed, setCollapsed] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
     const windowWidth = useWindowWidth(); // Custom hook to get window width
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
 
     const isMobile = windowWidth <= 768;
 
@@ -73,25 +78,74 @@ export const BHHeader = () => {
     ];
 
     const menuForMobile = (
-        <Sider width={200} theme="light" style={{alignSelf: "end"}}>
-            <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                style={{ height: '100%', borderRight: 0 }}
-            >
-                <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                    <Menu.Item key="1">Profile</Menu.Item>
-                    <Menu.Item key="2">Settings</Menu.Item>
-                </SubMenu>
-                <Menu.Item key="3" icon={<DesktopOutlined />}>
-                    Dashboard
-                </Menu.Item>
-                <Menu.Item key="4" icon={<PieChartOutlined />}>
-                    Charts
-                </Menu.Item>
-            </Menu>
-        </Sider>
+        <>
+            <Button style={{alignSelf: "end"}} type="text" shape="circle" size="large" onClick={toggleMenu} icon={<MenuFoldOutlined />}/>
+            {showMenu && (
+                <div
+                    style={{
+                        marginTop: 65,
+                        height: '100vh',
+                        position: 'fixed',
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        boxShadow: "rgba(7, 185, 255, 0.03) 0px 10px 20px 0px",
+                    }}
+                >
+                    <Menu
+                        mode="vertical"
+                        style={{
+                            height: '100%',
+                        }}
+                    >
+                        <Menu.Item key="1">
+                            <Link to={MappingPaths.PRIVATE.EXPLORE_BLOGGERS}>Bloggers</Link>
+                        </Menu.Item>
+                        <Menu.Item key="2">
+                            <Link to={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}>Advertisers</Link>
+                        </Menu.Item>
+                        <Menu.Item key="3">
+                            <Link to={MappingPaths.PRIVATE.DASHBOARD}>Create</Link>
+                        </Menu.Item>
+                        <Menu.Item key="4">
+                            <Link to={MappingPaths.PUBLIC.ABOUT}>About us</Link>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                            <Link to={MappingPaths.PUBLIC.CONTACT_US}>Contact us</Link>
+                        </Menu.Item>
+                        <Menu.Item key="6" style={{
+                            backgroundClip: "text",
+                            backgroundImage: "linear-gradient(45deg, #244fff, #07b9ff)",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent",
+                        }}>
+                            {userStore.is_authenticated
+                                ? <Dropdown
+                                    menu={{
+                                        items,
+                                    }}
+                                    trigger={['click']}
+                                >
+                                    <div style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                    }}>
+                                                    <span style={{
+                                                        marginRight: 10,
+                                                    }}>
+                                                        {userStore.User.first_name}
+                                                    </span>
+                                        <img src={profileIcon} alt="profile icon"/>
+                                        <img src={caretDownIcon} alt="Caret down icon"/>
+                                    </div>
+                                </Dropdown>
+                                : <Link to={MappingPaths.PUBLIC.LOGIN}>Log in / Register</Link>
+                            }
+                        </Menu.Item>
+                    </Menu>
+                </div>
+            )}
+        </>
     );
     return (
         <>
@@ -116,11 +170,11 @@ export const BHHeader = () => {
                         qw
                     </Col>
                     <Col span={14}>
-                        <Layout>
+                        <Layout style={{backgroundColor: "white"}}>
                             {isMobile ? (
                                 menuForMobile
                             ) : (
-                                <Menu className="desktop-menu" mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <Menu mode="horizontal" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                                     <Menu.Item key="1">
                                         <Link to={MappingPaths.PRIVATE.EXPLORE_BLOGGERS}>Bloggers</Link>
                                     </Menu.Item>
