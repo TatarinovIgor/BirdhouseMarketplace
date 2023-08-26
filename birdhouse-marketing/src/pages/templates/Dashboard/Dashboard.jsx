@@ -18,6 +18,9 @@ const { TabPane } = Tabs;
 const { Title } = Typography;
 
 const Dashboard = () => {
+    const isMobile = window.innerWidth <= 768;
+
+    const tabPosition = isMobile ? 'top' : 'left';
 
 
     return (
@@ -32,7 +35,7 @@ const Dashboard = () => {
                     justifyContent: "space-between",
                 }}
             >
-                    <Tabs size="large" tabPosition="top">
+                    <Tabs size="large" tabPosition={tabPosition}>
                     <TabPane tab={
                         <span style={{
                             display: "flex",
@@ -80,7 +83,7 @@ const Dashboard = () => {
                     <TabPane tab={
                         <span style={{
                             display: "flex",
-                            alignItems: "center"
+                            alignItems: "center",
                         }}>
                             <img style={{width: 24, marginRight: 10}} src={profileIcon} alt="Profile icon"/>
                             Profile
