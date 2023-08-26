@@ -41,9 +41,6 @@ export const BHHeader = () => {
     const windowWidth = useWindowWidth(); // Custom hook to get window width
 
     const isMobile = windowWidth <= 768;
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
 
     const items = [
         {

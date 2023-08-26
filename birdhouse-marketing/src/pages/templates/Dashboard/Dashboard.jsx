@@ -32,81 +32,76 @@ const Dashboard = () => {
                     justifyContent: "space-between",
                 }}
             >
-                <div style={{
-                    position: "sticky",
-                    top: "100px"
-                }}>
-                    <Tabs size="large" tabPosition="left">
-                        <TabPane tab={
+                    <Tabs size="large" tabPosition="top">
+                    <TabPane tab={
+                        <span style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img style={{width: 24, marginRight: 10}} src={createdOrdersIcon} alt="Created orders icon"/>
+                            Created orders
+                        </span>
+                    } key="1">
+                        <CreatedOrders/>
+                    </TabPane>
+                    <TabPane tab={
+                        <span style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img style={{width: 24, marginRight: 10}} src={acceptedOrdersIcon} alt="Accepted orders icon"/>
+                            Accepted orders
+                        </span>
+                    } key="2">
+                        <AcceptedOrders />
+                    </TabPane>
+                    <TabPane tab={
+                        <span style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img style={{width: 24, marginRight: 10}} src={assignedOrdersIcon} alt="Assigned orders icon"/>
+                            Assigned orders
+                        </span>
+                    } key="3">
+                        <AssignedOrders />
+                    </TabPane>
+                    <TabPane tab={
+                        <span style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img style={{width: 24, marginRight: 10}} src={createOrderIcon} alt="Create order icon"/>
+                            Create order
+                        </span>
+                    } key="4">
+                        <CreateOrderPage />
+                    </TabPane>
+                    <TabPane tab={
+                        <span style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img style={{width: 24, marginRight: 10}} src={profileIcon} alt="Profile icon"/>
+                            Profile
+                        </span>
+                    } key="5">
+                        <Title>Profile settings</Title>
+                        <Profile />
+                    </TabPane>
+                    <TabPane tab={
                             <span style={{
                                 display: "flex",
                                 alignItems: "center"
                             }}>
-                                <img style={{width: 24, marginRight: 10}} src={createdOrdersIcon} alt="Created orders icon"/>
-                                Created orders
+                                <img style={{width: 24, marginRight: 10}} src={settingsIcon} alt="Settings icon"/>
+                                Settings
                             </span>
-                        } key="1">
-                            <CreatedOrders/>
-                        </TabPane>
-                        <TabPane tab={
-                            <span style={{
-                                display: "flex",
-                                alignItems: "center"
-                            }}>
-                                <img style={{width: 24, marginRight: 10}} src={acceptedOrdersIcon} alt="Accepted orders icon"/>
-                                Accepted orders
-                            </span>
-                        } key="2">
-                            <AcceptedOrders />
-                        </TabPane>
-                        <TabPane tab={
-                            <span style={{
-                                display: "flex",
-                                alignItems: "center"
-                            }}>
-                                <img style={{width: 24, marginRight: 10}} src={assignedOrdersIcon} alt="Assigned orders icon"/>
-                                Assigned orders
-                            </span>
-                        } key="3">
-                            <AssignedOrders />
-                        </TabPane>
-                        <TabPane tab={
-                            <span style={{
-                                display: "flex",
-                                alignItems: "center"
-                            }}>
-                                <img style={{width: 24, marginRight: 10}} src={createOrderIcon} alt="Create order icon"/>
-                                Create order
-                            </span>
-                        } key="4">
-                            <CreateOrderPage />
-                        </TabPane>
-                        <TabPane tab={
-                            <span style={{
-                                display: "flex",
-                                alignItems: "center"
-                            }}>
-                                <img style={{width: 24, marginRight: 10}} src={profileIcon} alt="Profile icon"/>
-                                Profile
-                            </span>
-                        } key="5">
-                            <Title>Profile settings</Title>
-                            <Profile />
-                        </TabPane>
-                        <TabPane tab={
-                                <span style={{
-                                    display: "flex",
-                                    alignItems: "center"
-                                }}>
-                                    <img style={{width: 24, marginRight: 10}} src={settingsIcon} alt="Settings icon"/>
-                                    Settings
-                                </span>
-                        } key="6">
-                            <Title> Settings </Title>
-                            <Settings />
-                        </TabPane>
-                    </Tabs>
-                </div>
+                    } key="6">
+                        <Title> Settings </Title>
+                        <Settings />
+                    </TabPane>
+                </Tabs>
             </div>
         </>
     );

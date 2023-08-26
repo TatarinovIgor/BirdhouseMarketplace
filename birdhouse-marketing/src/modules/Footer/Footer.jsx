@@ -74,10 +74,10 @@ export const Footer = () => {
                                         <Text>Vulputate hac felis morbi egestas.</Text>
                                         <Row style={{marginTop: 23}}>
                                                 <Col span={12}>
-                                                        <img src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg" alt="App store" style={{ width: 132 , height: 45 }} />
+                                                        {/*<img src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386772268x850938693558971400/Frame%20670.svg" alt="App store" style={{ width: 132 , height: 45 }} />*/}
                                                 </Col>
                                                 <Col span={12}>
-                                                        <img src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg" alt="Google play" style={{ width: 146, height: 44 }} />
+                                                        {/*<img src="https://38a0942e450bdb16ca9cf24659307840.cdn.bubble.io/f1647386777421x635310095370716000/Frame%20669.svg" alt="Google play" style={{ width: 146, height: 44 }} />*/}
                                                 </Col>
                                         </Row>
                                 </div>
