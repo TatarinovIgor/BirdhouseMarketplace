@@ -12,6 +12,8 @@ import {MappingPaths} from '../../constants/mapping.paths.js';
 import UserStoreContext from "../../stores/user.tsx";
 import profileIcon from "../../assets/img/icons/profileIcon.svg";
 import caretDownIcon from "../../assets/img/icons/carretDown.svg"
+import {useTranslation} from "react-i18next";
+import {observer} from "mobx-react";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -36,6 +38,7 @@ const useWindowWidth = () => {
 
 
 export const BHHeader = () => {
+    const { t } = useTranslation();
     const userStore = useContext(UserStoreContext);
     const [collapsed, setCollapsed] = useState(false);
     const windowWidth = useWindowWidth(); // Custom hook to get window width
@@ -44,7 +47,6 @@ export const BHHeader = () => {
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
     };
-
     const items = [
         {
             key: '1',
@@ -145,7 +147,7 @@ export const BHHeader = () => {
                                         WebkitBackgroundClip: "text",
                                         color: "transparent",
                                     }}>
-                                        {userStore.is_authenticated
+                                        {userStore.isAuthenticated||userStore.is_authenticated
                                             ? <Dropdown
                                                 menu={{
                                                     items,
@@ -165,7 +167,7 @@ export const BHHeader = () => {
                                                     <img src={caretDownIcon} alt="Caret down icon"/>
                                                 </div>
                                             </Dropdown>
-                                            : <Link to={MappingPaths.PUBLIC.LOGIN}>Log in / Register</Link>
+                                            : <Link to={MappingPaths.PUBLIC.LOGIN}>{t('header.registerLogin')}</Link>
                                         }
                                     </Menu.Item>
                                 </Menu>

@@ -1,4 +1,5 @@
 {
+  "header.registerLogin": "Log in / Register",
   "validation.required": "This field is required",
 
   "auth.identifier": "Email",

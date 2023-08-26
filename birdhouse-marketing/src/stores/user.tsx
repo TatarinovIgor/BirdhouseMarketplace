@@ -22,6 +22,7 @@ export class UserStore {
             partners: {} as Entity[],
         } as UserCRM;
         makeObservable(this, {
+            is_authenticated: observable,
             user: observable,
             fetchData: action,
             setFirstName: action,
@@ -49,7 +50,6 @@ export class UserStore {
         try {
             this.is_authenticated = false;
             const response = await fetch(CRM_BASE_URL + '/users/');
-
             return response.json().then(res => {
                     console.log(res);
                     this.user = res;
@@ -86,12 +86,21 @@ export class UserStore {
         }
     }
     get isAuthenticated () {
+        if (!this.is_authenticated) {
+            this.fetchData().then();
+        }
         return this.is_authenticated;
     }
     get isUploaded () {
+        if (!this.is_authenticated) {
+            this.fetchData().then();
+        }
         return this.is_uploaded;
     }
     get User() {
+        if (!this.is_authenticated) {
+            this.fetchData().then();
+        }
         return this.user;
     }
 };

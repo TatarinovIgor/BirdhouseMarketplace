@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
 import {Tabs, Typography} from "antd";
 import {BHInfoCard} from "../../modules/BHInfoCard.jsx";

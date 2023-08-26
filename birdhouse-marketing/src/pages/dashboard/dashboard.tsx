@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useTranslation} from "react-i18next";
 import {ActionFunctionArgs, Link, LoaderFunctionArgs, Navigate, redirect, useLoaderData} from "react-router-dom";
 
@@ -7,32 +7,29 @@ import {DashboardPageLoaderData} from "../../types/crm";
 import * as S from "./dashboard.style";
 import {Form} from "../../modules/antd/Form/Form";
 import {Loader} from "../../modules/antd/Loader/Loader";
-import UserStoreContext from "../../stores/user";
+import UserStoreContext, {UserStore} from "../../stores/user";
 
 export const DashboardPage = () => {
     const {t} = useTranslation();
     const userStore = useContext(UserStoreContext);
-
     const handleSubmitBlogger = async (values: any) => {
         const formData = new FormData();
     };
     const handleSubmitAdvertiser = async (values: any) => {
         const formData = new FormData();
     };
-
     if (!userStore.isAuthenticated) {
-        return <Loader/>;
+        return (
+            <S.Card>
+                <Loader/>
+            </S.Card>
+        );
     }
     const user = userStore.user;
     switch (user.agents.length + user.clients.length + user.merchants.length) {
         case 0:
             // create new entities
-            return (
-                <S.Card>
-                    <Form onFinish={handleSubmitBlogger}>
-                    </Form>
-                </S.Card>
-            )
+            return <Navigate to={MappingPaths.PRIVATE.ACCOUNT}/>
         case 1:
             // redirect to created
             if (user.agents.length == 1) {
@@ -59,10 +56,8 @@ export const DashboardPage = () => {
 export default DashboardPage;
 
 export const action = async ({request}: ActionFunctionArgs) => {
-
 }
-export const loader = async () => {
-    const userStore = useContext(UserStoreContext);
-    await userStore.fetchData();
+
+export const loader = async (userStore: UserStore) => {
     return null;
 };

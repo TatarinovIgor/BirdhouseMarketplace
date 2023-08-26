@@ -42,7 +42,7 @@ const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
 const AccountPreview = React.lazy(() => import("./pages/account/account.tsx"))
 const ContactUs = React.lazy(() => import("./pages/templates/ContactUs/ContactUs.jsx"))
-const Dashboard = React.lazy(() => import("./pages/templates/Dashboard/Dashboard.jsx"))
+const Dashboard = React.lazy(() => import("./pages/dashboard/advertiser/dashboard.tsx"))
 const DepositSuccess = React.lazy(() => import("./pages/templates/DepositSuccess/DepositSuccess.jsx"))
 const DepositUnsuccess = React.lazy(() => import("./pages/templates/DepositUsuccess/DepositUnsuccess.jsx"))
 const DepositWithdraw = React.lazy(() => import("./pages/templates/DepositWithdraw/DepositWithdraw.jsx"))
@@ -59,7 +59,7 @@ const RegistrationPage = () => import('./pages/auth/registration/registration.ts
 const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
 const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
 const CreateConfirmCodePage = () => import('./pages/auth/confirm-code/confirm-code.tsx')
-const CreateDashboardPage = () => import('./pages/templates/Dashboard/Dashboard.jsx')
+const CreateDashboardPage = () => import('./pages/dashboard/dashboard.tsx')
 const DocsPage = React.lazy(() => import("./pages/templates/Docs/Docs.jsx"))
 
 
@@ -83,6 +83,8 @@ function App() {
 
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    const userStore = useContext(UserStoreContext);
+
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route>
@@ -178,7 +180,6 @@ function App() {
             </Route>
         )
     );
-    const userStore = useContext(UserStoreContext);
     return (
         <UserStoreContext.Provider value={userStore}>
             <QueryClientProvider client={queryClient}>
