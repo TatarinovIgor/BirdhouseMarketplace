@@ -29,7 +29,9 @@
   "traits.tos": "Terms and Conditions",
 
 
+  "account.user_info": "User Information",
   "account.first_name": "First Name",
   "account.last_name": "Last Name",
-  "account.submit": "Update"
+  "account.submit": "Update",
+  "account.user_entities": "User Entities"
 }

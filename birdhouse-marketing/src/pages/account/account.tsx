@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
-import {Tabs, Typography} from "antd";
+import {List, Typography} from "antd";
 import {BHInfoCard} from "../../modules/BHInfoCard.jsx";
 import {AppstoreOutlined, ThunderboltFilled, ThunderboltOutlined, ThunderboltTwoTone} from "@ant-design/icons";
 import UserStoreContext from "../../stores/user.js";
@@ -10,11 +10,12 @@ import {Input} from "../../modules/antd/Input/Input";
 import {Button} from "antd";
 import {useNavigation} from "react-router-dom";
 
+
 const {Title, Text} = Typography;
-const {TabPane} = Tabs;
 
 const Account = () => {
     const {t} = useTranslation();
+    const [isUploaded, changeUploaded] = useState(true);
     const userStore = useContext(UserStoreContext);
     const navigation = useNavigation();
 
@@ -22,12 +23,15 @@ const Account = () => {
         const formData = new FormData();
         userStore.setFirstName(values['user.first_name']);
         userStore.setLastName(values['user.last_name']);
-        await userStore.uploadData();
+        userStore.uploadData().then(() => {
+            changeUploaded(true);
+        });
     };
     const submitting = navigation.state === 'submitting';
 
     return (<S.Card>
             <Form onFinish={handleSubmit}>
+                <Title>{t('account.user_info')}</Title>
                 <Form.Item
                     key={'user.first_name'}
                     name={'user.first_name'}
@@ -43,6 +47,9 @@ const Account = () => {
                         size="large"
                         allowClear
                         placeholder={`${t(`account.first_name`)}`}
+                        onChange={() => {
+                            changeUploaded(false)
+                        }}
                     />
                 </Form.Item>
                 <Form.Item
@@ -60,6 +67,9 @@ const Account = () => {
                         size="large"
                         allowClear
                         placeholder={`${t(`account.last_name`)}`}
+                        onChange={() => {
+                            changeUploaded(false)
+                        }}
                     />
                 </Form.Item>
                 <Form.Item name={'user_submit'} key={'user_submit'} noStyle>
@@ -67,6 +77,7 @@ const Account = () => {
                         value={'user_submit'}
                         type="primary"
                         loading={submitting}
+                        disabled={isUploaded}
                         size="large"
                         htmlType="submit"
                         block
@@ -75,7 +86,20 @@ const Account = () => {
                     </Button>
                 </Form.Item>
             </Form>
-        </S.Card>
+            <Title level={2}>{t('account.user_entities')}</Title>
+        <List
+            itemLayout="horizontal"
+            dataSource={userStore.User.partners}
+            renderItem={(item, index) => (
+                <List.Item >
+                    <List.Item.Meta
+                        title={`${item[Object.keys(item)[0]].email}`}
+                        description={`${item[Object.keys(item)[0]].guid}`}
+                    />
+                </List.Item>
+            )}/>
+
+    </S.Card>
     );
 };
 
