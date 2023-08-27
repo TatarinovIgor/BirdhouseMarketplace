@@ -90,12 +90,12 @@ const Account = () => {
             <Title level={2}>{t('account.user_entities')}</Title>
             <List
                 itemLayout="horizontal"
-                dataSource={Object.keys(userStore.User.partners)}
+                dataSource={userStore.ListEntities}
                 renderItem={(item, index) => (
                     <List.Item>
                         <List.Item.Meta
-                            title={`${userStore.User.partners[item].email}`}
-                            description={`${item}`}
+                            title={`${item.Email}`}
+                            description={`${item.ID}`}
                         />
                     </List.Item>
                 )}/>
