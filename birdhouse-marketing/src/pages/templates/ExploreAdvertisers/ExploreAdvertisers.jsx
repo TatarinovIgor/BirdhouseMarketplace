@@ -169,14 +169,14 @@ const ExploreBloggers = () => {
             }}>
                 {/* Upper panel */}
                 <Row justify="space-between" gutter={20} align="top">
-                    <Col xs={{span: 0}} lg={{span: 6}}>
+                    <Col xs={{span: 0}} xl={{span: 5}}>
                         <Title level={3}>Explore Advertisers</Title>
                         <Divider/>
                         {menu}
                     </Col>
-                    <Col xs={{span: 24}} lg={{span: 18}}>
+                    <Col xs={{span: 24}} xl={{span: 19}}>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            {windowWidth <= 992 &&
+                            {windowWidth <= 1100 &&
                                 mobileMenu
                             }
                             <span style={{ flex: 1, textAlign: 'left', color: "rgb(123, 123, 123)" }}>Found 0 Ads</span>
@@ -195,7 +195,10 @@ const ExploreBloggers = () => {
                         </div>
                         <Divider />
                         <Row gutter={20} style={{
-                            marginLeft: 50
+                            marginLeft: 50,
+                            display: "flex",
+                            alignSelf: "center",
+                            justifyContent: "center"
                         }}>
                             {data.map(item => {
                                 const metaData = JSON.parse(item.meta_data); // Parse the JSON string

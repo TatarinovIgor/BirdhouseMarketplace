@@ -1,3 +1,4 @@
+
 import React, { useContext } from 'react';
 import {Tabs, Typography} from "antd";
 import {CreatedOrders} from "../../templates/Dashboard/pages/CreatedOrders.jsx";
@@ -26,7 +27,9 @@ const Dashboard = () => {
     const tabPosition = isMobile ? 'top' : 'left';
 
     return (
-        <S.Card>
+        <S.Card style={{
+            backgroundColor: "transparent"
+        }}>
             <Tabs size="large" tabPosition={tabPosition}>
                 <TabPane tab={
                     <span style={{

@@ -26,7 +26,9 @@ const Dashboard = () => {
     const tabPosition = isMobile ? 'top' : 'left';
 
     return (
-        <S.Card>
+        <S.Card style={{
+            backgroundColor: "transparent"
+        }}>
             <Tabs size="large" tabPosition={tabPosition}>
                 <TabPane tab={
                     <span style={{

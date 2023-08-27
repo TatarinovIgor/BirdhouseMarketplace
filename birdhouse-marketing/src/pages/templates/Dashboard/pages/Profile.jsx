@@ -13,9 +13,8 @@ import {CRM_BASE_URL} from "../../../../constants/endpoins.js";
 import {PlusOutlined} from "@ant-design/icons";
 
 const { Option } = Select;
-const { Dragger } = Upload;
-const { Title } = Typography;
 const { TextArea } = Input;
+const { Title } = Typography;
 
 const selectOptionStyle = {
     display: "flex",
@@ -83,6 +82,7 @@ export const Profile = () => {
     const [email, setEmail] = useState('');
     const [selectedSocialMedia, setSelectedSocialMedia] = useState('twitter');
     const [profilePicture, setProfilePicture] = useState([]);
+    const isMobile = window.innerWidth <= 768;
 
 
     const handleSubmit = async () => {
@@ -132,16 +132,42 @@ export const Profile = () => {
         <div>
             {contextHolder}
             <Form
-                style={{
-                    margin: 50
-                }}
                 layout="vertical"
                 onFinish={handleSubmit}
             >
-                <Row gutter={20}>
+                <Row style={
+                    isMobile
+                        ? {
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }
+                        : {}
+                }
+                >
                     <Col span={15}>
-                        <Row>
-                            <Col>
+                        <Row gutter={20}>
+                            <Col span={9} style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Form.Item
+                                    label="Profile"
+                                    name="profile"
+                                    style={{ fontWeight: 500 }}>
+                                    <ImgCrop rotationSlider cropShape="round">
+                                        <Upload
+                                            listType="picture-circle"
+                                            fileList={profilePicture}
+                                            onChange={handleProfileChange}
+                                        >
+                                            {profilePicture.length >= 1 ? null : uploadButtonProfile}
+                                        </Upload>
+                                    </ImgCrop>
+                                </Form.Item>
+                            </Col>
+                            <Col span={15}>
                                 {/* Username */}
                                 <Form.Item
                                     label="Username"
@@ -158,20 +184,6 @@ export const Profile = () => {
                                     <Input size="large" value="*Actual Email*" disabled />
                                 </Form.Item>
                             </Col>
-                                <Form.Item
-                                    label="Profile"
-                                    name="profile"
-                                    style={{ fontWeight: 500 }}>
-                                    <ImgCrop rotationSlider cropShape="round">
-                                        <Upload
-                                            listType="picture-circle"
-                                            fileList={profilePicture}
-                                            onChange={handleProfileChange}
-                                        >
-                                            {profilePicture.length >= 1 ? null : uploadButtonProfile}
-                                        </Upload>
-                                    </ImgCrop>
-                                </Form.Item>
                         </Row>
                         {/* Bio */}
                         <Form.Item

@@ -4,7 +4,6 @@ import React, {useState} from "react";
 import {InboxOutlined, PlusOutlined, UploadOutlined} from "@ant-design/icons";
 import axios from "axios";
 import {CRM_BASE_URL} from "../../../../constants/endpoins.js";
-import {json} from "react-router-dom";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -63,6 +62,24 @@ export const CreateOrderPage = () => {
             const response = await axios.post( `${CRM_BASE_URL}/services/`, data);
 
             console.log('Response:', response.data);
+            for (const image of fileList) {
+                const formData = new FormData();
+                formData.append('image', image);
+                console.log(image);
+
+                try {
+                    const imgResponse = await axios
+                        .post(`${CRM_BASE_URL}/images/services/${response.data}`, formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        });
+
+                    console.log(imgResponse.data)
+                } catch (error) {
+                    console.error('Error uploading image', error);
+                }
+            }
 
 
             axios.put(`${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services/${response.data}`)
@@ -81,7 +98,12 @@ export const CreateOrderPage = () => {
         }
     };
 
-    const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+    const handleBeforeUpload = (file) => {
+        console.log('File selected:', file);
+        return false;
+    };
+
+    const handleFileUpload = ({ fileList: newFileList }) => setFileList(newFileList);
 
 
     const uploadButton = (
@@ -128,9 +150,10 @@ export const CreateOrderPage = () => {
                         File types supported: JPG, PNG, GIF, SVG. Max size: 50 MB
                         <div>
                             <Upload
+                                beforeUpload={handleBeforeUpload}
                                 listType="picture-card"
                                 fileList={fileList}
-                                onChange={handleChange}
+                                onChange={handleFileUpload}
                             >
                                 {fileList.length >= 8 ? null : uploadButton}
                             </Upload>

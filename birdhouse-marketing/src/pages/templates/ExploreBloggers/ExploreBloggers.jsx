@@ -195,7 +195,10 @@ const ExploreBloggers = () => {
                         </div>
                         <Divider />
                         <Row gutter={20} style={{
-                            marginLeft: 50
+                            marginLeft: 50,
+                            display: "flex",
+                            alignSelf: "center",
+                            justifyContent: "center"
                         }}>
                                 {data.map(item => {
                                     const metaData = JSON.parse(item.meta_data); // Parse the JSON string

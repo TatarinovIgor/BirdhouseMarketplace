@@ -41,7 +41,7 @@ export const BHHeader = () => {
     const { t } = useTranslation();
     const userStore = useContext(UserStoreContext);
     const [isAuthenticated, changeAuthStatus] = useState(userStore.isAuthenticated);
-    const [showMenu, setShowMenu] = useState(userStore.isAuthenticated);
+    const [showMenu, setShowMenu] = useState(false);
     const windowWidth = useWindowWidth(); // Custom hook to get window width
 
     const toggleMenu = () => {
