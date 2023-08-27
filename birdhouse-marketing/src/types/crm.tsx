@@ -20,7 +20,3 @@ export type UserCRM = {
     merchants: Entity;
     partners: Entity;
 }
-
-export type DashboardPageLoaderData = {
-    user: UserCRM
-};

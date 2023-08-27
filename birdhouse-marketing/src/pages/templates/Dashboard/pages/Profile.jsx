@@ -84,7 +84,6 @@ export const Profile = () => {
     const [profilePicture, setProfilePicture] = useState([]);
     const isMobile = window.innerWidth <= 768;
 
-
     const handleSubmit = async () => {
         try {
             // Define the URL for the resource you want to update
@@ -113,7 +112,10 @@ export const Profile = () => {
         }
     };
 
-    const handleProfileChange = ({ fileList: newFileList }) => setProfilePicture(newFileList);
+    const handleProfileChange = ({ fileList: newFileList }) => {
+
+        setProfilePicture(newFileList);
+    }
 
     const uploadButtonProfile = (
         <div>

@@ -7,13 +7,13 @@ import {EntitiesType, EntityType} from "../types/bh"
 export class UserStore {
     user: UserCRM;
     is_authenticated: boolean
-    currentEntityType: string
-    currentEntityID: string
+    currentEntityID: number
+    entitiesList: EntityType[]
 
     constructor() {
         this.is_authenticated = false;
-        this.currentEntityType = EntitiesType.None;
-        this.currentEntityID = '';
+        this.currentEntityID = 0;
+        this.entitiesList = [] as EntityType[];
         this.user = {
             first_name: '',
             last_name: '',
@@ -35,6 +35,7 @@ export class UserStore {
             uploadData: action,
             isAuthenticated: computed,
             User: computed,
+            ListEntities: computed,
             CurrentEntity: computed,
         });
     }
@@ -51,30 +52,57 @@ export class UserStore {
     fetchData = async () => {
         try {
             this.is_authenticated = false;
-            this.currentEntityType = EntitiesType.None;
             const query = await fetch(CRM_BASE_URL + '/users/');
             const response = await query.json();
             runInAction(() => (this.user = response));
             this.is_authenticated = true;
             // define current entities
-            const keys = Object.keys(this.user.clients);
-            if ((Object.keys(this.user.clients)).length > 0) {
-                this.currentEntityType = EntitiesType.Advertisers;
-                this.currentEntityID = Object.keys(this.user.clients)[0];
-            } else if ((Object.keys(this.user.partners)).length > 0) {
-                this.currentEntityType = EntitiesType.Bloggers;
-                this.currentEntityID = Object.keys(this.user.partners)[0];
-            } else if((Object.keys(this.user.agents)).length > 0) {
-                this.currentEntityType = EntitiesType.Agents;
-                this.currentEntityID = Object.keys(this.user.agents)[0];
-            } else if((Object.keys(this.user.merchants)).length > 0) {
-                this.currentEntityType = EntitiesType.Admins;
-                this.currentEntityID = Object.keys(this.user.merchants)[0];
-            } else {
-                this.currentEntityType = '';
-                this.currentEntityID = '';
-            }
-            console.log(response);
+            this.entitiesList.forEach(() => this.entitiesList.pop());
+            (Object.keys(this.user.clients)).forEach(value => {
+                if (!this.entitiesList[value]) {
+                    this.entitiesList.push(
+                        {
+                            Type: EntitiesType.Advertisers,
+                            Name: this.user.clients[value].name,
+                            ID: this.user.clients[value].guid,
+                            Email: this.user.clients[value].email
+                        } as EntityType)
+                }
+            });
+            (Object.keys(this.user.partners)).forEach(value => {
+                if (!this.entitiesList[value]) {
+                    this.entitiesList.push(
+                        {
+                            Type: EntitiesType.Bloggers,
+                            Name: this.user.partners[value].name,
+                            ID: this.user.partners[value].guid,
+                            Email: this.user.partners[value].email
+                        } as EntityType)
+                }
+            });
+            (Object.keys(this.user.agents)).forEach(value => {
+                if (!this.entitiesList[value]) {
+                    this.entitiesList.push(
+                        {
+                            Type: EntitiesType.Agents,
+                            Name: this.user.agents[value].name,
+                            ID: this.user.agents[value].guid,
+                            Email: this.user.agents[value].email
+                        } as EntityType)
+                }
+            });
+            this.user.merchants ? (Object.keys(this.user.merchants)).forEach(value => {
+                    if (!this.entitiesList[value]) {
+                        this.entitiesList.push(
+                            {
+                                Type: EntitiesType.Admins,
+                                Name: this.user.merchants[value].name,
+                                ID: this.user.merchants[value].guid,
+                                Email: this.user.merchants[value].email
+                            } as EntityType)
+                    }
+                }) :
+                console.log(response);
             return true;
         } catch (e: any) {
             this.is_authenticated = false;
@@ -114,33 +142,26 @@ export class UserStore {
         return this.user;
     }
 
+    get ListEntities() {
+        if (!this.is_authenticated) {
+            this.fetchData().then();
+        }
+        return this.entitiesList;
+    }
+
     get CurrentEntity() {
         if (!this.is_authenticated) {
             this.fetchData().then();
         }
-        const current = {} as EntityType;
-        current.Type = this.currentEntityType;
-        current.ID = this.currentEntityID;
-        current.Email = EntitiesType.None;
-        current.Name = EntitiesType.None;
-        switch (current.Type) {
-            case EntitiesType.Agents:
-                current.Email = this.user.agents[current.ID].email;
-                current.Name = this.user.agents[current.ID].name;
-                break;
-            case EntitiesType.Advertisers:
-                current.Email = this.user.clients[current.ID].email;
-                current.Name = this.user.clients[current.ID].name;
-                break;
-            case EntitiesType.Bloggers:
-                current.Email = this.user.partners[current.ID].email;
-                current.Name = this.user.partners[current.ID].name;
-                break;
-            case EntitiesType.Admins:
-                current.Email = this.user.merchants[current.ID].email;
-                current.Name = this.user.merchants[current.ID].name;
+        if (this.entitiesList.length === 0) {
+            const current = {} as EntityType;
+            current.Type = EntitiesType.None;
+            current.ID = EntitiesType.None;
+            current.Email = EntitiesType.None;
+            current.Name = EntitiesType.None;
+            return current;
         }
-        return current;
+        return this.entitiesList[this.currentEntityID];
     }
 };
 export const UserStoreG = new UserStore()
