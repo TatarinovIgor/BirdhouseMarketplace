@@ -21,10 +21,13 @@ const {TabPane} = Tabs;
 const {Title} = Typography;
 
 const Dashboard = () => {
+    const isMobile = window.innerWidth <= 768;
+
+    const tabPosition = isMobile ? 'top' : 'left';
 
     return (
         <S.Card>
-            <Tabs size="large" tabPosition="left">
+            <Tabs size="large" tabPosition={tabPosition}>
                 <TabPane tab={
                     <span style={{
                         display: "flex",

@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import { makeObservable, observable, action, computed } from "mobx";
+import {createContext} from "react";
+import {makeObservable, runInAction, observable, action, computed} from "mobx";
 import {UserCRM, Entity} from "../types/crm";
 import {CRM_BASE_URL} from "../constants/endpoins"
 
@@ -7,6 +7,7 @@ export class UserStore {
     user: UserCRM;
     is_uploaded: boolean;
     is_authenticated: boolean
+
     constructor() {
         this.is_authenticated = false;
         this.is_uploaded = false;
@@ -34,6 +35,7 @@ export class UserStore {
             User: computed,
         });
     }
+
     setFirstName = (text: string) => {
         this.user.first_name = text;
         this.is_uploaded = false;
@@ -49,15 +51,13 @@ export class UserStore {
     fetchData = async () => {
         try {
             this.is_authenticated = false;
-            const response = await fetch(CRM_BASE_URL + '/users/');
-            return response.json().then(res => {
-                    console.log(res);
-                    this.user = res;
-                    this.is_authenticated = true;
-                    return this.is_authenticated;
-                }
-            )
+            const query = await fetch(CRM_BASE_URL + '/users/');
+            const response = await query.json();
+            runInAction(() => (this.user = response));
+            this.is_authenticated = true;
+            return true;
         } catch (e: any) {
+            this.is_authenticated = false;
             console.log(e.message)
         }
         return false;
@@ -68,7 +68,7 @@ export class UserStore {
                 first_name: this.user.first_name,
                 last_name: this.user.last_name,
             }
-            const response = await fetch(CRM_BASE_URL+ 'users/', {
+            const response = await fetch(CRM_BASE_URL + 'users/', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,18 +85,21 @@ export class UserStore {
             this.is_uploaded = false;
         }
     }
-    get isAuthenticated () {
+
+    get isAuthenticated() {
         if (!this.is_authenticated) {
             this.fetchData().then();
         }
         return this.is_authenticated;
     }
-    get isUploaded () {
+
+    get isUploaded() {
         if (!this.is_authenticated) {
             this.fetchData().then();
         }
         return this.is_uploaded;
     }
+
     get User() {
         if (!this.is_authenticated) {
             this.fetchData().then();
@@ -104,5 +107,6 @@ export class UserStore {
         return this.user;
     }
 };
-const UserStoreContext = createContext<UserStore>(new UserStore())
+export const UserStoreG = new UserStore()
+const UserStoreContext = createContext<UserStore>(UserStoreG)
 export default UserStoreContext;

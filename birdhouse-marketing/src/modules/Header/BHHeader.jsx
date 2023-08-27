@@ -7,9 +7,9 @@ import {
     LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, PieChartOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Link} from "react-router-dom";
+import {Link, useLoaderData} from "react-router-dom";
 import {MappingPaths} from '../../constants/mapping.paths.js';
-import UserStoreContext from "../../stores/user.tsx";
+import UserStoreContext, {UserStoreG} from "../../stores/user.tsx";
 import profileIcon from "../../assets/img/icons/profileIcon.svg";
 import caretDownIcon from "../../assets/img/icons/carretDown.svg"
 import {useTranslation} from "react-i18next";
@@ -40,14 +40,17 @@ const useWindowWidth = () => {
 
 export const BHHeader = () => {
     const { t } = useTranslation();
-    const userStore = useContext(UserStoreContext);
-    const [showMenu, setShowMenu] = useState(false);
+    const userStore = UserStoreG;
+    const [isAuthenticated, changeAuthStatus] = useState(UserStoreG.isAuthenticated);
+    const [showMenu, setShowMenu] = useState(userStore.isAuthenticated);
     const windowWidth = useWindowWidth(); // Custom hook to get window width
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
-
+    useEffect(() => {
+        changeAuthStatus(UserStoreG.isAuthenticated);
+    });
     const isMobile = windowWidth <= 768;
 
     const items = [
@@ -122,7 +125,7 @@ export const BHHeader = () => {
                             WebkitBackgroundClip: "text",
                             color: "transparent",
                         }}>
-                            {userStore.is_authenticated
+                            {isAuthenticated
                                 ? <Dropdown
                                     menu={{
                                         items,
@@ -142,7 +145,7 @@ export const BHHeader = () => {
                                         <img src={caretDownIcon} alt="Caret down icon"/>
                                     </div>
                                 </Dropdown>
-                                : <Link to={MappingPaths.PUBLIC.LOGIN}>Log in / Register</Link>
+                                : <Link to={MappingPaths.PUBLIC.LOGIN}>{t('header.registerLogin')}</Link>
                             }
                         </Menu.Item>
                     </Menu>
@@ -199,7 +202,7 @@ export const BHHeader = () => {
                                         WebkitBackgroundClip: "text",
                                         color: "transparent",
                                     }}>
-                                        {userStore.isAuthenticated||userStore.is_authenticated
+                                        {isAuthenticated
                                             ? <Dropdown
                                                 menu={{
                                                     items,

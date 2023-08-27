@@ -87,7 +87,7 @@ function App() {
 
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route>
+            <Route loader={userStore.fetchData}>
 
                 <Route path={MappingPaths.ERROR}
                        element={<React.Suspense fallback='Loading...'> <Error/> </React.Suspense>}/>
