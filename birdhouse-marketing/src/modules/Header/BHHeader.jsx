@@ -13,7 +13,6 @@ import UserStoreContext, {UserStoreG} from "../../stores/user.tsx";
 import profileIcon from "../../assets/img/icons/profileIcon.svg";
 import caretDownIcon from "../../assets/img/icons/carretDown.svg"
 import {useTranslation} from "react-i18next";
-import {observer} from "mobx-react";
 import settingsIcon from "../../assets/img/icons/settings.svg";
 
 const { Sider } = Layout;
@@ -40,8 +39,8 @@ const useWindowWidth = () => {
 
 export const BHHeader = () => {
     const { t } = useTranslation();
-    const userStore = UserStoreG;
-    const [isAuthenticated, changeAuthStatus] = useState(UserStoreG.isAuthenticated);
+    const userStore = useContext(UserStoreContext);
+    const [isAuthenticated, changeAuthStatus] = useState(userStore.isAuthenticated);
     const [showMenu, setShowMenu] = useState(userStore.isAuthenticated);
     const windowWidth = useWindowWidth(); // Custom hook to get window width
 

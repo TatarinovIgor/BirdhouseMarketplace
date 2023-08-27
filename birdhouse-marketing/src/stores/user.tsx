@@ -55,6 +55,7 @@ export class UserStore {
             const response = await query.json();
             runInAction(() => (this.user = response));
             this.is_authenticated = true;
+            console.log(response);
             return true;
         } catch (e: any) {
             this.is_authenticated = false;

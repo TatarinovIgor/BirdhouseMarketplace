@@ -40,9 +40,10 @@ import UserStoreContext, {UserStore } from "./stores/user";
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
-const AccountPreview = React.lazy(() => import("./pages/account/account.tsx"))
+const Account = React.lazy(() => import("./pages/account/account.tsx"))
 const ContactUs = React.lazy(() => import("./pages/templates/ContactUs/ContactUs.jsx"))
-const Dashboard = React.lazy(() => import("./pages/dashboard/advertiser/dashboard.tsx"))
+const DashboardAdvertiser = React.lazy(() => import("./pages/dashboard/advertiser/dashboard.tsx"))
+const DashboardBlogger = React.lazy(() => import("./pages/dashboard/blogger/dashboard.tsx"))
 const DepositSuccess = React.lazy(() => import("./pages/templates/DepositSuccess/DepositSuccess.jsx"))
 const DepositUnsuccess = React.lazy(() => import("./pages/templates/DepositUsuccess/DepositUnsuccess.jsx"))
 const DepositWithdraw = React.lazy(() => import("./pages/templates/DepositWithdraw/DepositWithdraw.jsx"))
@@ -141,10 +142,13 @@ function App() {
                            <BasePage content={React.lazy(CreateDashboardPage)}/>
                        </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={Dashboard}/>
+                       element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardAdvertiser}/>
+                       </React.Suspense>}/>
+                <Route path={MappingPaths.PRIVATE.DASHBOARD_BLOGGERS}
+                       element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardBlogger}/>
                        </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.ACCOUNT}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={AccountPreview}/>
+                       element={<React.Suspense fallback='Loading...'> <BasePage content={Account}/>
                        </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}
                        element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreAdvertisers}/>

@@ -26,7 +26,7 @@ export const DashboardPage = () => {
         );
     }
     const user = userStore.user;
-    switch (user.agents.length + user.clients.length + user.merchants.length) {
+    switch (user.agents.length + user.clients.length + user.partners.length + user.merchants.length) {
         case 0:
             // create new entities
             return <Navigate to={MappingPaths.PRIVATE.ACCOUNT}/>
