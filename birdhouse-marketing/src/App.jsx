@@ -29,10 +29,6 @@ import {
     loader as createConfirmCodeLoader,
     action as createConfirmCodeAction
 } from "./pages/auth/confirm-code/confirm-code";
-import {
-    loader as createDashboardLoader,
-    action as createDashboardAction
-} from "./pages/dashboard/dashboard";
 
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
@@ -137,7 +133,6 @@ function App() {
                        </React.Suspense>}/>
 
                 <Route path={MappingPaths.PRIVATE.DASHBOARD}
-                       loader={createDashboardLoader} action={createDashboardAction}
                        element={<React.Suspense fallback='Loading...'>
                            <BasePage content={React.lazy(CreateDashboardPage)}/>
                        </React.Suspense>}/>

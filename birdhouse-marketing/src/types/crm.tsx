@@ -15,10 +15,10 @@ export type UserCRM = {
     identity: string;
     email: string;
     is_blocked: boolean;
-    agents: Entity[];
-    clients: Entity[];
-    merchants: Entity[];
-    partners: Entity[];
+    agents: Entity;
+    clients: Entity;
+    merchants: Entity;
+    partners: Entity;
 }
 
 export type DashboardPageLoaderData = {

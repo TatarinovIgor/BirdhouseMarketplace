@@ -1,63 +1,34 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {useTranslation} from "react-i18next";
-import {ActionFunctionArgs, Link, LoaderFunctionArgs, Navigate, redirect, useLoaderData} from "react-router-dom";
-
+import {Navigate} from "react-router-dom";
 import {MappingPaths} from '../../constants/mapping.paths';
-import {DashboardPageLoaderData} from "../../types/crm";
-import * as S from "./dashboard.style";
-import {Form} from "../../modules/antd/Form/Form";
 import {Loader} from "../../modules/antd/Loader/Loader";
+import {EntitiesType} from '../../types/bh';
 import UserStoreContext, {UserStore} from "../../stores/user";
 
+// That is just routing to dashboard depending on current user state
 export const DashboardPage = () => {
     const {t} = useTranslation();
     const userStore = useContext(UserStoreContext);
-    const handleSubmitBlogger = async (values: any) => {
-        const formData = new FormData();
-    };
-    const handleSubmitAdvertiser = async (values: any) => {
-        const formData = new FormData();
-    };
+
     if (!userStore.isAuthenticated) {
-        return (
-            <S.Card>
-                <Loader/>
-            </S.Card>
-        );
+        return <Navigate to={MappingPaths.PUBLIC.LOGIN}/>
     }
-    const user = userStore.user;
-    switch (user.agents.length + user.clients.length + user.partners.length + user.merchants.length) {
-        case 0:
-            // create new entities
-            return <Navigate to={MappingPaths.PRIVATE.ACCOUNT}/>
-        case 1:
-            // redirect to created
-            if (user.agents.length == 1) {
-                // TODO: agent page
-                return <Loader/>;
-            } else if (user.clients.length == 1) {
-                return <Navigate to={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}/>
-            } else if (user.partners.length == 1) {
-                return <Navigate to={MappingPaths.PRIVATE.DASHBOARD_BLOGGERS}/>
-            } else {
-                // TODO: merchant page
-                return <Loader/>;
-            }
+    const currentEntity = userStore.CurrentEntity;
+    switch (currentEntity.Type) {
+        case EntitiesType.Agents:
+            // TODO: agent page
+            return <Loader/>;
+        case EntitiesType.Advertisers:
+            return <Navigate to={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}/>
+        case EntitiesType.Bloggers:
+            return <Navigate to={MappingPaths.PRIVATE.DASHBOARD_BLOGGERS}/>
+        case EntitiesType.Admins:
+            // TODO: merchant page
+            return <Loader/>;
         default:
-            // select one from many entities
-            return (
-                <S.Card>
-
-                </S.Card>
-            );
+            return <Navigate to={MappingPaths.PRIVATE.ACCOUNT}/>
     }
-
 };
+
 export default DashboardPage;
-
-export const action = async ({request}: ActionFunctionArgs) => {
-}
-
-export const loader = async (userStore: UserStore) => {
-    return null;
-};

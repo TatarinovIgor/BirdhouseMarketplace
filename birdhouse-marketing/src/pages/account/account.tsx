@@ -9,7 +9,7 @@ import {Form} from "../../modules/antd/Form/Form";
 import {Input} from "../../modules/antd/Input/Input";
 import {Button} from "antd";
 import {useNavigation} from "react-router-dom";
-
+import {EntityData} from "../../types/crm";
 
 const {Title, Text} = Typography;
 
@@ -18,6 +18,7 @@ const Account = () => {
     const [isUploaded, changeUploaded] = useState(true);
     const userStore = useContext(UserStoreContext);
     const navigation = useNavigation();
+    const entities = {} as EntityData[]
 
     const handleSubmit = async (values: any) => {
         const formData = new FormData();
@@ -87,19 +88,18 @@ const Account = () => {
                 </Form.Item>
             </Form>
             <Title level={2}>{t('account.user_entities')}</Title>
-        <List
-            itemLayout="horizontal"
-            dataSource={userStore.User.partners}
-            renderItem={(item, index) => (
-                <List.Item >
-                    <List.Item.Meta
-                        title={`${item[Object.keys(item)[0]].email}`}
-                        description={`${item[Object.keys(item)[0]].guid}`}
-                    />
-                </List.Item>
-            )}/>
-
-    </S.Card>
+            <List
+                itemLayout="horizontal"
+                dataSource={Object.keys(userStore.User.partners)}
+                renderItem={(item, index) => (
+                    <List.Item>
+                        <List.Item.Meta
+                            title={`${userStore.User.partners[item].email}`}
+                            description={`${item}`}
+                        />
+                    </List.Item>
+                )}/>
+        </S.Card>
     );
 };
 
