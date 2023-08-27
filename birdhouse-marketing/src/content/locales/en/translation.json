@@ -33,5 +33,11 @@
   "account.first_name": "First Name",
   "account.last_name": "Last Name",
   "account.submit": "Update",
-  "account.user_entities": "User Entities"
+  "account.user_entities": "User Entities",
+  "account.entity.new": "New",
+  "account.entity.blogger": "Blogger",
+  "account.entity.advertiser": "Advertiser",
+  "account.entity.name": "Name",
+  "account.entity.email": "Email",
+  "account.entity.create": "Create"
 }
