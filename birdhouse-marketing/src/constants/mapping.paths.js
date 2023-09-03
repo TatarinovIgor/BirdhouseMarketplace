@@ -22,6 +22,7 @@ export const MappingPaths = {
         EXPLORE_ADVERTISES: basePath + '/explore_advertisers',
         EXPLORE_BLOGGERS: basePath + '/explore_bloggers',
         PRODUCT_PAGE: basePath + '/product_page',
+        LOGOUT: basePath + '/logout',
 
         PAYMENTS_PAGE: basePath + '/deposit_withdraw',
         DEPOSIT_PAGE: basePath + '/deposit',

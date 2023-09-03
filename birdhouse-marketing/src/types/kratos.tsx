@@ -1,4 +1,4 @@
-import { LoginFlow } from '@ory/kratos-client';
+import { LoginFlow, LogoutFlow } from '@ory/kratos-client';
 
 export type LoginPageLoaderData = {
   flow: LoginFlow;
@@ -7,6 +7,16 @@ export type LoginPageLoaderData = {
 export type LoginPageActionData = {
   errors: string[];
 };
+
+export type LogoutPageLoaderData = {
+  flow: LogoutFlow;
+};
+
+export type LogoutPageActionData = {
+  errors: string[];
+};
+
+
 
 export type nodes = {
   attributes: {

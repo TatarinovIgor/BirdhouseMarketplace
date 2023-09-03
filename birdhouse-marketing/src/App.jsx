@@ -14,6 +14,9 @@ import {
     action as loginAction
 } from "./pages/auth/login/login";
 import {
+    loader as logoutLoader,
+} from "./pages/auth/logout/logout"
+import {
     loader as registrationLoader,
     action as registrationAction
 } from "./pages/auth/registration/registration";
@@ -52,6 +55,7 @@ const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/Produ
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
+const LogoutPage = () => import('./pages/auth/logout/logout.tsx')
 const RegistrationPage = () => import('./pages/auth/registration/registration.tsx');
 const ChangePasswordPage = () => import('./pages/auth/change-password/changepassword.tsx')
 const CreateNewPasswordPage = () => import('./pages/auth/create-new-password/create-new-password.tsx')
@@ -132,6 +136,11 @@ function App() {
                            content={React.lazy(CreateConfirmCodePage)}/>
                        </React.Suspense>}/>
 
+
+                <Route path={MappingPaths.PRIVATE.LOGOUT}
+                       loader={logoutLoader}
+                       element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LogoutPage)}/>
+                       </React.Suspense>}/>
                 <Route path={MappingPaths.PRIVATE.DASHBOARD}
                        element={<React.Suspense fallback='Loading...'>
                            <BasePage content={React.lazy(CreateDashboardPage)}/>

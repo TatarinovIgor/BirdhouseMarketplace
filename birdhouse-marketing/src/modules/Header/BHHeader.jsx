@@ -76,7 +76,7 @@ export const BHHeader = () => {
         {
             key: '4',
             label: (
-                <Link to="/">Log out</Link>
+                <Link to={MappingPaths.PRIVATE.LOGOUT}>Log out</Link>
             ),
             icon: <LogoutOutlined />,
         },

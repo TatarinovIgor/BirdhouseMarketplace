@@ -57,6 +57,8 @@ export class UserStore {
             runInAction(() => (this.user = response));
             this.is_authenticated = true;
             // define current entities
+            console.log(response);
+
             this.entitiesList.forEach(() => this.entitiesList.pop());
             (Object.keys(this.user.clients)).forEach(value => {
                 if (!this.entitiesList[value]) {
