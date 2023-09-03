@@ -29,6 +29,7 @@ const Account = () => {
         userStore.uploadData().then(() => {
             changeUploaded(true);
         });
+        window.location.reload();
     };
     const handleCreate = async (values: any) => {
         const data = {
@@ -42,6 +43,11 @@ const Account = () => {
             },
             body: JSON.stringify(data),
         });
+
+        if (response.ok) {
+            window.location.reload()
+        }
+
     };
     const submitting = navigation.state === 'submitting';
 
