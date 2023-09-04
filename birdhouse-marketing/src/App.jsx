@@ -36,6 +36,7 @@ import {
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
 import UserStoreContext, {UserStore } from "./stores/user";
+import OfferStoreContext, {OfferStore } from "./stores/offers";
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
@@ -190,13 +191,15 @@ function App() {
     );
     return (
         <UserStoreContext.Provider value={userStore}>
-            <QueryClientProvider client={queryClient}>
-                <I18nextProvider i18n={i18next}>
-                    <AntApp>
-                        <Router router={router}/>
-                    </AntApp>
-                </I18nextProvider>
-            </QueryClientProvider>
+            <OfferStoreContext.Provider value={OfferStore}>
+                <QueryClientProvider client={queryClient}>
+                    <I18nextProvider i18n={i18next}>
+                        <AntApp>
+                            <Router router={router}/>
+                        </AntApp>
+                    </I18nextProvider>
+                </QueryClientProvider>
+            </OfferStoreContext.Provider>
         </UserStoreContext.Provider>
     );
 }

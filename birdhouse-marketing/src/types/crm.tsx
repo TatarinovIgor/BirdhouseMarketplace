@@ -20,3 +20,13 @@ export type UserCRM = {
     merchants: Entity;
     partners: Entity;
 }
+
+
+export type ServiceCRM = {
+    name: string;
+    description: string;
+    category: string;
+    price: number;
+    meta_data: string;
+    partnerGuid: string;
+}

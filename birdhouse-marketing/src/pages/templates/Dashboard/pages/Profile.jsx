@@ -131,6 +131,10 @@ export const Profile = () => {
     );
 
     return (
+        <>
+        <Title>
+            Profile
+        </Title>
         <div>
             {contextHolder}
             <Form
@@ -211,5 +215,6 @@ export const Profile = () => {
                 </Row>
             </Form>
         </div>
+        </>
     );
 };

@@ -4,6 +4,11 @@ import React from "react";
 const { Title } = Typography;
 export const Settings = () => {
     return (
+        <>
+        <Title>
+            Settings
+        </Title>
+
         <div style={{
             marginLeft: 50,
             width: 580
@@ -18,5 +23,6 @@ export const Settings = () => {
                 <Input size="large" placeholder="Current password" />
             </div>
         </div>
+        </>
     )
 }

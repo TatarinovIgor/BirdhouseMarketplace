@@ -96,6 +96,7 @@ export const CreateOrderPage = () => {
             // Handle errors (e.g., show error message)
             console.error('Error:', error);
         }
+
     };
 
     const handleBeforeUpload = (file) => {
@@ -121,6 +122,10 @@ export const CreateOrderPage = () => {
 
 
     return (
+        <>
+        <title>
+            Create Order
+        </title>
         <div style={{
             marginLeft: 50,
             maxWidth: 580
@@ -315,5 +320,6 @@ export const CreateOrderPage = () => {
                 </Form.Item>
             </Form>
         </div>
+        </>
     )
 }
