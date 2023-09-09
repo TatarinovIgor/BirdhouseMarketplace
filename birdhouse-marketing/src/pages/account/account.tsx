@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Trans, useTranslation} from "react-i18next";
-import {Collapse, List, Radio, Typography} from "antd";
+import {Checkbox, Collapse, List, Radio, Typography} from "antd";
 import type {CollapseProps} from 'antd';
 import {BHInfoCard} from "../../modules/BHInfoCard.jsx";
 import {AppstoreOutlined, ThunderboltFilled, ThunderboltOutlined, ThunderboltTwoTone} from "@ant-design/icons";
@@ -22,7 +22,9 @@ const Account = () => {
     const userStore = useContext(UserStoreContext);
     const navigation = useNavigation();
     const entities = {} as EntityData[]
+    const [selectedItem, changeSelection] = useState(userStore.CurrentEntity.ID)
 
+    useEffect(() => {changeSelection(userStore.CurrentEntity.ID)})
     const handleSubmit = async (values: any) => {
         userStore.setFirstName(values['user.first_name']);
         userStore.setLastName(values['user.last_name']);
@@ -31,6 +33,11 @@ const Account = () => {
         });
         window.location.reload();
     };
+    const handleSetCurrentEntity = async (values: any) => {
+        userStore.setCurrentEntity(values)
+        changeSelection(values)
+        console.log(values, userStore.currentEntityID)
+    }
     const handleCreate = async (values: any) => {
         const data = {
             name: values['entity.name'],
@@ -51,6 +58,8 @@ const Account = () => {
     };
     const submitting = navigation.state === 'submitting';
 
+    // @ts-ignore
+    // @ts-ignore
     return (<S.Card>
             <Form onFinish={handleSubmit}>
                 <Title>{t('account.user_info')}</Title>
@@ -111,9 +120,12 @@ const Account = () => {
             <Title level={2}>{t('account.user_entities')}</Title>
             <List
                 itemLayout="horizontal"
-                dataSource={userStore.ListEntities}
+                dataSource={Object.values(userStore.ListEntities)}
                 renderItem={(item, index) => (
-                    <List.Item>
+                    <List.Item
+                        actions={[
+                            <Radio onClick={ () => handleSetCurrentEntity(item.ID)} checked={selectedItem === item.ID} />,
+                        ]}>
                         <List.Item.Meta
                             title={`${item.Email}`}
                             description={`${item.ID}`}
