@@ -1,9 +1,12 @@
 import {Button, Col, Form, Input, InputNumber, message, Select, Space, Typography, Upload} from "antd";
 import imagePlaceholder from "../../../../assets/img/images/imagePlaceholder.svg";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {InboxOutlined, PlusOutlined, UploadOutlined} from "@ant-design/icons";
 import axios from "axios";
 import {CRM_BASE_URL} from "../../../../constants/endpoins.js";
+
+import OfferStoreContext, {OfferStoreG} from "../../../../stores/offers";
+import UserStoreContext from "../../../../stores/user";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -33,6 +36,9 @@ export const CreateOrderPage = () => {
     const [price, setPrice] = useState(100);
     const [fileList, setFileList] = useState([]);
 
+    const offerStore = useContext(OfferStoreContext);
+    const userStore = useContext(UserStoreContext)
+
     const handleTypeChange = (value) => {
         setSelectedType(value);
     };
@@ -41,61 +47,37 @@ export const CreateOrderPage = () => {
         setSelectedCategory(value);
     };
 
-    const handleCreateClick = async () => {
-        try {
-            const meta_data = {
-                type: selectedType,
-                category: selectedCategory,
-                link: link,
-                price: price
-            };
-            const metaDataString = JSON.stringify(meta_data);
-
-
-            const data = {
-                name: title,
-                description: description,
-                partnerGuid: "63c53aa5-5165-49c5-8b81-b01b1362a4d5",
-                meta_data: metaDataString
-            };
-
-            const response = await axios.post( `${CRM_BASE_URL}/services/`, data);
-
-            console.log('Response:', response.data);
-            for (const image of fileList) {
-                const formData = new FormData();
-                formData.append('image', image);
-                console.log(image);
-
-                try {
-                    const imgResponse = await axios
-                        .post(`${CRM_BASE_URL}/images/services/${response.data}`, formData, {
-                            headers: {
-                                "Content-Type": "multipart/form-data",
-                            },
-                        });
-
-                    console.log(imgResponse.data)
-                } catch (error) {
-                    console.error('Error uploading image', error);
-                }
-            }
-
-
-            axios.put(`${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services/${response.data}`)
-                .then(() => {
-                    messageApi.open({
-                        type: 'success',
-                        content: 'The order was created successfully',
-                    });
-                })
-                .catch(error => {
-                    console.log('Error:', error)
-                });
-        } catch (error) {
-            // Handle errors (e.g., show error message)
-            console.error('Error:', error);
+    const handleCreateClick = async (values) => {
+        if (!values) {
+            return
         }
+        console.log(values)
+        offerStore.setName(values['offer.title']);
+        offerStore.setPrice(values['offer.price']);
+        offerStore.setCategory(values['offer.category']);
+        offerStore.setDescription(description);
+        offerStore.setMetadata('{}');
+        offerStore.setGuid(userStore.CurrentEntity.ID)
+        const response = await offerStore.uploadData();
+        for (const image of fileList) {
+            const formData = new FormData();
+            formData.append('image', image);
+            console.log(image);
+
+            try {
+                const imgResponse = await axios
+                    .post(`${CRM_BASE_URL}/images/services/${response.data}`, formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                        },
+                    });
+
+                console.log(imgResponse.data)
+            } catch (error) {
+                console.error('Error uploading image', error);
+            }
+        }
+
 
     };
 
@@ -166,7 +148,8 @@ export const CreateOrderPage = () => {
                     </div>
                 </Form.Item>
                 <Form.Item
-                    name="orderTitle"
+                    key={'offer.title'}
+                    name={'offer.title'}
                     label="Order Title"
                     style={{
                         fontWeight: 500,
@@ -188,7 +171,8 @@ export const CreateOrderPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="referralLink"
+                    key={'offer.link'}
+                    name={'offer.link'}
                     label="Your referral link"
                     style={{
                         fontWeight: 500,
@@ -211,7 +195,8 @@ export const CreateOrderPage = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="description"
+                    key={'offer.description'}
+                    name={'offer.description'}
                     label="Description"
                     style={{
                         fontWeight: 500,
@@ -238,7 +223,8 @@ export const CreateOrderPage = () => {
                     marginBottom: 30
                 }}>
                     <Form.Item
-                        name="type"
+                        key={'offer.type'}
+                        name={'offer.type'}
                         label="I am looking for..."
                         rules={[
                             {
@@ -265,7 +251,8 @@ export const CreateOrderPage = () => {
                     marginBottom: 30
                 }}>
                     <Form.Item
-                        name="category"
+                        key={'offer.category'}
+                        name={'offer.category'}
                         label="Categories"
                         rules={[
                             {
@@ -296,7 +283,8 @@ export const CreateOrderPage = () => {
                         fontWeight: 500,
                         marginBottom: 30
                     }}
-                    name="price"
+                    key={'offer.price'}
+                    name={'offer.price'}
                     label="Price"
                     rules={[
                         {
@@ -323,3 +311,5 @@ export const CreateOrderPage = () => {
         </>
     )
 }
+
+export default CreateOrderPage;

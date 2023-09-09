@@ -28,5 +28,4 @@ export type ServiceCRM = {
     category: string;
     price: number;
     meta_data: string;
-    partnerGuid: string;
 }

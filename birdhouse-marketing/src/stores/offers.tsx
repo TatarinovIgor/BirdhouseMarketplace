@@ -8,6 +8,7 @@ export class OfferStore {
     service: ServiceCRM;
     currentEntityID: number
     entitiesList: EntityType[]
+    guid: string;
 
     constructor() {
         this.currentEntityID = 0;
@@ -20,6 +21,7 @@ export class OfferStore {
             meta_data: '',
             partnerGuid: '',
         } as ServiceCRM;
+        this.guid = "";
 
         makeObservable(this, {
             service: observable,
@@ -29,7 +31,7 @@ export class OfferStore {
             setCategory: action,
             setPrice: action,
             setMetadata: action,
-            setPartnerGuid: action,
+            setGuid: action,
             uploadData: action,
         });
     }
@@ -49,8 +51,8 @@ export class OfferStore {
     setMetadata  = (text: string) => {
         this.service.meta_data = text;
     }
-    setPartnerGuid  = (text: string) => {
-        this.service.partnerGuid = text;
+    setGuid = (text: string) => {
+        this.guid = text;
     }
     fetchData = async () => {
         //ToDo fetch all data
@@ -60,19 +62,20 @@ export class OfferStore {
             const data = {
                 name: this.service.name,
                 description: this.service.description,
-                category: this.service.category,
+                //category: this.service.category,
                 price: this.service.price.valueOf(),
                 meta_data: this.service.meta_data,
-                partnerGuid: this.service.partnerGuid
             }
-            const response = await fetch(CRM_BASE_URL + '/users/', {
-                method: 'PUT',
+            console.log(data)
+            const response = await fetch(CRM_BASE_URL + '/partners/' + this.guid + '/services', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             });
             console.log(response.json())
+            return response.json()
 
         } catch (error) {
             console.error('Error uploading data:', error);

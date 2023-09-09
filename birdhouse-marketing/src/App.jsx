@@ -86,6 +86,7 @@ function App() {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const userStore = useContext(UserStoreContext);
+    const offerStore = useContext(OfferStoreContext)
 
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -191,7 +192,7 @@ function App() {
     );
     return (
         <UserStoreContext.Provider value={userStore}>
-            <OfferStoreContext.Provider value={OfferStore}>
+            <OfferStoreContext.Provider value={offerStore}>
                 <QueryClientProvider client={queryClient}>
                     <I18nextProvider i18n={i18next}>
                         <AntApp>

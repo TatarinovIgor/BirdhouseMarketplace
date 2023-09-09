@@ -16,8 +16,6 @@ import createOrderIcon from "../../../assets/img/icons/edit.svg"
 import profileIcon from "../../../assets/img/icons/user.svg"
 import settingsIcon from "../../../assets/img/icons/Settings.svg"
 import {ActionFunctionArgs, Link} from "react-router-dom";
-import OfferStoreContext, {OfferStoreG} from "../../../stores/offers";
-import {CRM_BASE_URL} from "../../../constants/endpoins";
 import {MappingPaths} from "../../../constants/mapping.paths";
 
 const {TabPane} = Tabs;
