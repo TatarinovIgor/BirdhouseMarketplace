@@ -1,6 +1,7 @@
 /* eslint-disable no-debugger */
 import React from 'react';
 import {
+  Navigate,
   useLoaderData,
 } from 'react-router-dom';
 import {kratos} from '../kratos';

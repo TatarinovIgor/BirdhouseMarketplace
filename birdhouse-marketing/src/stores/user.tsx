@@ -32,6 +32,7 @@ export class UserStore {
             setFirstName: action,
             setLastName: action,
             setEmail: action,
+            setCurrentEntity: action,
             uploadData: action,
             isAuthenticated: computed,
             User: computed,
@@ -48,6 +49,15 @@ export class UserStore {
     }
     setEmail = (text: string) => {
         this.user.email = text;
+    }
+    setCurrentEntity = (id: number) => {
+        if (id < 0 ) {
+            this.currentEntityID = 0;
+        } else if (id > this.entitiesList.length) {
+            this.currentEntityID = this.entitiesList.length;
+        } else {
+            this.currentEntityID = id;
+        }
     }
     fetchData = async () => {
         try {
