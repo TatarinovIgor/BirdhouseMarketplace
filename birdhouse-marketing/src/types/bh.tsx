@@ -5,6 +5,9 @@ export const EntitiesType = {
     Bloggers: 'partners',
     Admins: 'merchants'
 };
+export interface BHEntities {
+    [guid: string]: EntityType
+}
 export type EntityType = {
     Type: string,
     ID: string
