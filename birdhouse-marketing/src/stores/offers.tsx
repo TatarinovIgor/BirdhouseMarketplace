@@ -17,7 +17,9 @@ export class OfferStore {
         this.entitiesList = {} as ServiceList;
         this.service = {
         } as ServiceCRM;
-
+        this.service.categories = [];
+        this.service.name = '';
+        this.service.description = '';
         makeObservable(this, {
             service: observable,
             fetchData: action,
@@ -38,7 +40,7 @@ export class OfferStore {
         this.service.description = text;
     }
     setCategory = (text: string) => {
-        this.service.category = text;
+        this.service.categories.push(text);
     }
     setPrice  = (price: number) => {
         this.service.price = price;
@@ -60,7 +62,7 @@ export class OfferStore {
             const data = {
                 name: this.service.name,
                 description: this.service.description,
-                //category: this.service.category,
+                categories: this.service.categories,
                 price: this.service.price.valueOf(),
                 meta_data: this.service.meta_data,
             }

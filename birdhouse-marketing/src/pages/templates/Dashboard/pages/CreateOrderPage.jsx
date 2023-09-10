@@ -257,7 +257,7 @@ export const CreateOrderPage = () => {
                         marginBottom: 30
                     }}>
                         <Form.Item
-                            key={'offer.category'}
+                            key={'offer.key'}
                             name={'offer.category'}
                             label="Categories"
                             rules={[
@@ -275,8 +275,8 @@ export const CreateOrderPage = () => {
                                 size="large"
                             >
                                 {options.map(option => (
-                                    <option key={option[0]} value={option[1].category}>
-                                        {option.category}
+                                    <option key={option[0]} value={option[1].guid}>
+                                        {option[1].category}
                                     </option>
                                 ))}
                             </Select>
