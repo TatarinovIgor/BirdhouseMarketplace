@@ -44,3 +44,8 @@ export type CategoryCRM = {
 export interface CategoryList {
     [guid: string]: CategoryCRM
 }
+
+
+export interface ServiceList {
+    [guid: string]: ServiceCRM
+}

@@ -1,27 +1,22 @@
 import {createContext} from "react";
 import {makeObservable, runInAction, observable, action, computed} from "mobx";
-import {UserCRM, Entity, ServiceCRM} from "../types/crm";
+import {UserCRM, Entity, ServiceCRM, ServiceList} from "../types/crm";
 import {CRM_BASE_URL} from "../constants/endpoins"
-import {EntitiesType, EntityType} from "../types/bh"
+import {MERCHANT_GUID} from "../constants/merchant"
+import {BHEntities, EntitiesType, EntityType} from "../types/bh"
+import axios from "axios";
 
 export class OfferStore {
     service: ServiceCRM;
     currentEntityID: number
-    entitiesList: EntityType[]
+    entitiesList: ServiceList
     guid: string;
 
     constructor() {
         this.currentEntityID = 0;
-        this.entitiesList = [] as EntityType[];
+        this.entitiesList = {} as ServiceList;
         this.service = {
-            name: '',
-            description: '',
-            category: '',
-            price: 0,
-            meta_data: '',
-            partnerGuid: '',
         } as ServiceCRM;
-        this.guid = "";
 
         makeObservable(this, {
             service: observable,
@@ -55,7 +50,10 @@ export class OfferStore {
         this.guid = text;
     }
     fetchData = async () => {
-        //ToDo fetch all data
+        const response = await axios.get(`${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/tags`)
+        for (let i = 0; i < response.data.length; i++) {
+            this.service[response.data[i].guid] = response.data[i];
+        }
     }
     uploadData = async () => {
         try {
@@ -80,6 +78,14 @@ export class OfferStore {
         } catch (error) {
             console.error('Error uploading data:', error);
         }
+    }
+    GetOffers(){
+        if (!this.service || Object.keys(this.service).length ==  0) {
+            this.fetchData().then();
+        }
+        console.log(Object.keys(this.service))
+
+        return this.service
     }
 }
 export const OfferStoreG = new OfferStore()

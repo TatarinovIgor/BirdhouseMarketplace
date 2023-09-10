@@ -88,6 +88,7 @@ function App() {
     const loader = async () => {
         await categoryStore.fetchData();
         await userStore.fetchData();
+        await offerStore.fetchData()
         return 0;
     }
 
