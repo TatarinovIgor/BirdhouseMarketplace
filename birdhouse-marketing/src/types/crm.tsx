@@ -1,3 +1,5 @@
+import {EntityType} from "./bh";
+
 export type EntityData = {
     name: string;
     guid: string;
@@ -28,4 +30,17 @@ export type ServiceCRM = {
     category: string;
     price: number;
     meta_data: string;
+}
+
+
+export type CategoryCRM = {
+    created_at: string;
+    updated_at: string;
+    guid: string;
+    category: string;
+    description: string;
+}
+
+export interface CategoryList {
+    [guid: string]: CategoryCRM
 }

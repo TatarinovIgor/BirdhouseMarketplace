@@ -10,33 +10,29 @@ import {getAnalytics} from "firebase/analytics";
 
 import {App as AntApp} from './modules/antd/App';
 import {
-    loader as loginLoader,
-    action as loginAction
+    loader as loginLoader, action as loginAction
 } from "./pages/auth/login/login";
 import {
     loader as logoutLoader,
 } from "./pages/auth/logout/logout"
 import {
-    loader as registrationLoader,
-    action as registrationAction
+    loader as registrationLoader, action as registrationAction
 } from "./pages/auth/registration/registration";
 import {
-    loader as changePasswordLoader,
-    action as changePasswordAction
+    loader as changePasswordLoader, action as changePasswordAction
 } from "./pages/auth/change-password/changepassword";
 import {
-    loader as createNewPasswordLoader,
-    action as createNewPasswordAction
+    loader as createNewPasswordLoader, action as createNewPasswordAction
 } from "./pages/auth/create-new-password/create-new-password";
 import {
-    loader as createConfirmCodeLoader,
-    action as createConfirmCodeAction
+    loader as createConfirmCodeLoader, action as createConfirmCodeAction
 } from "./pages/auth/confirm-code/confirm-code";
 
 import {queryClient} from "./middleware/clients/query.client"
 import {MappingPaths} from './constants/mapping.paths.js';
-import UserStoreContext, {UserStore } from "./stores/user";
-import OfferStoreContext, {OfferStore } from "./stores/offers";
+import UserStoreContext, {UserStore} from "./stores/user";
+import OfferStoreContext, {OfferStore} from "./stores/offers";
+import CategoryStoreContext from "./stores/category";
 
 const BasePage = React.lazy(() => import("./modules/Base/Base.jsx"))
 const AboutPage = React.lazy(() => import("./pages/templates/AboutUs/AboutUs.jsx"))
@@ -86,122 +82,127 @@ function App() {
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const userStore = useContext(UserStoreContext);
-    const offerStore = useContext(OfferStoreContext)
+    const offerStore = useContext(OfferStoreContext);
+    const categoryStore = useContext(CategoryStoreContext);
 
-    const router = createBrowserRouter(
-        createRoutesFromElements(
-            <Route loader={userStore.fetchData}>
+    const loader = async () => {
+        await categoryStore.fetchData();
+        await userStore.fetchData();
+        return 0;
+    }
 
-                <Route path={MappingPaths.ERROR}
-                       element={<React.Suspense fallback='Loading...'> <Error/> </React.Suspense>}/>
+    const router = createBrowserRouter(createRoutesFromElements(<Route loader={loader}>
 
-                <Route path={MappingPaths.ROOT}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.ABOUT}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={AboutPage}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.CONTACT_US}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={ContactUs}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.LANDING_ADVERTISERS}
-                       element={<React.Suspense fallback='Loading...'> <LandingAdvertisers/> </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.LANDING_BLOGGERS}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.TERMS_AND_CONDITION}
-                       element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>
-                       </React.Suspense>}/>
+        <Route path={MappingPaths.ERROR}
+               element={<React.Suspense fallback='Loading...'> <Error/> </React.Suspense>}/>
 
-                <Route path={MappingPaths.PUBLIC.LOGIN}
-                       loader={loginLoader} action={loginAction}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.REGISTRATION}
-                       loader={registrationLoader} action={registrationAction}
-                       element={<React.Suspense fallback='Loading...'> <BasePage
-                           content={React.lazy(RegistrationPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.CHANGE_PASSWORD}
-                       loader={changePasswordLoader} action={changePasswordAction}
-                       element={<React.Suspense fallback='Loading...'> <BasePage
-                           content={React.lazy(ChangePasswordPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.CREATE_NEW_PASSWORD}
-                       loader={createNewPasswordLoader} action={createNewPasswordAction}
-                       element={<React.Suspense fallback='Loading...'> <BasePage
-                           content={React.lazy(CreateNewPasswordPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PUBLIC.CONFIRM_CODE}
-                       loader={createConfirmCodeLoader} action={createConfirmCodeAction}
-                       element={<React.Suspense fallback='Loading...'> <BasePage
-                           content={React.lazy(CreateConfirmCodePage)}/>
-                       </React.Suspense>}/>
+        <Route path={MappingPaths.ROOT}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.ABOUT}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={AboutPage}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.CONTACT_US}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={ContactUs}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.LANDING_ADVERTISERS}
+               element={<React.Suspense fallback='Loading...'> <LandingAdvertisers/> </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.LANDING_BLOGGERS}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={LandingBloggers}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.TERMS_AND_CONDITION}
+               element={<React.Suspense fallback='Loading'> <BasePage content={DocsPage}/>
+               </React.Suspense>}/>
+
+        <Route path={MappingPaths.PUBLIC.LOGIN}
+               loader={loginLoader} action={loginAction}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LoginPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.REGISTRATION}
+               loader={registrationLoader} action={registrationAction}
+               element={<React.Suspense fallback='Loading...'> <BasePage
+                   content={React.lazy(RegistrationPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.CHANGE_PASSWORD}
+               loader={changePasswordLoader} action={changePasswordAction}
+               element={<React.Suspense fallback='Loading...'> <BasePage
+                   content={React.lazy(ChangePasswordPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.CREATE_NEW_PASSWORD}
+               loader={createNewPasswordLoader} action={createNewPasswordAction}
+               element={<React.Suspense fallback='Loading...'> <BasePage
+                   content={React.lazy(CreateNewPasswordPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PUBLIC.CONFIRM_CODE}
+               loader={createConfirmCodeLoader} action={createConfirmCodeAction}
+               element={<React.Suspense fallback='Loading...'> <BasePage
+                   content={React.lazy(CreateConfirmCodePage)}/>
+               </React.Suspense>}/>
 
 
-                <Route path={MappingPaths.PRIVATE.LOGOUT}
-                       loader={logoutLoader}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LogoutPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DASHBOARD}
-                       element={<React.Suspense fallback='Loading...'>
-                           <BasePage content={React.lazy(CreateDashboardPage)}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardAdvertiser}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DASHBOARD_BLOGGERS}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardBlogger}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.ACCOUNT}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={Account}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreAdvertisers}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.EXPLORE_BLOGGERS}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreBloggers}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.PRODUCT_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
-                       </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.LOGOUT}
+               loader={logoutLoader}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={React.lazy(LogoutPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DASHBOARD}
+               element={<React.Suspense fallback='Loading...'>
+                   <BasePage content={React.lazy(CreateDashboardPage)}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DASHBOARD_ADVERTISERS}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardAdvertiser}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DASHBOARD_BLOGGERS}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DashboardBlogger}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.ACCOUNT}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={Account}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.EXPLORE_ADVERTISES}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreAdvertisers}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.EXPLORE_BLOGGERS}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreBloggers}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.PRODUCT_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
+               </React.Suspense>}/>
 
-                <Route path={MappingPaths.PRIVATE.PAYMENTS_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DEPOSIT_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.WITHDRAW_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.WITHDRAW_SUCCESS_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawSuccess}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.WITHDRAW_FAIL_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawUnsuccess}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DEPOSIT_SUCCESS_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DepositSuccess}/>
-                       </React.Suspense>}/>
-                <Route path={MappingPaths.PRIVATE.DEPOSIT_FAIL_PAGE}
-                       element={<React.Suspense fallback='Loading...'> <BasePage content={DepositUnsuccess}/>
-                       </React.Suspense>}/>
-            </Route>
-        )
-    );
+        <Route path={MappingPaths.PRIVATE.PAYMENTS_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DEPOSIT_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.WITHDRAW_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DepositWithdraw}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.WITHDRAW_SUCCESS_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawSuccess}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.WITHDRAW_FAIL_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={WithdrawUnsuccess}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DEPOSIT_SUCCESS_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DepositSuccess}/>
+               </React.Suspense>}/>
+        <Route path={MappingPaths.PRIVATE.DEPOSIT_FAIL_PAGE}
+               element={<React.Suspense fallback='Loading...'> <BasePage content={DepositUnsuccess}/>
+               </React.Suspense>}/>
+    </Route>));
     return (
-        <UserStoreContext.Provider value={userStore}>
-            <OfferStoreContext.Provider value={offerStore}>
-                <QueryClientProvider client={queryClient}>
-                    <I18nextProvider i18n={i18next}>
-                        <AntApp>
-                            <Router router={router}/>
-                        </AntApp>
-                    </I18nextProvider>
-                </QueryClientProvider>
-            </OfferStoreContext.Provider>
-        </UserStoreContext.Provider>
+        <CategoryStoreContext.Provider value={categoryStore}>
+            <UserStoreContext.Provider value={userStore}>
+                <OfferStoreContext.Provider value={offerStore}>
+                    <QueryClientProvider client={queryClient}>
+                        <I18nextProvider i18n={i18next}>
+                            <AntApp>
+                                <Router router={router}/>
+                            </AntApp>
+                        </I18nextProvider>
+                    </QueryClientProvider>
+                </OfferStoreContext.Provider>
+            </UserStoreContext.Provider>
+        </CategoryStoreContext.Provider>
     );
 }
 

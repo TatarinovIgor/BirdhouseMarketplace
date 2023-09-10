@@ -1,0 +1,1 @@
+export const MERCHANT_GUID = "73cef4f7-cfa0-4cb0-99f8-5e2cc07f52ae";
