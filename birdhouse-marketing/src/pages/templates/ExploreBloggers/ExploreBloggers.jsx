@@ -21,6 +21,7 @@ import axios from "axios";
 import {CRM_BASE_URL} from '../../../constants/endpoins';
 import {Link} from "react-router-dom";
 import settingsIcon from "../../../assets/img/icons/settings.svg"
+import {MERCHANT_GUID} from "../../../constants/merchant.js";
 
 const { Title, Text} = Typography;
 const { Search } = Input;
@@ -55,7 +56,7 @@ const ExploreBloggers = () => {
     useEffect(() => {
         // Define the API URL
 
-        const apiUrl = `${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services`;
+        const apiUrl = `${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/services`;
 
         axios.get(apiUrl)
             .then(response => setData(response.data))
@@ -63,7 +64,7 @@ const ExploreBloggers = () => {
     }, []);
 
     const handleApplyFilters = () => {
-        const apiUrl = `${CRM_BASE_URL}/products/6f916130-724a-434c-8f87-f6fea8c35b85/services`;
+        const apiUrl = `${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/services`;
 
         const queryParams = [];
         if (checkedList.length > 0) {

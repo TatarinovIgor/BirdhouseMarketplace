@@ -52,7 +52,8 @@ export class OfferStore {
         this.guid = text;
     }
     fetchData = async () => {
-        const response = await axios.get(`${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/tags`)
+        const response = await axios.get(`${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/services`)
+        console.log(response.data)
         for (let i = 0; i < response.data.length; i++) {
             this.service[response.data[i].guid] = response.data[i];
         }

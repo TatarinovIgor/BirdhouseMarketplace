@@ -12,7 +12,7 @@ export const CreatedOrders = () => {
 
     const offerStore = useContext(OfferStoreContext);
     const offers = Object.entries(offerStore.GetOffers())
-    //console.log(offers)
+    console.log(offers)
     return (
         <>
             <Title>
