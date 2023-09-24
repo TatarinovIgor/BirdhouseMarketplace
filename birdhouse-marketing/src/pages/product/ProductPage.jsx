@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./style.css"
-import {BHInfoCard} from "../../../modules/BHInfoCard.jsx";
+import {BHInfoCard} from "../../modules/BHInfoCard.jsx";
 import {Row, Typography, Col, Tabs} from "antd";
 import {AppstoreOutlined, ThunderboltOutlined} from "@ant-design/icons";
 import {useLocation} from "react-router-dom";

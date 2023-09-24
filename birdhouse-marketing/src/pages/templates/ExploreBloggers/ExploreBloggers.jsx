@@ -290,17 +290,18 @@ const ExploreBloggers = () => {
                             justifyContent: "center"
                         }}>
                             {data.map(item => {
-                                const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                                const metaData = JSON.parse(item.meta_data);
+                                // Parse the JSON string
                                 return (
                                     <Link
-                                        to={'/ui/product_page'}
+                                        to={'/ui/product_page?guid=' + item.guid}
                                         state={{
                                             userName: item.name,
                                             description: item.description,
                                             adName: item.name,
                                             category: item.category,
                                             price: item.price,
-                                            bg: item.bg,
+                                            bg: item.images[0],
                                         }}
                                         style={{ textDecoration: "none" }}
                                     >
@@ -310,7 +311,7 @@ const ExploreBloggers = () => {
                                             adName={item.description}
                                             category={item.category}
                                             price={item.price}
-                                            bg={item.bg}
+                                            bg={item.images[0]}
                                         />
                                     </Link>
                                 );

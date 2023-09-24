@@ -48,7 +48,7 @@ const ExploreAdvertisers = React.lazy(() => import("./pages/templates/ExploreAdv
 const ExploreBloggers = React.lazy(() => import("./pages/templates/ExploreBloggers/ExploreBloggers.jsx"))
 const LandingAdvertisers = React.lazy(() => import("./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx"))
 const LandingBloggers = React.lazy(() => import("./pages/templates/LandingBlogger/LandingBlogger.jsx"))
-const ProductPage = React.lazy(() => import("./pages/templates/ProductPage/ProductPage.jsx"))
+const ProductPage = React.lazy(() => import("./pages/product/ProductPage.jsx"))
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');

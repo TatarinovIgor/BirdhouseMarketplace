@@ -1,6 +1,7 @@
 import {Col, Row} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
+import {CRM_BASE_URL} from "../constants/endpoins.js";
 
 export const BHInfoCard = (props) => {
     const {userName, adName, category, price, bg} = props;
@@ -11,7 +12,7 @@ export const BHInfoCard = (props) => {
                 width: 280,
                 borderRadius: 20,
                 backgroundSize: "cover",
-                backgroundImage: `url(${bg})`,
+                backgroundImage: `url(${CRM_BASE_URL}/public/images/content/${bg})`,
                 alignItems: "flex-end",
                 display: "flex",
                 marginBottom: 20,

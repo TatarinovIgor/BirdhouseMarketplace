@@ -300,7 +300,7 @@ const ExploreBloggers = () => {
                                                 adName: item.name,
                                                 category: item.category,
                                                 price: item.price,
-                                                bg: item.bg,
+                                                bg: item.images[0],
                                             }}
                                             style={{ textDecoration: "none" }}
                                         >
@@ -310,7 +310,7 @@ const ExploreBloggers = () => {
                                                 adName={item.description}
                                                 category={item.category}
                                                 price={item.price}
-                                                bg={item.bg}
+                                                bg={item.images[0]}
                                             />
                                         </Link>
                                     );

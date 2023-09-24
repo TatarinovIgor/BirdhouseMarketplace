@@ -64,6 +64,7 @@ export const CreateOrderPage = () => {
         offerStore.setMetadata('{}');
         offerStore.setGuid(userStore.CurrentEntity.ID)
         const response = await offerStore.uploadData();
+        console.log(fileList)
         for (const image of fileList) {
             const formData = new FormData();
             formData.append('image', image);
