@@ -12,7 +12,7 @@ export const BHInfoCard = (props) => {
                 width: 280,
                 borderRadius: 20,
                 backgroundSize: "cover",
-                backgroundImage: `url(${CRM_BASE_URL}/public/images/content/${bg})`,
+                backgroundImage: `url(${CRM_BASE_URL}/images/content/${bg})`,
                 alignItems: "flex-end",
                 display: "flex",
                 marginBottom: 20,

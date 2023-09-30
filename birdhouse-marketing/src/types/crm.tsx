@@ -27,7 +27,9 @@ export type UserCRM = {
 export type ServiceCRM = {
     name: string;
     description: string;
-    categories: string[];
+    state: string;
+    images: string[];
+    categories: CategoryList;
     price: number;
     meta_data: string;
 }

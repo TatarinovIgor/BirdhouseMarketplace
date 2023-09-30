@@ -16,6 +16,9 @@ import {
     loader as logoutLoader,
 } from "./pages/auth/logout/logout"
 import {
+    loader as productLoader
+} from "./pages/product/ProductPage.tsx";
+import {
     loader as registrationLoader, action as registrationAction
 } from "./pages/auth/registration/registration";
 import {
@@ -48,7 +51,7 @@ const ExploreAdvertisers = React.lazy(() => import("./pages/templates/ExploreAdv
 const ExploreBloggers = React.lazy(() => import("./pages/templates/ExploreBloggers/ExploreBloggers.jsx"))
 const LandingAdvertisers = React.lazy(() => import("./pages/templates/LandingAdvertiser/LandingAdvertisers.jsx"))
 const LandingBloggers = React.lazy(() => import("./pages/templates/LandingBlogger/LandingBlogger.jsx"))
-const ProductPage = React.lazy(() => import("./pages/product/ProductPage.jsx"))
+const ProductPage = React.lazy(() => import("./pages/product/ProductPage.tsx"))
 const WithdrawSuccess = React.lazy(() => import("./pages/templates/WithdrawSuccess/WithdrawSuccess.jsx"))
 const WithdrawUnsuccess = React.lazy(() => import("./pages/templates/WithdrawUnsuccess/WithdrawUnsuccess.jsx"))
 const LoginPage = () => import('./pages/auth/login/login.tsx');
@@ -165,6 +168,7 @@ function App() {
                element={<React.Suspense fallback='Loading...'> <BasePage content={ExploreBloggers}/>
                </React.Suspense>}/>
         <Route path={MappingPaths.PRIVATE.PRODUCT_PAGE}
+               loader={productLoader}
                element={<React.Suspense fallback='Loading...'> <BasePage content={ProductPage}/>
                </React.Suspense>}/>
 
