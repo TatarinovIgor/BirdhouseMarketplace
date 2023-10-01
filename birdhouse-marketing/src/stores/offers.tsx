@@ -1,10 +1,14 @@
 import {createContext} from "react";
 import {makeObservable, runInAction, observable, action, computed} from "mobx";
-import {UserCRM, Entity, ServiceCRM, ServiceList} from "../types/crm";
+import {UserCRM, Entity, ServiceCRM, ServiceList, CategoryCRM} from "../types/crm";
 import {CRM_BASE_URL} from "../constants/endpoins"
 import {MERCHANT_GUID} from "../constants/merchant"
 import {BHEntities, EntitiesType, EntityType} from "../types/bh"
 import axios from "axios";
+import {EAuthLoginFlowId, kratos} from "../pages/auth/kratos";
+import {GenericError, LogoutFlow} from "@ory/kratos-client";
+import {redirect, useSearchParams} from "react-router-dom";
+import {MappingPaths} from "../constants/mapping.paths";
 
 export class OfferStore {
     service: ServiceCRM;
@@ -17,9 +21,12 @@ export class OfferStore {
         this.entitiesList = {} as ServiceList;
         this.service = {
         } as ServiceCRM;
+        // @ts-ignore
         this.service.categories = [];
         this.service.name = '';
         this.service.description = '';
+        this.service.images = [];
+        this.service.state = '';
         makeObservable(this, {
             service: observable,
             fetchData: action,
@@ -40,6 +47,7 @@ export class OfferStore {
         this.service.description = text;
     }
     setCategory = (text: string) => {
+        // @ts-ignore
         this.service.categories.push(text);
     }
     setPrice  = (price: number) => {
@@ -55,7 +63,7 @@ export class OfferStore {
         const response = await axios.get(`${CRM_BASE_URL}/public/merchants/${MERCHANT_GUID}/services`)
         console.log(response.data)
         for (let i = 0; i < response.data.length; i++) {
-            this.service[response.data[i].guid] = response.data[i];
+                this.service[response.data[i].guid] = response.data[i];
         }
     }
     uploadData = async () => {
@@ -91,6 +99,42 @@ export class OfferStore {
         return this.service
     }
 }
+
+export const loader = async () => {
+
+    const queryParam = window.location.search;
+    const params = new URLSearchParams(queryParam);
+    const guid = params.get("guid");
+    const apiUrl = `${CRM_BASE_URL}/services/${guid}`;
+
+    console.log(guid)
+    try {
+        const response = await axios.get(apiUrl)
+        console.log("loader response: ", response.data)
+        return {
+            flow: response.data,
+        };
+    } catch (e: any) {
+        // check for axios@0.21 Error
+        if (!e.isAxiosError) {
+            throw e;
+        }
+
+        const { data } = e.response;
+
+        if (data.error) {
+            if ((data.error as GenericError).id === EAuthLoginFlowId.SessionAlreadyAvailable) {
+                return redirect(MappingPaths.PRIVATE.EXPLORE_ADVERTISES);
+            }
+        }
+
+        if (data.ui) {
+            return data;
+        }
+        throw e;
+    }
+};
+
 export const OfferStoreG = new OfferStore()
 const OfferStoreContext = createContext<OfferStore>(OfferStoreG)
 export default OfferStoreContext;

@@ -293,7 +293,7 @@ const ExploreBloggers = () => {
                                     const metaData = JSON.parse(item.meta_data); // Parse the JSON string
                                     return (
                                         <Link
-                                            to={'/ui/product_page'}
+                                            to={`/ui/product_page?guid=${item.guid}`}
                                             state={{
                                                 userName: item.name,
                                                 description: item.description,

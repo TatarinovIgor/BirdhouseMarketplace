@@ -15,7 +15,13 @@ const ProductPage = () => {
 
     console.log("my load resp:", productData)
 
-
+    let imageGuid = productData.images[0]
+    let productName = productData.name
+    let productCategory = productData.categories[0].category
+    let productPrice = productData.price
+    let productDescription = productData.description
+    let imageUrl = "url("+CRM_BASE_URL+"/images/content/"+imageGuid+")"
+    imageUrl.replace(/&quot;|&#039;/g, "'")
     // @ts-ignore
     // @ts-ignore
     return (
@@ -30,6 +36,7 @@ const ProductPage = () => {
                     justifyContent: "flex-start",
                 }}
             >
+
                 <Row
                     style={{
                         alignSelf: "center",
@@ -45,7 +52,7 @@ const ProductPage = () => {
                                 width: 280,
                                 borderRadius: 20,
                                 backgroundSize: "cover",
-                                backgroundImage: `url(${CRM_BASE_URL}/images/content/${productData.images[0]})`,
+                                backgroundImage: imageUrl,
                                 alignItems: "flex-end",
                                 display: "flex",
                                 marginBottom: 20,
@@ -56,16 +63,16 @@ const ProductPage = () => {
                     <Col style={{
                         justifyContent: "flex-start"
                     }}>
-                        <div>
+                        <>
                                     <span style={{
                                         fontSize: 30,
                                         fontWeight: "bold"
                                     }}>
-                                        {productData.name}
+                                        {productName}
                                     </span>
 
-                            Category: {productData.categories[0]}
-                        </div>
+                            Category: {productCategory}
+                        </>
                         <div>
                             by n
                         </div>
@@ -73,7 +80,7 @@ const ProductPage = () => {
                             <Text style={{
                                 fontSize: 21
                             }}>
-                                {productData.price} $
+                                {productPrice} $
                             </Text>
                         </div>
                         <div>
@@ -82,7 +89,7 @@ const ProductPage = () => {
                             }}>
                                 Description:
                             </div>
-                            {productData.description}
+                            {productDescription}
                         </div>
                     </Col>
                 </Row>
