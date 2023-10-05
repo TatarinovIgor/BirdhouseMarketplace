@@ -9,10 +9,11 @@ import * as S from "./account.style";
 import {Form} from "../../modules/antd/Form/Form";
 import {Input} from "../../modules/antd/Input/Input";
 import {Button} from "antd";
-import {useNavigation} from "react-router-dom";
+import {redirect, useNavigation} from "react-router-dom";
 import {EntityData} from "../../types/crm";
 import {EntitiesType} from "../../types/bh";
 import {CRM_BASE_URL} from "../../constants/endpoins";
+import {BASE_URL} from "../../constants/endpoins";
 
 const {Title, Text} = Typography;
 
@@ -37,6 +38,7 @@ const Account = () => {
         userStore.setCurrentEntity(values)
         changeSelection(values)
         console.log(values, userStore.currentEntityID)
+        window.location.assign(BASE_URL+"/dashboard")
     }
     const handleCreate = async (values: any) => {
         const data = {

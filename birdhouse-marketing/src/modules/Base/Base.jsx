@@ -3,7 +3,7 @@ import {Footer} from "../Footer/Footer.jsx";
 import background from '../../assets/img/backgrounds/background1.png';
 import {Divider} from "antd";
 
-export const Base = (props) => {
+const Base = (props) => {
     const { content: Content } = props;
     const isMobile = window.innerWidth <= 768;
 
