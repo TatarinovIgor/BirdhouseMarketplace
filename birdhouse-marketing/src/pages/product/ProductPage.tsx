@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import "./style.css"
-import {Row, Typography, Col, Tabs} from "antd";
+import {Row, Typography, Col, Tabs, Button} from "antd";
 import {json, redirect, useLoaderData, useLocation, useSearchParams} from "react-router-dom";
 import {CRM_BASE_URL} from "../../constants/endpoins.js";
 import axios from "axios";
@@ -13,7 +13,81 @@ const ProductPage = () => {
 
     const productData = (useLoaderData() || {}) as ServiceCRM;
 
+    const queryParam = window.location.search;
+    const params = new URLSearchParams(queryParam);
+    const guid = params.get("guid");
+
     console.log("my load resp:", productData)
+    let RejectCreationButtonStatus = "none"
+    let FinishButtonStatus = "none"
+    let ApproveButtonStatus = "none"
+    let ChangeButtonStatus = "none"
+    let PutForSaleButtonStatus = "none"
+    let BuyButtonStatus = "none"
+    let RejectButtonStatus = "none"
+    let StartButtonStatus = "none"
+    let ConfirmButtonStatus = "none"
+    let AdminHelpButtonStatus = "none"
+    let ExecutedButtonStatus = "none"
+    let RequestChangesButtonStatus = "none"
+    let RejectAdminButtonStatus = "none"
+    let DoneButtonStatus = "none"
+    let CancelButtonStatus = "none"
+
+    switch (productData.state) {
+        case "": {
+            FinishButtonStatus = "block"
+            break;
+        }
+        case "ready": {
+            RejectCreationButtonStatus = "block"
+            ApproveButtonStatus = "block"
+            CancelButtonStatus = "block"
+            break;
+        }
+        case "approved": {
+            PutForSaleButtonStatus = "block"
+            break;
+        }
+        case "published": {
+            ChangeButtonStatus = "block"
+            BuyButtonStatus = "block"
+            CancelButtonStatus = "block"
+            break;
+        }
+        case "bought": {
+            StartButtonStatus = "block"
+            break;
+        }
+        case "pending_issuer_approval": {
+            RejectButtonStatus = "block"
+            ConfirmButtonStatus = "block"
+            break;
+        }
+        case "delivering": {
+            AdminHelpButtonStatus = "block"
+            ExecutedButtonStatus = "block"
+            break;
+        }
+        case "delivered": {
+            AdminHelpButtonStatus = "block"
+            DoneButtonStatus = "block"
+            break;
+        }
+        case "admin_help": {
+            RejectAdminButtonStatus = "block"
+            DoneButtonStatus = "block"
+            break;
+        }
+        case "canceled": {
+            break;
+        }
+
+        default: {
+            break;
+        }
+    }
+
 
     let imageGuid = productData.images[0]
     let productName = productData.name
@@ -22,6 +96,92 @@ const ProductPage = () => {
     let productDescription = productData.description
     let imageUrl = "url("+CRM_BASE_URL+"/images/content/"+imageGuid+")"
     imageUrl.replace(/&quot;|&#039;/g, "'")
+
+    async function UpdateState(action: string) {
+        let state = ""
+        switch (action) {
+            case "reject_creation": {
+                state = ""
+                break;
+            }
+            case "finish": {
+                state = "ready"
+                break;
+            }
+            case "approve": {
+                state = "approved"
+                break;
+            }
+            case "change": {
+                state = ""
+                break;
+            }
+            case "put_for_sale": {
+                state = "published"
+                break;
+            }
+            case "buy": {
+                state = "bought"
+                break;
+            }
+            case "reject": {
+                state = "published"
+                break;
+            }
+            case "start": {
+                state = "pending_issuer_approval"
+                break;
+            }
+            case "confirm": {
+                state = "delivering"
+                break;
+            }
+            case "admin_help": {
+                state = "admin_help"
+                break;
+            }
+            case "executed": {
+                state = "delivered"
+                break;
+            }
+            case "request_changes": {
+                state = "delivering"
+                break;
+            }
+            case "reject_admin": {
+                state = "published"
+                break;
+            }
+            case "done": {
+                state = "done"
+                break;
+            }
+            case "cancel":{
+                state = "canceled"
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        const data = {
+            state: state
+        }
+
+
+        const response = await fetch(CRM_BASE_URL + '/services/' + guid + '/state', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            console.log(response.status)
+        }
+    }
+
     // @ts-ignore
     // @ts-ignore
     return (
@@ -90,6 +250,92 @@ const ProductPage = () => {
                                 Description:
                             </div>
                             {productDescription}
+                        </div>
+
+                        <div>
+                            <Button onClick={() => UpdateState("reject_creation")} style={{
+                                display: RejectCreationButtonStatus
+                            }}>
+                                Reject Creation
+                            </Button>
+
+                            <Button onClick={() => UpdateState("finish")} style={{
+                                display: FinishButtonStatus
+                            }}>
+                                Finish
+                            </Button>
+
+                            <Button onClick={() => UpdateState("approve")} style={{
+                                display: ApproveButtonStatus
+                            }}>
+                                Approve
+                            </Button>
+
+                            <Button onClick={() => UpdateState("change")} style={{
+                                display: ChangeButtonStatus
+                            }}>
+                                Change
+                            </Button>
+
+                            <Button onClick={() => UpdateState("put_for_sale")} style={{
+                                display: PutForSaleButtonStatus
+                            }}>
+                                Put for sale
+                            </Button>
+
+                            <Button onClick={() => UpdateState("buy")} style={{
+                                display: BuyButtonStatus
+                            }}>
+                                Buy
+                            </Button>
+
+                            <Button onClick={() => UpdateState("reject")} style={{
+                                display: RejectButtonStatus
+                            }}>
+                                Reject
+                            </Button>
+
+                            <Button onClick={() => UpdateState("start")} style={{
+                                display: StartButtonStatus
+                            }}>
+                                Start
+                            </Button>
+
+                            <Button onClick={() => UpdateState("confirm")} style={{
+                                display: ConfirmButtonStatus
+                            }}>
+                                Confirm
+                            </Button>
+
+                            <Button onClick={() => UpdateState("admin_help")} style={{
+                                display: AdminHelpButtonStatus
+                            }}>
+                                Admin help
+                            </Button>
+
+                            <Button onClick={() => UpdateState("executed")} style={{
+                                display: ExecutedButtonStatus
+                            }}>
+                                Executed
+                            </Button>
+
+                            <Button onClick={() => UpdateState("request_changes")} style={{
+                                display: RequestChangesButtonStatus
+                            }}>
+                                Request changes
+                            </Button>
+
+                            <Button onClick={() => UpdateState("reject_admin")} style={{
+                                display: RejectAdminButtonStatus
+                            }}>
+                                Reject
+                            </Button>
+
+                            <Button onClick={() => UpdateState("done")} style={{
+                                display: DoneButtonStatus
+                            }}>
+                                Done
+                            </Button>
                         </div>
                     </Col>
                 </Row>
