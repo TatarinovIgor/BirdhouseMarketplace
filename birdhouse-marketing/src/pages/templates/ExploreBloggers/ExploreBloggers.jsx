@@ -261,7 +261,7 @@ const ExploreBloggers = () => {
                             {windowWidth <= 992 &&
                                 mobileMenu
                             }
-                            <span style={{ flex: 1, textAlign: 'left', color: "rgb(123, 123, 123)" }}>Found 0 Ads</span>
+                            <span style={{ flex: 1, textAlign: 'left', color: "rgb(123, 123, 123)" }}>Found {data.length} Ads</span>
                             <Search
                                 placeholder="input search text"
                                 allowClear

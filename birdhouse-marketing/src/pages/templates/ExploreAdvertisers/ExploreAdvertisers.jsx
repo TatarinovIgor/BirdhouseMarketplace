@@ -45,6 +45,7 @@ const useWindowWidth = () => {
 
 const ExploreBloggers = () => {
         const [data, setData] = useState([]);
+        const [img, setImg] = useState("");
         const [checkedList, setCheckedList] = useState([]);
         const [selectedSort, setSelectedSort] = useState("LowHigh");
         const [minPrice, setMinPrice] = useState(0);
@@ -261,7 +262,7 @@ const ExploreBloggers = () => {
                                 {windowWidth <= 992 &&
                                     mobileMenu
                                 }
-                                <span style={{ flex: 1, textAlign: 'left', color: "rgb(123, 123, 123)" }}>Found 0 Ads</span>
+                                <span style={{ flex: 1, textAlign: 'left', color: "rgb(123, 123, 123)" }}>Found {data.length} Ads</span>
                                 <Search
                                     placeholder="input search text"
                                     allowClear
@@ -291,6 +292,12 @@ const ExploreBloggers = () => {
                             }}>
                                 {data.map(item => {
                                     const metaData = JSON.parse(item.meta_data); // Parse the JSON string
+                                    console.log(item)
+                                    const imgApiUrl = `${CRM_BASE_URL}/image/content/${item.images[0]}`;
+                                    axios.get(imgApiUrl)
+                                        .then(response => console.log(response))
+                                        .catch(error => console.error('Error fetching data:', error));
+                                    console.log(response.data)
                                     return (
                                         <Link
                                             to={`/ui/product_page?guid=${item.guid}`}

@@ -83,8 +83,9 @@ export class OfferStore {
                 },
                 body: JSON.stringify(data),
             });
-            console.log(response.json())
-            return response.json()
+            const resp = await response.json();
+            console.log("Response:", resp)
+            return resp
 
         } catch (error) {
             console.error('Error uploading data:', error);

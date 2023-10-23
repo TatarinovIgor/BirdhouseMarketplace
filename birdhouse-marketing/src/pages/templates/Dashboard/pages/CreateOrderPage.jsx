@@ -32,7 +32,7 @@ export const CreateOrderPage = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const [imageUrl, setImageUrl] = useState("");
     const [selectedType, setSelectedType] = useState("Choose an option...");
-    const [selectedCategory, setSelectedCategory] = useState("Choose an option...");
+    const [selectedCategory, setSelectedCategory] = useState([]);
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
     const [description, setDescription] = useState('');
@@ -42,20 +42,22 @@ export const CreateOrderPage = () => {
     const offerStore = useContext(OfferStoreContext);
     const userStore = useContext(UserStoreContext);
     const categoryStore = useContext(CategoryStoreContext);
-
-    const options = Object.entries(categoryStore.Category)
+    const options = Object.entries(categoryStore.Category);
     const handleTypeChange = (value) => {
         setSelectedType(value);
     };
 
     const handleCategoryChange = (value) => {
-        setSelectedCategory(value);
+        if (!(value in selectedCategory)) {
+            setSelectedCategory(value);
+        }
     };
 
     const handleCreateClick = async (values) => {
         if (!values) {
             return
         }
+
         console.log(values)
         offerStore.setName(values['offer.title']);
         offerStore.setPrice(values['offer.price']);
@@ -63,25 +65,46 @@ export const CreateOrderPage = () => {
         offerStore.setDescription(description);
         offerStore.setMetadata('{}');
         offerStore.setGuid(userStore.CurrentEntity.ID)
-        const response = await offerStore.uploadData();
-        console.log(fileList)
-        for (const image of fileList) {
-            const formData = new FormData();
-            formData.append('image', image);
-            console.log(image);
+        debugger;
+        try {
+            const response = await offerStore.uploadData();
+            console.log(response)
+            for (const image of fileList) {
+                console.log(image);
+                console.log(fileList[0]);
 
-            try {
-                const imgResponse = await axios
-                    .post(`${CRM_BASE_URL}/images/services/${response.data}`, formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    });
+                // Create a Blob from the binary data
+                const blob = await fetch(image.thumbUrl)
+                    .then((res) => res.blob());
 
-                console.log(imgResponse.data)
-            } catch (error) {
-                console.error('Error uploading image', error);
+                // Create a File object with the blob and specify the filename and file type
+                const file = new File([blob], image.name, { type: image.type });
+
+                const formData = new FormData();
+                formData.append(
+                    "image",
+                    file,
+                );
+
+                const imageValue = formData.get("image");
+                console.log(imageValue)
+
+
+                try {
+                    const imgResponse = await axios
+                        .post(`${CRM_BASE_URL}/images/services/${response}`, formData, {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        });
+
+                    console.log(imgResponse.data)
+                } catch (error) {
+                    console.error('Error uploading image', error);
+                }
             }
+        } catch (error) {
+            console.error(error)
         }
 
 
@@ -92,7 +115,9 @@ export const CreateOrderPage = () => {
         return false;
     };
 
-    const handleFileUpload = ({fileList: newFileList}) => setFileList(newFileList);
+    const handleFileUpload = ({fileList: newFileList}) => {
+        setFileList(newFileList);
+    }
 
 
     const uploadButton = (
